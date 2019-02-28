@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.workplace.mapper.WorkplaceMapper">
+    
+    <resultMap type="Workplace" id="WorkplaceResult">
+        <result property="deptId"    column="dept_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="ancestors"    column="ancestors"    />
+        <result property="workplaceType"    column="workplace_type"    />
+        <result property="workplaceName"    column="workplace_name"    />
+        <result property="workplaceCode"    column="workplace_code"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectWorkplaceVo">
+        select dept_id, parent_id, ancestors, workplace_type, workplace_name, workplace_code, order_num, status, create_by, create_time, update_by, update_time from sys_workplace
+    </sql>
+	
+    <select id="selectWorkplaceList" parameterType="Workplace" resultMap="WorkplaceResult">
+        <include refid="selectWorkplaceVo"/>
+        <where>  
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+             <if test="parentId != null "> and parent_id = #{parentId}</if>
+             <if test="ancestors != null  and ancestors != '' "> and ancestors = #{ancestors}</if>
+             <if test="workplaceType != null  and workplaceType != '' "> and workplace_type = #{workplaceType}</if>
+             <if test="workplaceName != null  and workplaceName != '' "> and workplace_name = #{workplaceName}</if>
+             <if test="workplaceCode != null  and workplaceCode != '' "> and workplace_code = #{workplaceCode}</if>
+             <if test="orderNum != null "> and order_num = #{orderNum}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectWorkplaceById" parameterType="Integer" resultMap="WorkplaceResult">
+        <include refid="selectWorkplaceVo"/>
+        where dept_id = #{deptId}
+    </select>
+        
+    <insert id="insertWorkplace" parameterType="Workplace">
+        insert into sys_workplace
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptId != null  ">dept_id,</if>
+			<if test="parentId != null  ">parent_id,</if>
+			<if test="ancestors != null  and ancestors != ''  ">ancestors,</if>
+			<if test="workplaceType != null  and workplaceType != ''  ">workplace_type,</if>
+			<if test="workplaceName != null  and workplaceName != ''  ">workplace_name,</if>
+			<if test="workplaceCode != null  and workplaceCode != ''  ">workplace_code,</if>
+			<if test="orderNum != null  ">order_num,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deptId != null  ">#{deptId},</if>
+			<if test="parentId != null  ">#{parentId},</if>
+			<if test="ancestors != null  and ancestors != ''  ">#{ancestors},</if>
+			<if test="workplaceType != null  and workplaceType != ''  ">#{workplaceType},</if>
+			<if test="workplaceName != null  and workplaceName != ''  ">#{workplaceName},</if>
+			<if test="workplaceCode != null  and workplaceCode != ''  ">#{workplaceCode},</if>
+			<if test="orderNum != null  ">#{orderNum},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateWorkplace" parameterType="Workplace">
+        update sys_workplace
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null  ">parent_id = #{parentId},</if>
+            <if test="ancestors != null  and ancestors != ''  ">ancestors = #{ancestors},</if>
+            <if test="workplaceType != null  and workplaceType != ''  ">workplace_type = #{workplaceType},</if>
+            <if test="workplaceName != null  and workplaceName != ''  ">workplace_name = #{workplaceName},</if>
+            <if test="workplaceCode != null  and workplaceCode != ''  ">workplace_code = #{workplaceCode},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where dept_id = #{deptId}
+    </update>
+
+	<delete id="deleteWorkplaceById" parameterType="Integer">
+        delete from sys_workplace where dept_id = #{deptId}
+    </delete>
+	
+    <delete id="deleteWorkplaceByIds" parameterType="String">
+        delete from sys_workplace where dept_id in 
+        <foreach item="deptId" collection="array" open="(" separator="," close=")">
+            #{deptId}
+        </foreach>
+    </delete>
+
+    <select id="checkWorkplaceNameUnique" resultMap="WorkplaceResult">
+        <include refid="selectWorkplaceVo"/>
+        where workplace_name=#{workplaceName} and parent_id = #{parentId}
+    </select>
+    
+</mapper>
