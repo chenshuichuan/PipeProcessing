@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.scanner.mapper.ScannerMapper">
+    
+    <resultMap type="Scanner" id="ScannerResult">
+        <result property="id"    column="id"    />
+        <result property="scannerCode"    column="scanner_code"    />
+        <result property="workerId"    column="worker_id"    />
+        <result property="workplaceId"    column="workplace_id"    />
+        <result property="isLock"    column="is_lock"    />
+        <result property="workerBindingTime"    column="worker_binding_time"    />
+        <result property="description"    column="description"    />
+    </resultMap>
+	
+	<sql id="selectScannerVo">
+        select id, scanner_code, worker_id, workplace_id, is_lock, worker_binding_time, description from sys_scanner
+    </sql>
+	
+    <select id="selectScannerList" parameterType="Scanner" resultMap="ScannerResult">
+        <include refid="selectScannerVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="scannerCode != null  and scannerCode != '' "> and scanner_code = #{scannerCode}</if>
+             <if test="workerId != null "> and worker_id = #{workerId}</if>
+             <if test="workplaceId != null "> and workplace_id = #{workplaceId}</if>
+             <if test="isLock != null "> and is_lock = #{isLock}</if>
+             <if test="workerBindingTime != null "> and worker_binding_time = #{workerBindingTime}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+         </where>
+    </select>
+    
+    <select id="selectScannerById" parameterType="Integer" resultMap="ScannerResult">
+        <include refid="selectScannerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertScanner" parameterType="Scanner">
+        insert into sys_scanner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="scannerCode != null  and scannerCode != ''  ">scanner_code,</if>
+			<if test="workerId != null  ">worker_id,</if>
+			<if test="workplaceId != null  ">workplace_id,</if>
+			<if test="isLock != null  ">is_lock,</if>
+			<if test="workerBindingTime != null  ">worker_binding_time,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="scannerCode != null  and scannerCode != ''  ">#{scannerCode},</if>
+			<if test="workerId != null  ">#{workerId},</if>
+			<if test="workplaceId != null  ">#{workplaceId},</if>
+			<if test="isLock != null  ">#{isLock},</if>
+			<if test="workerBindingTime != null  ">#{workerBindingTime},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateScanner" parameterType="Scanner">
+        update sys_scanner
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="scannerCode != null  and scannerCode != ''  ">scanner_code = #{scannerCode},</if>
+            <if test="workerId != null  ">worker_id = #{workerId},</if>
+            <if test="workplaceId != null  ">workplace_id = #{workplaceId},</if>
+            <if test="isLock != null  ">is_lock = #{isLock},</if>
+            <if test="workerBindingTime != null  ">worker_binding_time = #{workerBindingTime},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteScannerById" parameterType="Integer">
+        delete from sys_scanner where id = #{id}
+    </delete>
+	
+    <delete id="deleteScannerByIds" parameterType="String">
+        delete from sys_scanner where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

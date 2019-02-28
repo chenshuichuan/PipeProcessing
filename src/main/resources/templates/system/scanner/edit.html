@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-scanner-edit" th:object="${scanner}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扫码枪编号：</label>
+				<div class="col-sm-8">
+					<input id="scannerCode" name="scannerCode" th:field="*{scannerCode}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工人表_id：</label>
+				<div class="col-sm-8">
+					<input id="workerId" name="workerId" th:field="*{workerId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工位id：</label>
+				<div class="col-sm-8">
+					<input id="workplaceId" name="workplaceId" th:field="*{workplaceId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否锁定：</label>
+				<div class="col-sm-8">
+					<input id="isLock" name="isLock" th:field="*{isLock}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">绑定工人时间：</label>
+				<div class="col-sm-8">
+					<input id="workerBindingTime" name="workerBindingTime" th:field="*{workerBindingTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="description" name="description" th:field="*{description}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "system/scanner"
+		$("#form-scanner-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-scanner-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
