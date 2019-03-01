@@ -69,5 +69,12 @@ public interface WorkplaceMapper
 	 * @return 结果
 	 */
 	public Workplace checkWorkplaceNameUnique(@Param("workplaceName") String workpalceName, @Param("parentId") Integer parentId);
-	
+
+	/**
+	 * 修改子元素关系
+	 *
+	 * @param workplaces 子元素
+	 * @return 结果
+	 */
+	public int updateDeptChildren(@Param("workplaces") List<Workplace> workplaces);
 }

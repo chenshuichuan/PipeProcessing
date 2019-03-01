@@ -95,7 +95,7 @@ public class ScannerController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Scanner scanner)
-	{		
+	{
 		return toAjax(scannerService.insertScanner(scanner));
 	}
 

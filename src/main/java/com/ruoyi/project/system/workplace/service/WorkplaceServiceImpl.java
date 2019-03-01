@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
 import com.ruoyi.project.system.dept.domain.Dept;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,7 @@ public class WorkplaceServiceImpl implements IWorkplaceService
      * @return 部门集合
      */
 	@Override
+	@DataScope(tableAlias = "d")
 	public List<Workplace> selectWorkplaceList(Workplace workplace)
 	{
 	    return workplaceMapper.selectWorkplaceList(workplace);
@@ -61,7 +63,10 @@ public class WorkplaceServiceImpl implements IWorkplaceService
 	@Override
 	public int insertWorkplace(Workplace workplace)
 	{
-	    return workplaceMapper.insertWorkplace(workplace);
+		Workplace info = workplaceMapper.selectWorkplaceById(workplace.getParentId());
+		workplace.setCreateBy(ShiroUtils.getLoginName());
+		workplace.setAncestors(info.getAncestors() + "," + workplace.getParentId());
+		return workplaceMapper.insertWorkplace(workplace);
 	}
 	
 	/**
@@ -73,8 +78,37 @@ public class WorkplaceServiceImpl implements IWorkplaceService
 	@Override
 	public int updateWorkplace(Workplace workplace)
 	{
-	    return workplaceMapper.updateWorkplace(workplace);
+		Workplace info = workplaceMapper.selectWorkplaceById(workplace.getParentId());
+		if (StringUtils.isNotNull(info))
+		{
+			String ancestors = info.getAncestors() + "," + workplace.getParentId();
+			workplace.setAncestors(ancestors);
+			updateDeptChildren(workplace.getDeptId(), ancestors);
+		}
+		workplace.setUpdateBy(ShiroUtils.getLoginName());
+		return workplaceMapper.updateWorkplace(workplace);
 	}
+	/**
+	 * 修改子元素关系
+	 *
+	 * @param deptId 部门ID
+	 * @param ancestors 元素列表
+	 */
+	public void updateDeptChildren(Integer deptId, String ancestors)
+	{
+		Workplace workplace = new Workplace();
+		workplace.setParentId(deptId);
+		List<Workplace> childrens = workplaceMapper.selectWorkplaceList(workplace);
+		for (Workplace children : childrens)
+		{
+			children.setAncestors(ancestors + "," + workplace.getParentId());
+		}
+		if (childrens.size() > 0)
+		{
+			workplaceMapper.updateDeptChildren(childrens);
+		}
+	}
+
 
 	/**
      * 删除部门对象
@@ -120,6 +154,11 @@ public class WorkplaceServiceImpl implements IWorkplaceService
 		List<Workplace> deptList = workplaceMapper.selectWorkplaceList(dept);
 		trees = getTrees(deptList, false, null);
 		return trees;
+	}
+
+	@Override
+	public int deleteWorkplaceById(Integer deptId) {
+		return workplaceMapper.deleteWorkplaceById(deptId);
 	}
 
 	/**

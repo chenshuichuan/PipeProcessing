@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
     <select id="selectWorkplaceList" parameterType="Workplace" resultMap="WorkplaceResult">
         <include refid="selectWorkplaceVo"/>
-        <where>  
+        <where>
             <if test="deptId != null "> and dept_id = #{deptId}</if>
              <if test="parentId != null "> and parent_id = #{parentId}</if>
              <if test="ancestors != null  and ancestors != '' "> and ancestors = #{ancestors}</if>
@@ -39,6 +39,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
          </where>
+        <!--where 1=1-->
+        <!--<if test="parentId != null and parentId != 0">-->
+            <!--AND parent_id = #{parentId}-->
+        <!--</if>-->
+        <!--<if test="workplaceName != null and workplaceName != ''">-->
+            <!--AND dept_name like concat('%', #{workplaceName}, '%')-->
+        <!--</if>-->
+        <!--<if test="status != null and status != ''">-->
+            <!--AND status = #{status}-->
+        <!--</if>-->
+        <!--&lt;!&ndash; 数据范围过滤 &ndash;&gt;-->
+        <!--${params.dataScope}-->
+        <!--order by d.order_num-->
     </select>
     
     <select id="selectWorkplaceById" parameterType="Integer" resultMap="WorkplaceResult">
@@ -58,9 +71,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="orderNum != null  ">order_num,</if>
 			<if test="status != null  and status != ''  ">status,</if>
 			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createTime != null  ">create_time,</if>
+			<!--<if test="createTime != null  ">create_time,</if>-->
+            create_time
 			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updateTime != null  ">update_time,</if>
+			<!--<if test="updateTime != null  ">update_time,</if>-->
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="deptId != null  ">#{deptId},</if>
@@ -72,9 +86,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="orderNum != null  ">#{orderNum},</if>
 			<if test="status != null  and status != ''  ">#{status},</if>
 			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createTime != null  ">#{createTime},</if>
+			<!--<if test="createTime != null  ">#{createTime},</if>-->
+            sysdate()
 			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updateTime != null  ">#{updateTime},</if>
+			<!--<if test="updateTime != null  ">#{updateTime},</if>-->
          </trim>
     </insert>
 	 
@@ -89,9 +104,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderNum != null  ">order_num = #{orderNum},</if>
             <if test="status != null  and status != ''  ">status = #{status},</if>
             <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
-            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <!--<if test="createTime != null  ">create_time = #{createTime},</if>-->
             <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
-            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <!--<if test="updateTime != null  ">update_time = #{updateTime},</if>-->
+            update_time = sysdate()
         </trim>
         where dept_id = #{deptId}
     </update>
@@ -111,5 +127,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectWorkplaceVo"/>
         where workplace_name=#{workplaceName} and parent_id = #{parentId}
     </select>
-    
+    <update id="updateDeptChildren" parameterType="java.util.List">
+        update sys_workplace set ancestors =
+        <foreach collection="workplaces" item="item" index="index"
+                 separator=" " open="case dept_id" close="end">
+            when #{item.deptId} then #{item.ancestors}
+        </foreach>
+        where dept_id in
+        <foreach collection="workplaces" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.deptId}
+        </foreach>
+    </update>
+
 </mapper>

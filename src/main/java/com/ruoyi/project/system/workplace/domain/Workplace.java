@@ -40,7 +40,18 @@ public class Workplace extends BaseEntity
 	/** 更新时间 */
 	private Date updateTime;
 
-	public void setDeptId(Integer deptId) 
+	/** 父部门名称 */
+	private String parentName;
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
+	public void setDeptId(Integer deptId)
 	{
 		this.deptId = deptId;
 	}
@@ -149,6 +160,7 @@ public class Workplace extends BaseEntity
 		return updateTime;
 	}
 
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("deptId", getDeptId())

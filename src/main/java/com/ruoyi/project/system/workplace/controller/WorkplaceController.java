@@ -3,6 +3,8 @@ package com.ruoyi.project.system.workplace.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.ruoyi.common.utils.StringUtils;
+import io.swagger.models.auth.In;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,7 +53,7 @@ public class WorkplaceController extends BaseController
 	@ResponseBody
 	public List<Workplace> list(Workplace workplace)
 	{
-		startPage();
+//		startPage();
         List<Workplace> list = workplaceService.selectWorkplaceList(workplace);
 		return list;
 	}
@@ -78,7 +80,17 @@ public class WorkplaceController extends BaseController
 	{
 	    return prefix + "/add";
 	}
-	
+	/**
+	 * 新增部门
+	 */
+	@GetMapping("/add/{parentId}")
+	public String add(@PathVariable("parentId") Integer parentId, ModelMap mmap)
+	{
+		mmap.put("dept", workplaceService.selectWorkplaceById(parentId));
+		return prefix + "/add";
+	}
+
+
 	/**
 	 * 新增保存部门
 	 */
@@ -97,7 +109,12 @@ public class WorkplaceController extends BaseController
 	@GetMapping("/edit/{deptId}")
 	public String edit(@PathVariable("deptId") Integer deptId, ModelMap mmap)
 	{
+
 		Workplace workplace = workplaceService.selectWorkplaceById(deptId);
+		if (StringUtils.isNotNull(workplace) && 100L == deptId)
+		{
+			workplace.setParentName("无");
+		}
 		mmap.put("workplace", workplace);
 	    return prefix + "/edit";
 	}
@@ -119,11 +136,11 @@ public class WorkplaceController extends BaseController
 	 */
 	@RequiresPermissions("system:workplace:remove")
 	@Log(title = "部门", businessType = BusinessType.DELETE)
-	@PostMapping( "/remove")
+	@PostMapping("/remove/{deptId}")
 	@ResponseBody
-	public AjaxResult remove(String ids)
+	public AjaxResult remove(@PathVariable("deptId") Integer deptId)
 	{		
-		return toAjax(workplaceService.deleteWorkplaceByIds(ids));
+		return toAjax(workplaceService.deleteWorkplaceById(deptId));
 	}
 
 	/**

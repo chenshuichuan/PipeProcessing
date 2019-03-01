@@ -67,5 +67,12 @@ public interface IWorkplaceService
 	 * @return 所有部门信息
 	 */
 	public List<Map<String, Object>> selectWorkplaceTree(Workplace dept);
+	/**
+	 * 删除部门管理信息
+	 *
+	 * @param deptId 部门ID
+	 * @return 结果
+	 */
+	public int deleteWorkplaceById(Integer deptId);
 	
 }
