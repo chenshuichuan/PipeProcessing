@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cutPlan-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">序号：</label>
+				<div class="col-sm-8">
+					<input id="serialNumber" name="serialNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">上传的计划名称：</label>
+				<div class="col-sm-8">
+					<input id="planName" name="planName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">船名：</label>
+				<div class="col-sm-8">
+					<input id="shipName" name="shipName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">加工批次：</label>
+				<div class="col-sm-8">
+					<input id="batchName" name="batchName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">加工批次描述：</label>
+				<div class="col-sm-8">
+					<input id="batchDescription" name="batchDescription" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">更新时间：</label>
+				<div class="col-sm-8">
+					<input id="updateTime" name="updateTime" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否完工：</label>
+				<div class="col-sm-8">
+					<input id="isFinished" name="isFinished" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">完工时间：</label>
+				<div class="col-sm-8">
+					<input id="finishedDate" name="finishedDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">该次计划下料总数：</label>
+				<div class="col-sm-8">
+					<input id="totalCutNumber" name="totalCutNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">一部大管工段下料-加工管数：</label>
+				<div class="col-sm-8">
+					<input id="onebigCutNumber" name="onebigCutNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">一部大管工段下料-下料完成数：</label>
+				<div class="col-sm-8">
+					<input id="onebigCutFinished" name="onebigCutFinished" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">一部下料工段-弯管下料数：</label>
+				<div class="col-sm-8">
+					<input id="oneBendCutNumber" name="oneBendCutNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">一部下料工段-直管下料数：</label>
+				<div class="col-sm-8">
+					<input id="oneVerCutNumber" name="oneVerCutNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">一部下料工段-大管下料数：</label>
+				<div class="col-sm-8">
+					<input id="oneBigCutNumber" name="oneBigCutNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">一部下料工段-下料总数：</label>
+				<div class="col-sm-8">
+					<input id="oneTotalNumber" name="oneTotalNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">一部下料工段-完成总数：</label>
+				<div class="col-sm-8">
+					<input id="oneTotalFinished" name="oneTotalFinished" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">二部下料工段-弯管下料数：</label>
+				<div class="col-sm-8">
+					<input id="twoBendNumber" name="twoBendNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">二部下料工段-直管下料数：</label>
+				<div class="col-sm-8">
+					<input id="twoVerNumber" name="twoVerNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">二部下料工段-下料总数：</label>
+				<div class="col-sm-8">
+					<input id="twoTotalNumber" name="twoTotalNumber" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">二部下料工段-完成总数：</label>
+				<div class="col-sm-8">
+					<input id="twoTotalFinished" name="twoTotalFinished" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "pipe/cutPlan";
+		$("#form-cutPlan-add").validate({
+			rules:{
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-cutPlan-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

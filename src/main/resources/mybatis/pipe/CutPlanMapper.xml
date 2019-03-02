@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pipe.cutPlan.mapper.CutPlanMapper">
+    
+    <resultMap type="CutPlan" id="CutPlanResult">
+        <result property="id"    column="id"    />
+        <result property="serialNumber"    column="serial_number"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="shipName"    column="ship_name"    />
+        <result property="batchName"    column="batch_name"    />
+        <result property="batchDescription"    column="batch_description"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="isFinished"    column="is_finished"    />
+        <result property="finishedDate"    column="finished_date"    />
+        <result property="totalCutNumber"    column="total_cut_number"    />
+        <result property="onebigCutNumber"    column="onebig_cut_number"    />
+        <result property="onebigCutFinished"    column="onebig_cut_finished"    />
+        <result property="oneBendCutNumber"    column="one_bend_cut_number"    />
+        <result property="oneVerCutNumber"    column="one_ver_cut_number"    />
+        <result property="oneBigCutNumber"    column="one_big_cut_number"    />
+        <result property="oneTotalNumber"    column="one_total_number"    />
+        <result property="oneTotalFinished"    column="one_total_finished"    />
+        <result property="twoBendNumber"    column="two_bend_number"    />
+        <result property="twoVerNumber"    column="two_ver_number"    />
+        <result property="twoTotalNumber"    column="two_total_number"    />
+        <result property="twoTotalFinished"    column="two_total_finished"    />
+    </resultMap>
+	
+	<sql id="selectCutPlanVo">
+        select id, serial_number, plan_name, ship_name, batch_name, batch_description, update_time, remark, is_finished, finished_date, total_cut_number, onebig_cut_number, onebig_cut_finished, one_bend_cut_number, one_ver_cut_number, one_big_cut_number, one_total_number, one_total_finished, two_bend_number, two_ver_number, two_total_number, two_total_finished from pipe_cut_plan
+    </sql>
+	
+    <select id="selectCutPlanList" parameterType="CutPlan" resultMap="CutPlanResult">
+        <include refid="selectCutPlanVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="serialNumber != null  and serialNumber != '' "> and serial_number = #{serialNumber}</if>
+             <if test="planName != null  and planName != '' "> and plan_name = #{planName}</if>
+             <if test="shipName != null  and shipName != '' "> and ship_name = #{shipName}</if>
+             <if test="batchName != null  and batchName != '' "> and batch_name = #{batchName}</if>
+             <if test="batchDescription != null  and batchDescription != '' "> and batch_description = #{batchDescription}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+             <if test="finishedDate != null "> and finished_date = #{finishedDate}</if>
+             <if test="totalCutNumber != null "> and total_cut_number = #{totalCutNumber}</if>
+             <if test="onebigCutNumber != null "> and onebig_cut_number = #{onebigCutNumber}</if>
+             <if test="onebigCutFinished != null "> and onebig_cut_finished = #{onebigCutFinished}</if>
+             <if test="oneBendCutNumber != null "> and one_bend_cut_number = #{oneBendCutNumber}</if>
+             <if test="oneVerCutNumber != null "> and one_ver_cut_number = #{oneVerCutNumber}</if>
+             <if test="oneBigCutNumber != null "> and one_big_cut_number = #{oneBigCutNumber}</if>
+             <if test="oneTotalNumber != null "> and one_total_number = #{oneTotalNumber}</if>
+             <if test="oneTotalFinished != null "> and one_total_finished = #{oneTotalFinished}</if>
+             <if test="twoBendNumber != null "> and two_bend_number = #{twoBendNumber}</if>
+             <if test="twoVerNumber != null "> and two_ver_number = #{twoVerNumber}</if>
+             <if test="twoTotalNumber != null "> and two_total_number = #{twoTotalNumber}</if>
+             <if test="twoTotalFinished != null "> and two_total_finished = #{twoTotalFinished}</if>
+         </where>
+    </select>
+    
+    <select id="selectCutPlanById" parameterType="Integer" resultMap="CutPlanResult">
+        <include refid="selectCutPlanVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCutPlan" parameterType="CutPlan">
+        insert into pipe_cut_plan
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="serialNumber != null  and serialNumber != ''  ">serial_number,</if>
+			<if test="planName != null  and planName != ''  ">plan_name,</if>
+			<if test="shipName != null  and shipName != ''  ">ship_name,</if>
+			<if test="batchName != null  and batchName != ''  ">batch_name,</if>
+			<if test="batchDescription != null  and batchDescription != ''  ">batch_description,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="isFinished != null  ">is_finished,</if>
+			<if test="finishedDate != null  ">finished_date,</if>
+			<if test="totalCutNumber != null  ">total_cut_number,</if>
+			<if test="onebigCutNumber != null  ">onebig_cut_number,</if>
+			<if test="onebigCutFinished != null  ">onebig_cut_finished,</if>
+			<if test="oneBendCutNumber != null  ">one_bend_cut_number,</if>
+			<if test="oneVerCutNumber != null  ">one_ver_cut_number,</if>
+			<if test="oneBigCutNumber != null  ">one_big_cut_number,</if>
+			<if test="oneTotalNumber != null  ">one_total_number,</if>
+			<if test="oneTotalFinished != null  ">one_total_finished,</if>
+			<if test="twoBendNumber != null  ">two_bend_number,</if>
+			<if test="twoVerNumber != null  ">two_ver_number,</if>
+			<if test="twoTotalNumber != null  ">two_total_number,</if>
+			<if test="twoTotalFinished != null  ">two_total_finished,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="serialNumber != null  and serialNumber != ''  ">#{serialNumber},</if>
+			<if test="planName != null  and planName != ''  ">#{planName},</if>
+			<if test="shipName != null  and shipName != ''  ">#{shipName},</if>
+			<if test="batchName != null  and batchName != ''  ">#{batchName},</if>
+			<if test="batchDescription != null  and batchDescription != ''  ">#{batchDescription},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="isFinished != null  ">#{isFinished},</if>
+			<if test="finishedDate != null  ">#{finishedDate},</if>
+			<if test="totalCutNumber != null  ">#{totalCutNumber},</if>
+			<if test="onebigCutNumber != null  ">#{onebigCutNumber},</if>
+			<if test="onebigCutFinished != null  ">#{onebigCutFinished},</if>
+			<if test="oneBendCutNumber != null  ">#{oneBendCutNumber},</if>
+			<if test="oneVerCutNumber != null  ">#{oneVerCutNumber},</if>
+			<if test="oneBigCutNumber != null  ">#{oneBigCutNumber},</if>
+			<if test="oneTotalNumber != null  ">#{oneTotalNumber},</if>
+			<if test="oneTotalFinished != null  ">#{oneTotalFinished},</if>
+			<if test="twoBendNumber != null  ">#{twoBendNumber},</if>
+			<if test="twoVerNumber != null  ">#{twoVerNumber},</if>
+			<if test="twoTotalNumber != null  ">#{twoTotalNumber},</if>
+			<if test="twoTotalFinished != null  ">#{twoTotalFinished},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCutPlan" parameterType="CutPlan">
+        update pipe_cut_plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serialNumber != null  and serialNumber != ''  ">serial_number = #{serialNumber},</if>
+            <if test="planName != null  and planName != ''  ">plan_name = #{planName},</if>
+            <if test="shipName != null  and shipName != ''  ">ship_name = #{shipName},</if>
+            <if test="batchName != null  and batchName != ''  ">batch_name = #{batchName},</if>
+            <if test="batchDescription != null  and batchDescription != ''  ">batch_description = #{batchDescription},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+            <if test="finishedDate != null  ">finished_date = #{finishedDate},</if>
+            <if test="totalCutNumber != null  ">total_cut_number = #{totalCutNumber},</if>
+            <if test="onebigCutNumber != null  ">onebig_cut_number = #{onebigCutNumber},</if>
+            <if test="onebigCutFinished != null  ">onebig_cut_finished = #{onebigCutFinished},</if>
+            <if test="oneBendCutNumber != null  ">one_bend_cut_number = #{oneBendCutNumber},</if>
+            <if test="oneVerCutNumber != null  ">one_ver_cut_number = #{oneVerCutNumber},</if>
+            <if test="oneBigCutNumber != null  ">one_big_cut_number = #{oneBigCutNumber},</if>
+            <if test="oneTotalNumber != null  ">one_total_number = #{oneTotalNumber},</if>
+            <if test="oneTotalFinished != null  ">one_total_finished = #{oneTotalFinished},</if>
+            <if test="twoBendNumber != null  ">two_bend_number = #{twoBendNumber},</if>
+            <if test="twoVerNumber != null  ">two_ver_number = #{twoVerNumber},</if>
+            <if test="twoTotalNumber != null  ">two_total_number = #{twoTotalNumber},</if>
+            <if test="twoTotalFinished != null  ">two_total_finished = #{twoTotalFinished},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCutPlanById" parameterType="Integer">
+        delete from pipe_cut_plan where id = #{id}
+    </delete>
+	
+    <delete id="deleteCutPlanByIds" parameterType="String">
+        delete from pipe_cut_plan where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

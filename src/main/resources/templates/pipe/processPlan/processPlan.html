@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								序号：<input type="text" name="serialNumber"/>
+							</li>
+
+							<li>
+								上传的计划名称：<input type="text" name="planName"/>
+							</li>
+
+							<li>
+								船名：<input type="text" name="shipName"/>
+							</li>
+
+							<li>
+								加工批次：<input type="text" name="batchName"/>
+							</li>
+
+							<li>
+								加工批次描述：<input type="text" name="batchDescription"/>
+							</li>
+
+							<li>
+								加工工段：<input type="text" name="processPlace"/>
+							</li>
+							<li>
+								备注：<input type="text" name="remark"/>
+							</li>
+
+							<li>
+								是否完工：<input type="text" name="isFinished"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pipe:processPlan:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="pipe:processPlan:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pipe:processPlan:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pipe:processPlan:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('pipe:processPlan:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('pipe:processPlan:remove')}]];
+        ctx = ctx + webPrefix+"/";
+        var prefix = ctx + "pipe/processPlan";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : 'plan id',
+					visible: false
+				},
+				{
+					field : 'serialNumber', 
+					title : '序号',
+					sortable: true
+				},
+				{
+					field : 'planName', 
+					title : '上传的计划名称',
+					sortable: true
+				},
+				{
+					field : 'shipName', 
+					title : '船名',
+					sortable: true
+				},
+				{
+					field : 'batchName', 
+					title : '加工批次',
+					sortable: true
+				},
+				{
+					field : 'batchDescription', 
+					title : '加工批次描述',
+					sortable: true
+				},
+				{
+					field : 'createTime', 
+					title : '上传时间',
+					sortable: true
+				},
+				{
+					field : 'updateTime', 
+					title : '更新时间',
+					sortable: true
+				},
+				{
+					field : 'stocks', 
+					title : '包含托盘',
+					sortable: true
+				},
+				{
+					field : 'sections', 
+					title : '包含分段',
+					sortable: true
+				},
+				{
+					field : 'processPlace', 
+					title : '加工点，工段',
+					sortable: true
+				},
+				{
+					field : 'number', 
+					title : '加工管件数量',
+					sortable: true
+				},
+				{
+					field : 'lightBodyPipe', 
+					title : '含光身管',
+					sortable: true
+				},
+				{
+					field : 'planStart', 
+					title : '计划结束时间',
+					sortable: true
+				},
+				{
+					field : 'planEnd', 
+					title : '计划开始时间',
+					sortable: true
+				},
+				{
+					field : 'actualStart', 
+					title : '实际开始时间',
+					sortable: true
+				},
+				{
+					field : 'actualEnd', 
+					title : '实际结束时间',
+					sortable: true
+				},
+				{
+					field : 'middleDate', 
+					title : '10-12计划',
+					sortable: true
+				},
+				{
+					field : 'sendPicTime', 
+					title : '发图时间',
+					sortable: true
+				},
+				{
+					field : 'remark', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'isFinished', 
+					title : '是否完工',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
