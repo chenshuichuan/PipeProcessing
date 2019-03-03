@@ -11,6 +11,7 @@ import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.files.domain.Files;
 import com.ruoyi.project.system.files.domain.PlaysOrder;
+import com.ruoyi.project.system.files.service.FilesRepository;
 import com.ruoyi.project.system.files.service.IFilesService;
 import com.ruoyi.project.system.files.service.IPlayOrderService;
 import io.swagger.annotations.Api;
@@ -50,6 +51,9 @@ public class FilesController extends BaseController {
 
     @Autowired
     private IPlayOrderService playOrderService;
+
+    @Autowired
+    private  FilesRepository filesRepository;
 
     @RequiresPermissions("file:view")
     @GetMapping()
@@ -303,7 +307,16 @@ public class FilesController extends BaseController {
             out.close();
         }
 
-
+    }
+    /**
+     * 查询文件上传列表(仅xls计划文件)
+     * 默认计划文件为xls后缀的文件
+     */
+    @GetMapping("/listOfXls")
+    @ResponseBody
+    public List<Files> listOfXls(){
+        List<Files> list = filesRepository.findBySuffix("xls");
+        return list;
     }
 
 }

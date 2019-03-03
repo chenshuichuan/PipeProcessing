@@ -3,6 +3,8 @@ package com.ruoyi.project.pipe.cutPlan.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -11,56 +13,98 @@ import java.util.Date;
  * @author ricardo
  * @date 2019-03-02
  */
+@Entity
+@Table(name="pipe_cut_plan")
 public class CutPlan extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
-	/** plan id */
+	/** plan id *///@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@Column(name = "id")
 	private Integer id;
 	/** 序号 */
+	@Column(name = "serial_number")
 	private String serialNumber;
 	/** 上传的计划名称 */
+	@Column(name = "plan_name")
 	private String planName;
 	/** 船名 */
+	@Column(name = "ship_name")
 	private String shipName;
 	/** 加工批次 */
+	@Column(name = "batch_name")
 	private String batchName;
 	/** 加工批次描述 */
+	@Column(name = "batch_description")
 	private String batchDescription;
 	/** 更新时间 */
+	@Column(name = "update_time")
 	private Date updateTime;
 	/** 备注 */
+	@Column(name = "remark")
 	private String remark;
 	/** 是否完工 */
+	@Column(name = "is_finished")
 	private Integer isFinished;
 	/** 完工时间 */
+	@Column(name = "finished_date")
 	private Date finishedDate;
 	/** 该次计划下料总数 */
+	@Column(name = "total_cut_number")
 	private Integer totalCutNumber;
 	/** 一部大管工段下料-加工管数 */
+	@Column(name = "onebig_cut_number")
 	private Integer onebigCutNumber;
 	/** 一部大管工段下料-下料完成数 */
+	@Column(name = "onebig_cut_finished")
 	private Integer onebigCutFinished;
 	/** 一部下料工段-弯管下料数 */
+	@Column(name = "one_bend_cut_number")
 	private Integer oneBendCutNumber;
 	/** 一部下料工段-直管下料数 */
+	@Column(name = "one_ver_cut_number")
 	private Integer oneVerCutNumber;
 	/** 一部下料工段-大管下料数 */
+	@Column(name = "one_big_cut_number")
 	private Integer oneBigCutNumber;
 	/** 一部下料工段-下料总数 */
+	@Column(name = "one_total_number")
 	private Integer oneTotalNumber;
 	/** 一部下料工段-完成总数 */
+	@Column(name = "one_total_finished")
 	private Integer oneTotalFinished;
 	/** 二部下料工段-弯管下料数 */
+	@Column(name = "two_bend_number")
 	private Integer twoBendNumber;
 	/** 二部下料工段-直管下料数 */
+	@Column(name = "two_ver_number")
 	private Integer twoVerNumber;
 	/** 二部下料工段-下料总数 */
+	@Column(name = "two_total_number")
 	private Integer twoTotalNumber;
 	/** 二部下料工段-完成总数 */
+	@Column(name = "two_total_finished")
 	private Integer twoTotalFinished;
 
-	public void setId(Integer id) 
+	public CutPlan() {
+		this.updateTime = new Date();
+		this.isFinished = 0;
+		this.totalCutNumber = 0;
+		this.onebigCutNumber = 0;
+		this.onebigCutFinished = 0;
+		this.oneBendCutNumber = 0;
+		this.oneVerCutNumber = 0;
+		this.oneBigCutNumber = 0;
+		this.oneTotalNumber = 0;
+		this.oneTotalFinished = 0;
+		this.twoBendNumber = 0;
+		this.twoVerNumber = 0;
+		this.twoTotalNumber = 0;
+		this.twoTotalFinished = 0;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

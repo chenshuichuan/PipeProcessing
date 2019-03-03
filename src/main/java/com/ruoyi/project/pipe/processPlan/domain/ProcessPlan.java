@@ -3,6 +3,8 @@ package com.ruoyi.project.pipe.processPlan.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -11,54 +13,86 @@ import java.util.Date;
  * @author ricardo
  * @date 2019-03-02
  */
+@Entity
+@Table(name="pipe_process_plan")
 public class ProcessPlan extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
 	/** plan id */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
 	/** 序号 */
+	@Column(name = "serial_number")
 	private String serialNumber;
 	/** 上传的计划名称 */
+	@Column(name = "plan_name")
 	private String planName;
 	/** 船名 */
+	@Column(name = "ship_name")
 	private String shipName;
 	/** 加工批次 */
+	@Column(name = "batch_name")
 	private String batchName;
 	/** 加工批次描述 */
+	@Column(name = "batch_description")
 	private String batchDescription;
 	/** 上传时间 */
+	@Column(name = "create_time")
 	private Date createTime;
 	/** 更新时间 */
+	@Column(name = "update_time")
 	private Date updateTime;
 	/** 包含托盘 */
+	@Column(name = "stocks")
 	private String stocks;
 	/** 包含分段 */
+	@Column(name = "sections")
 	private String sections;
 	/** 加工点，工段 */
+	@Column(name = "process_place")
 	private String processPlace;
 	/** 加工管件数量 */
+	@Column(name = "number")
 	private Integer number;
 	/** 含光身管 */
+	@Column(name = "light_body_pipe")
 	private String lightBodyPipe;
 	/** 计划结束时间 */
+	@Column(name = "plan_start")
 	private Date planStart;
 	/** 计划开始时间 */
+	@Column(name = "plan_end")
 	private Date planEnd;
 	/** 实际开始时间 */
+	@Column(name = "actual_start")
 	private Date actualStart;
 	/** 实际结束时间 */
+	@Column(name = "actual_end")
 	private Date actualEnd;
 	/** 10-12计划 */
+	@Column(name = "middle_date")
 	private Date middleDate;
 	/** 发图时间 */
+	@Column(name = "send_pic_time")
 	private Date sendPicTime;
 	/**  */
+	@Column(name = "remark")
 	private String remark;
 	/** 是否完工 */
+	@Column(name = "is_finished")
 	private Integer isFinished;
 
-	public void setId(Integer id) 
+	public ProcessPlan() {
+		this.createTime = new Date();
+		this.updateTime = new Date();
+		this.number = 0;
+		this.isFinished = 0;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

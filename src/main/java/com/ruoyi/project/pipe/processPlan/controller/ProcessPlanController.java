@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.project.system.files.domain.Files;
+import com.ruoyi.project.system.files.service.FilesRepository;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,46 +40,17 @@ public class ProcessPlanController extends BaseController
 	@Autowired
 	private IProcessPlanService processPlanService;
 
+	@Autowired
+	private FilesRepository filesRepository;
 
-	/**
-	 * 上传计划表
-	 */
-//	/**
-//	 * 新增保存文件上传
-//	 */
-//	@RequiresPermissions("file:add")
-//	@Log(title = "文件上传", businessType = BusinessType.INSERT)
-//	@PostMapping("/add")
-//	@ResponseBody
-//	public AjaxResult save(MultipartFile file, Files files) {
-//		int rtn = 0;
-//		Boolean isFile = false;
-//		try {
-//			files = dealFile(file, files);
-//			if (files.getUpdateFlag() == 1 && files.getId() > 0) {//修改
-//				if (file != null) {
-//					isFile = true;
-//				}
-//				rtn = filesService.updateFiles(files, isFile);
-//			} else {//新增
-//				rtn = filesService.insertFiles(files);
-//			}
-//			if (file != null && !"2".equals(files.getType())) {
-//				File desc = FileUploadUtils.getAbsoluteFile(Save_Url, files.getUrl());
-//				file.transferTo(desc);
-//			}
-//		} catch (Exception e) {
-//			log.error("保存失败，请检查后重试！", e);
-//			return error(e.getMessage());
-//		}
-//		return toAjax(rtn);
-//	}
 
 	@RequiresPermissions("pipe:processPlan:view")
 	@GetMapping()
-	public String processPlan()
+	public String processPlan(ModelMap mmap)
 	{
-	    return prefix + "/processPlan";
+		List<Files> list = filesRepository.findBySuffix("xls");
+		mmap.put("planFiles",list);
+		return prefix + "/processPlan";
 	}
 	
 	/**
@@ -91,6 +63,7 @@ public class ProcessPlanController extends BaseController
 	{
 		startPage();
         List<ProcessPlan> list = processPlanService.selectProcessPlanList(processPlan);
+		System.out.println("size:"+list.size());
 		return getDataTable(list);
 	}
 	

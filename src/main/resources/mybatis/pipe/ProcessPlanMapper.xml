@@ -41,21 +41,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="shipName != null  and shipName != '' "> and ship_name = #{shipName}</if>
              <if test="batchName != null  and batchName != '' "> and batch_name = #{batchName}</if>
              <if test="batchDescription != null  and batchDescription != '' "> and batch_description = #{batchDescription}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+
              <if test="stocks != null  and stocks != '' "> and stocks = #{stocks}</if>
              <if test="sections != null  and sections != '' "> and sections = #{sections}</if>
              <if test="processPlace != null  and processPlace != '' "> and process_place = #{processPlace}</if>
-             <if test="number != null "> and number = #{number}</if>
-             <if test="lightBodyPipe != null  and lightBodyPipe != '' "> and light_body_pipe = #{lightBodyPipe}</if>
-             <if test="planStart != null "> and plan_start = #{planStart}</if>
-             <if test="planEnd != null "> and plan_end = #{planEnd}</if>
-             <if test="actualStart != null "> and actual_start = #{actualStart}</if>
-             <if test="actualEnd != null "> and actual_end = #{actualEnd}</if>
-             <if test="middleDate != null "> and middle_date = #{middleDate}</if>
-             <if test="sendPicTime != null "> and send_pic_time = #{sendPicTime}</if>
+             <if test="number != null and number != 0"> and number = #{number}</if>
+
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+             <if test="isFinished != null and isFinished != 0"> and is_finished = #{isFinished}</if>
          </where>
     </select>
     

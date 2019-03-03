@@ -7,6 +7,22 @@
      <div class="container-div">
 		<div class="row">
 			<div class="col-sm-12 search-collapse">
+				<form id="genPlan">
+					<div class="select-list">
+						<ul>
+							<li>
+								生产计划文件：<select id="selectPlan" >
+								<option th:each="file,iterStat : ${planFiles}" th:text="${file.fileName}" th:value="${file.id}"></option>
+							</select>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick=""><i class="fa fa-file-excel-o"></i>&nbsp;生成计划</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-12 search-collapse">
 				<form id="formId">
 					<div class="select-list">
 						<ul>
@@ -73,6 +89,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('pipe:processPlan:edit')}]];
         var removeFlag = [[${@permission.hasPermi('pipe:processPlan:remove')}]];
+        var datas = [[${@dict.getType('user_yes_no')}]];
         ctx = ctx + webPrefix+"/";
         var prefix = ctx + "pipe/processPlan";
 
@@ -83,7 +100,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan",
+                modalName: "加工计划",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -91,7 +108,7 @@
 		        },
 				{
 					field : 'id', 
-					title : 'plan id',
+					title : '系统id',
 					visible: false
 				},
 				{
@@ -101,7 +118,7 @@
 				},
 				{
 					field : 'planName', 
-					title : '上传的计划名称',
+					title : '计划名称',
 					sortable: true
 				},
 				{
@@ -125,28 +142,25 @@
 					sortable: true
 				},
 				{
-					field : 'updateTime', 
-					title : '更新时间',
-					sortable: true
-				},
-				{
 					field : 'stocks', 
 					title : '包含托盘',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'sections', 
 					title : '包含分段',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'processPlace', 
-					title : '加工点，工段',
+					title : '加工工段',
 					sortable: true
 				},
 				{
 					field : 'number', 
-					title : '加工管件数量',
+					title : '加工数量',
 					sortable: true
 				},
 				{
@@ -155,29 +169,34 @@
 					sortable: true
 				},
 				{
-					field : 'planStart', 
-					title : '计划结束时间',
-					sortable: true
+					field: 'planEnd',
+					title: '计划开始时间',
+					sortable: true,
+					visible: false
 				},
 				{
-					field : 'planEnd', 
-					title : '计划开始时间',
-					sortable: true
+					field : 'planStart', 
+					title : '计划结束时间',
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'actualStart', 
 					title : '实际开始时间',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'actualEnd', 
 					title : '实际结束时间',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'middleDate', 
 					title : '10-12计划',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'sendPicTime', 
@@ -186,13 +205,15 @@
 				},
 				{
 					field : 'remark', 
-					title : '',
+					title : '备注',
 					sortable: true
 				},
 				{
 					field : 'isFinished', 
 					title : '是否完工',
-					sortable: true
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(datas, item.isFinished);
+                    }
 				},
 		        {
 		            title: '操作',

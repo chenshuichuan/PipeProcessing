@@ -51,6 +51,7 @@ public class CutPlanController extends BaseController
 	{
 		startPage();
         List<CutPlan> list = cutPlanService.selectCutPlanList(cutPlan);
+		System.out.println("size:"+list.size());
 		return getDataTable(list);
 	}
 	

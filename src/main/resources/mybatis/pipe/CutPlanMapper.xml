@@ -36,28 +36,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectCutPlanList" parameterType="CutPlan" resultMap="CutPlanResult">
         <include refid="selectCutPlanVo"/>
         <where>  
-            <if test="id != null "> and id = #{id}</if>
+
              <if test="serialNumber != null  and serialNumber != '' "> and serial_number = #{serialNumber}</if>
              <if test="planName != null  and planName != '' "> and plan_name = #{planName}</if>
              <if test="shipName != null  and shipName != '' "> and ship_name = #{shipName}</if>
              <if test="batchName != null  and batchName != '' "> and batch_name = #{batchName}</if>
              <if test="batchDescription != null  and batchDescription != '' "> and batch_description = #{batchDescription}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
-             <if test="finishedDate != null "> and finished_date = #{finishedDate}</if>
-             <if test="totalCutNumber != null "> and total_cut_number = #{totalCutNumber}</if>
-             <if test="onebigCutNumber != null "> and onebig_cut_number = #{onebigCutNumber}</if>
-             <if test="onebigCutFinished != null "> and onebig_cut_finished = #{onebigCutFinished}</if>
-             <if test="oneBendCutNumber != null "> and one_bend_cut_number = #{oneBendCutNumber}</if>
-             <if test="oneVerCutNumber != null "> and one_ver_cut_number = #{oneVerCutNumber}</if>
-             <if test="oneBigCutNumber != null "> and one_big_cut_number = #{oneBigCutNumber}</if>
-             <if test="oneTotalNumber != null "> and one_total_number = #{oneTotalNumber}</if>
-             <if test="oneTotalFinished != null "> and one_total_finished = #{oneTotalFinished}</if>
-             <if test="twoBendNumber != null "> and two_bend_number = #{twoBendNumber}</if>
-             <if test="twoVerNumber != null "> and two_ver_number = #{twoVerNumber}</if>
-             <if test="twoTotalNumber != null "> and two_total_number = #{twoTotalNumber}</if>
-             <if test="twoTotalFinished != null "> and two_total_finished = #{twoTotalFinished}</if>
+             <if test="isFinished != null and isFinished != 0"> and is_finished = #{isFinished}</if>
+
+             <if test="totalCutNumber != null and totalCutNumber != 0 "> and total_cut_number = #{totalCutNumber}</if>
          </where>
     </select>
     

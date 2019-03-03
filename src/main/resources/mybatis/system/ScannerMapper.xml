@@ -20,14 +20,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
     <select id="selectScannerList" parameterType="Scanner" resultMap="ScannerResult">
         <include refid="selectScannerVo"/>
-        <where>  
-            <if test="id != null "> and id = #{id}</if>
-             <if test="scannerCode != null  and scannerCode != '' "> and scanner_code = #{scannerCode}</if>
-             <if test="workerId != null "> and worker_id = #{workerId}</if>
-             <if test="workplaceId != null "> and workplace_id = #{workplaceId}</if>
+        <where>
+             <if test="scannerCode != null  and scannerCode != '' ">
+                 and scanner_code like concat('%', #{scannerCode}, '%')
+             </if>
+            <if test="workerId != null "> and worker_id = #{workerId}</if>
+            <if test="workplaceId != null "> and workplace_id = #{workplaceId}</if>
              <if test="isLock != null "> and is_lock = #{isLock}</if>
-             <if test="workerBindingTime != null "> and worker_binding_time = #{workerBindingTime}</if>
-             <if test="description != null  and description != '' "> and description = #{description}</if>
+
+             <if test="description != null  and description != '' ">
+                and description like concat('%', #{description}, '%')
+             </if>
          </where>
     </select>
     

@@ -13,35 +13,27 @@
 							<li>
 								序号：<input type="text" name="serialNumber"/>
 							</li>
-
 							<li>
 								上传的计划名称：<input type="text" name="planName"/>
 							</li>
-
 							<li>
 								船名：<input type="text" name="shipName"/>
 							</li>
-
 							<li>
 								加工批次：<input type="text" name="batchName"/>
 							</li>
-
 							<li>
 								加工批次描述：<input type="text" name="batchDescription"/>
 							</li>
 							<li>
 								备注：<input type="text" name="remark"/>
 							</li>
-
 							<li>
 								是否完工：<input type="text" name="isFinished"/>
 							</li>
-
 							<li>
-								完工时间：<input type="text" name="finishedDate"/>
+								该次计划下料总数：<input type="text" name="totalCutNumber"/>
 							</li>
-
-
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -74,6 +66,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('pipe:cutPlan:edit')}]];
         var removeFlag = [[${@permission.hasPermi('pipe:cutPlan:remove')}]];
+        var datas = [[${@dict.getType('user_yes_no')}]];
         ctx = ctx + webPrefix+"/";
         var prefix = ctx + "pipe/cutPlan";
 
@@ -84,7 +77,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "加工计划，不包含下料计划，下料计划请查看pipe_cut_plan",
+                modalName: "下料计划",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -117,13 +110,14 @@
 				},
 				{
 					field : 'batchDescription', 
-					title : '加工批次描述',
+					title : '批次描述',
 					sortable: true
 				},
 				{
 					field : 'updateTime', 
 					title : '更新时间',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'remark', 
@@ -133,72 +127,79 @@
 				{
 					field : 'isFinished', 
 					title : '是否完工',
-					sortable: true
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(datas, item.isFinished);
+                    }
 				},
 				{
 					field : 'finishedDate', 
-					title : '完工时间',
+					title : '计划完工时间',
 					sortable: true
 				},
 				{
 					field : 'totalCutNumber', 
-					title : '该次计划下料总数',
+					title : '计划下料总数',
 					sortable: true
 				},
 				{
 					field : 'onebigCutNumber', 
-					title : '一部大管工段下料-加工管数',
+					title : '一部大管工段下料数',
 					sortable: true
 				},
 				{
 					field : 'onebigCutFinished', 
-					title : '一部大管工段下料-下料完成数',
-					sortable: true
+					title : '一部大管工段完成数',
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'oneBendCutNumber', 
-					title : '一部下料工段-弯管下料数',
+					title : '一部下料工段弯管数',
 					sortable: true
 				},
 				{
 					field : 'oneVerCutNumber', 
-					title : '一部下料工段-直管下料数',
+					title : '一部下料工段直管数',
 					sortable: true
 				},
 				{
 					field : 'oneBigCutNumber', 
-					title : '一部下料工段-大管下料数',
+					title : '一部下料工段大管数',
 					sortable: true
 				},
 				{
 					field : 'oneTotalNumber', 
 					title : '一部下料工段-下料总数',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'oneTotalFinished', 
 					title : '一部下料工段-完成总数',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'twoBendNumber', 
-					title : '二部下料工段-弯管下料数',
+					title : '二部下料工段弯管数',
 					sortable: true
 				},
 				{
 					field : 'twoVerNumber', 
-					title : '二部下料工段-直管下料数',
+					title : '二部下料工段直管数',
 					sortable: true
 				},
 				{
 					field : 'twoTotalNumber', 
-					title : '二部下料工段-下料总数',
-					sortable: true
+					title : '二部下料工段总数',
+					sortable: true,
+                    visible: false
 				},
 				{
 					field : 'twoTotalFinished', 
 					title : '二部下料工段-完成总数',
-					sortable: true
+					sortable: true,
+                    visible: false
 				},
 		        {
 		            title: '操作',

@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 /**
- * Created by:Haien
- * Description: 文档类的repository类
+ * Created by: ricardo
+ * Description: 文件类的repository类
  * Date: 2018/8/22
  */
 public interface FilesRepository extends JpaRepository<Files,Integer> {
