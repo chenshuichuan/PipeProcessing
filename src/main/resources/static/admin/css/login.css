@@ -4,11 +4,11 @@ html {
 body.signin {
 	height:auto;
 	background:url(../img/login-background.jpg) no-repeat center fixed;
-	-webkit-background-size:cover;
-	-moz-background-size:cover;
-	-o-background-size:cover;
-	background-size:cover;
-	color:rgba(255,255,255,.95)
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	-o-background-size:100%;
+	color: rgba(1, 1, 1, 0.96)
 }
 .signinpanel {
 	width:750px;

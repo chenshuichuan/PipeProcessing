@@ -10,7 +10,7 @@
     <link href="../static/admin/css/bootstrap.min.css" th:href="@{/admin/css/bootstrap.min.css}" rel="stylesheet"/>
     <link href="../static/admin/css/font-awesome.min.css" th:href="@{/admin/css/font-awesome.min.css}" rel="stylesheet"/>
     <link href="../static/admin/css/style.css" th:href="@{/admin/css/style.css}" rel="stylesheet"/>
-    <link href="../static/admin/css/login.min.css" th:href="@{/admin/css/login.min.css}" rel="stylesheet"/>
+    <link href="../static/admin/css/login.css" th:href="@{/admin/css/login.css}" rel="stylesheet"/>
     <link href="../static/admin/ajax/libs/iCheck/custom.css" th:href="@{/admin/ajax/libs/iCheck/custom.css}" rel="stylesheet"/>
     <link href="../static/admin/ruoyi/css/ry-ui.css" th:href="@{/admin/ruoyi/css/ry-ui.css?v=3.1.0}" rel="stylesheet"/>
     <!--[if lt IE 9]>
@@ -25,12 +25,14 @@
 
 <body class="signin">
 
+
     <div class="signinpanel">
         <div class="row">
             <div class="col-sm-5">
                 <form id="signupForm">
                     <h4 class="no-margins">登录：</h4>
                     <!--<p class="m-t-md">你若不离不弃，我必生死相依</p>-->
+
                     <input type="text"     name="username" class="form-control uname"     placeholder="用户名" value="admin"    />
                     <input type="password" name="password" class="form-control pword m-b" placeholder="密码"   value="admin123" />
                     <div class="row" th:if="${captchaEnabled==true}">
@@ -43,7 +45,7 @@
                             </a>
                         </div>
                     </div>
-                    <input class="i-checks" type="checkbox" name="rememberme" />&nbsp;&nbsp;记住我
+                    <!--<input class="i-checks" type="checkbox" name="rememberme" />&nbsp;&nbsp;记住我-->
                     <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
                 </form>
             </div>
@@ -51,24 +53,24 @@
                 <div class="signin-info">
                     <div class="logopanel m-b">
                         <!--<h1><img alt="[ 文件 ]" src="../static/admin/ruoyi.png" th:src="@{/admin//tu.png}"></h1>-->
-                        <h1>文件管理</h1>
+                        <h1>管加车间管理系统</h1>
                     </div>
                     <div class="m-b"></div>
-                    <h4>欢迎使用 <strong>文件 后台管理系统</strong></h4>
-                    <ul class="m-b">
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 文件管理</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 支持图片和视频</li>
-                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 操作简单方便</li>
-                    </ul>
-                    <strong>还没有账号？ <a href="#">立即注册&raquo;</a></strong>
+                    <h4>欢迎使用 <strong>管加车间管理管理系统</strong></h4>
+                    <!--<ul class="m-b">-->
+                        <!--<li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 文件管理</li>-->
+                        <!--<li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 支持图片和视频</li>-->
+                        <!--<li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 操作简单方便</li>-->
+                    <!--</ul>-->
+                    <!--<strong>还没有账号？ <a href="#">立即注册&raquo;</a></strong>-->
                 </div>
             </div>
 
         </div>
         <div class="signup-footer">
             <div class="pull-left">
-                &copy; 2018 All Rights Reserved. file <br>
-                <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备18046899号</a><br>
+                &copy; 2019 All Rights Reserved. 广船国际·管业公司 <br>
+                <!--<a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备18046899号</a><br>-->
             </div>
         </div>
     </div>
