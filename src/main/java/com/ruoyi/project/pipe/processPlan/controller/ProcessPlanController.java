@@ -1,6 +1,10 @@
 package com.ruoyi.project.pipe.processPlan.controller;
 
+import java.io.File;
 import java.util.List;
+
+import com.ruoyi.common.utils.file.FileUploadUtils;
+import com.ruoyi.project.system.files.domain.Files;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan 信息操作处理
@@ -33,7 +38,42 @@ public class ProcessPlanController extends BaseController
 	
 	@Autowired
 	private IProcessPlanService processPlanService;
-	
+
+
+	/**
+	 * 上传计划表
+	 */
+//	/**
+//	 * 新增保存文件上传
+//	 */
+//	@RequiresPermissions("file:add")
+//	@Log(title = "文件上传", businessType = BusinessType.INSERT)
+//	@PostMapping("/add")
+//	@ResponseBody
+//	public AjaxResult save(MultipartFile file, Files files) {
+//		int rtn = 0;
+//		Boolean isFile = false;
+//		try {
+//			files = dealFile(file, files);
+//			if (files.getUpdateFlag() == 1 && files.getId() > 0) {//修改
+//				if (file != null) {
+//					isFile = true;
+//				}
+//				rtn = filesService.updateFiles(files, isFile);
+//			} else {//新增
+//				rtn = filesService.insertFiles(files);
+//			}
+//			if (file != null && !"2".equals(files.getType())) {
+//				File desc = FileUploadUtils.getAbsoluteFile(Save_Url, files.getUrl());
+//				file.transferTo(desc);
+//			}
+//		} catch (Exception e) {
+//			log.error("保存失败，请检查后重试！", e);
+//			return error(e.getMessage());
+//		}
+//		return toAjax(rtn);
+//	}
+
 	@RequiresPermissions("pipe:processPlan:view")
 	@GetMapping()
 	public String processPlan()

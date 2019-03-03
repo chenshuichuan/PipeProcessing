@@ -12,7 +12,7 @@
           enctype="multipart/form-data" th:object="${files}"> <!--method="POST"  enctype="multipart/form-data">-->
         <input type="hidden" id="id" th:field="*{id}" name="id">
         <div class="form-group">
-            <label class="col-sm-3 control-label">文件名称：</label>
+            <label class="col-sm-3 control-label">文件名称(上传计划请填写完整计划名称)：</label>
             <div class="col-sm-8">
                 <input id="fileName" name="fileName" th:field="*{fileName}" class="form-control" type="text">
             </div>
@@ -36,13 +36,6 @@
                     <input id="files" class="file" name="file" type="file" data-show-upload="false" language="zh"
                            data-show-Cancel="false" data-theme="fas">
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">文字内容：</label>
-            <div class="col-sm-8">
-                <input id="content" name="content" type="hidden" th:field="*{content}">
-                <div id="te" class="summernote"></div>
             </div>
         </div>
         <div class="form-group">
@@ -74,7 +67,7 @@
             {caption: captions, type: types, filetype: fileTypes, size: 329892, width: "120px", key: 1},
         ],
         showCaption: false,
-        allowedFileExtensions: ['jpg', 'png', 'jpeg', "gif", "pdf", "mp4", "ogg"],
+        allowedFileExtensions: ['jpg', 'png', 'jpeg', "gif", "pdf", "mp4", "ogg", "xls","pdf","word"],
         initialPreviewAsData: true,
         overwriteInitial: true,
         layoutTemplates: {
@@ -83,50 +76,29 @@
     })
 </script>
 <div th:include="include::footer"></div>
-<script th:src="@{/admin/ajax/libs/summernote/summernote.min.js}"></script>
-<script th:src="@{/admin/ajax/libs/summernote/summernote-zh-CN.js}"></script>
 <script type="text/javascript">
-    $(function () {
-        var type = $('input[name="type"]:checked').val();
-        show(type);
 
-        $('input').on('ifChecked',
-            function (event) {
-                var menuType = $(event.target).val();
-                show(menuType);
-            });
+    var fileInput = document.getElementById('files');
+    // 监听change事件:
+    fileInput.addEventListener('change', function() {
+        // 检查文件是否选择:
+        if(!fileInput.value) {
+            //alert("文件未选择！");
+        }else{
+            // 获取File引用:
+            var file = fileInput.files[0];
+            //alert(file.name);
+            $("#fileName").val(file.name);
+        }
+    });
+
+    $(function () {
 
         var id = $('#id').val();
         if (id) {
             $("#fileName").attr("readOnly", "true");
         }
 
-
-        $('.summernote').summernote({
-            height: '220px',
-            lang: 'zh-CN'
-        });
-        var content = $("#content").val();
-        $('#te').code(content);
-
-    });
-
-    function show(type) {
-        if (type == "0") {//图片
-            $("#content").parents(".form-group").hide();
-            $("#files").parents(".form-group").show();
-        } else if (type == "1") {//视频
-            $("#files").parents(".form-group").show();
-            $("#content").parents(".form-group").hide();
-        } else if (type == "2") {//文字
-            $("#files").parents(".form-group").hide();
-            $("#content").parents(".form-group").show();
-        }
-    }
-
-    $('.summernote').summernote({
-        height: '220px',
-        lang: 'zh-CN'
     });
 
     ctx = ctx + webPrefix+"/";
@@ -135,19 +107,19 @@
         rules: {
             fileName: {
                 required: true,
-                // remote: {
-                //     url: prefix + "/checkFileNameUnqiue",
-                //     type: "post",
-                //     dataType: "json",
-                //     data: {
-                //         "fileName": function () {
-                //             return $.common.trim($("#fileName").val());
-                //         }
-                //     },
-                //     dataFilter: function (data, type) {
-                //         return $.validate.unique(data);
-                //     }
-                // }
+                 remote: {
+                     url: prefix + "/checkFileNameUnqiue",
+                     type: "post",
+                     dataType: "json",
+                     data: {
+                         "fileName": function () {
+                             return $.common.trim($("#fileName").val());
+                         }
+                     },
+                     dataFilter: function (data, type) {
+                         return $.validate.unique(data);
+                     }
+                 }
             },
             url: {
                 required: true
@@ -176,18 +148,12 @@
                 form.append("updateFlag", 0);
                 checkFileName();
             }
-            if (val != null && val == "2") {
-                var sHTML = $('.summernote').code();
-                $("#content").val(sHTML);
-                form.append("content", $("#content").val());
-                form.append("fileName", $("#fileName").val());
-                form.append("type", $("input[name='type']:checked").val());
-            } else {
-                var file = document.getElementById("files").files[0];
-                form.append("file", file);
-                form.append("fileName", $("#fileName").val());
-                form.append("type", $("input[name='type']:checked").val());
-            }
+
+            var file = document.getElementById("files").files[0];
+            form.append("file", file);
+            form.append("fileName", $("#fileName").val());
+            form.append("type", $("input[name='type']:checked").val());
+
             form.append("remark", $("#remark").val());
             $.ajax({
                 url: prefix + "/add",
@@ -214,13 +180,8 @@
                 }
             },
             success: function (data) {
-
             }
-
-
         })
-
-
     }
 
 </script>

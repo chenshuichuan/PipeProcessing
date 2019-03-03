@@ -25,7 +25,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -118,8 +122,8 @@ public class FilesController extends BaseController {
                 rtn = filesService.updateFiles(files, isFile);
             } else {//新增
                 rtn = filesService.insertFiles(files);
-            }
-            if (file != null && !"2".equals(files.getType())) {
+            }//&& !"2".equals(files.getType())
+            if (file != null ) {
                 File desc = FileUploadUtils.getAbsoluteFile(Save_Url, files.getUrl());
                 file.transferTo(desc);
             }
@@ -237,11 +241,14 @@ public class FilesController extends BaseController {
     }
 
     private Files dealFile(MultipartFile file, Files files) throws Exception {
-        if (file == null || "2".equals(files.getType())) return files;
-
+        //if (file == null || "2".equals(files.getType())) return files;
+        if (file == null ){
+            return files;
+        }
         String suffix = FileUploadUtils.dealName(file.getOriginalFilename());
-        if (StringUtils.isEmpty(suffix)) throw new Exception();
-
+        if (StringUtils.isEmpty(suffix)){
+            throw new Exception();
+        }
         String name = Save_Url + files.getFileName() + "." + suffix;
         files.setUrl(name);
         files.setSuffix(suffix);
@@ -256,4 +263,47 @@ public class FilesController extends BaseController {
         }
         return prefix + "/lunbo";
     }
+
+    /**
+     * @Author haien
+     * @Description 前端请求下载Excel表格，返回一个输出流
+     * @Date 11:34 2018/7/22
+     * @Param [request, response]
+     * @return void
+     **/
+    @RequestMapping(value = "/getFileById")
+    @Log(title = "文件下载", businessType = BusinessType.OTHER)
+    @ResponseBody
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        //获得请求文件名
+        String encoding = System.getProperty("file.encoding");
+        String idStr = request.getParameter("id");
+        if(idStr==null||idStr.isEmpty()){
+            System.out.println("file id not find!");
+            return;
+        }
+        int id = Integer.parseInt(idStr);
+        Files file =  filesService.selectFilesById(id);
+        if(file!=null&&file.getUrl()!=null){
+            //设置Content-Disposition
+            String enFileName = URLEncoder.encode(file.getFileName()+"."+file.getSuffix(),"utf-8");
+            response.setHeader("Content-Disposition", "attachment;filename="+enFileName);
+            //读取目标文件，通过response将目标文件写到客户端
+            //读取文件
+            String fileName = new String(file.getUrl().getBytes("UTF-8"),encoding);
+            InputStream in = new FileInputStream(fileName);
+            OutputStream out = response.getOutputStream();
+            //写文件
+            int b;
+            while((b=in.read())!= -1) {
+                out.write(b);
+            }
+            in.close();
+            out.close();
+        }
+
+
+    }
+
 }
