@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pipe.unit.mapper.UnitMapper">
+    
+    <resultMap type="Unit" id="UnitResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="shipCode"    column="ship_code"    />
+        <result property="batchId"    column="batch_id"    />
+        <result property="batchName"    column="batch_name"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="pipeShape"    column="pipe_shape"    />
+        <result property="pipeNumber"    column="pipe_number"    />
+        <result property="cutSection"    column="cut_section"    />
+        <result property="processSection"    column="process_section"    />
+        <result property="processOrderId"    column="process_order_id"    />
+        <result property="processStageId"    column="process_stage_id"    />
+        <result property="nextStageId"    column="next_stage_id"    />
+        <result property="unprocessNumber"    column="unprocess_number"    />
+        <result property="processingNumber"    column="processing_number"    />
+        <result property="processedNumber"    column="processed_number"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isFinished"    column="is_finished"    />
+    </resultMap>
+	
+	<sql id="selectUnitVo">
+        select id, name, ship_code, batch_id, batch_name, plan_id, remark, pipe_shape, pipe_number, cut_section, process_section, process_order_id, process_stage_id, next_stage_id, unprocess_number, processing_number, processed_number, update_time, is_finished from pipe_unit
+    </sql>
+	
+    <select id="selectUnitList" parameterType="Unit" resultMap="UnitResult">
+        <include refid="selectUnitVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
+             <if test="batchId != null "> and batch_id = #{batchId}</if>
+             <if test="batchName != null  and batchName != '' "> and batch_name = #{batchName}</if>
+             <if test="planId != null "> and plan_id = #{planId}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="pipeShape != null  and pipeShape != '' "> and pipe_shape = #{pipeShape}</if>
+             <if test="pipeNumber != null "> and pipe_number = #{pipeNumber}</if>
+             <if test="cutSection != null  and cutSection != '' "> and cut_section = #{cutSection}</if>
+             <if test="processSection != null  and processSection != '' "> and process_section = #{processSection}</if>
+             <if test="processOrderId != null "> and process_order_id = #{processOrderId}</if>
+             <if test="processStageId != null "> and process_stage_id = #{processStageId}</if>
+             <if test="nextStageId != null "> and next_stage_id = #{nextStageId}</if>
+             <if test="unprocessNumber != null "> and unprocess_number = #{unprocessNumber}</if>
+             <if test="processingNumber != null "> and processing_number = #{processingNumber}</if>
+             <if test="processedNumber != null "> and processed_number = #{processedNumber}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+         </where>
+    </select>
+    
+    <select id="selectUnitById" parameterType="Integer" resultMap="UnitResult">
+        <include refid="selectUnitVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUnit" parameterType="Unit">
+        insert into pipe_unit
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="shipCode != null  and shipCode != ''  ">ship_code,</if>
+			<if test="batchId != null  ">batch_id,</if>
+			<if test="batchName != null  and batchName != ''  ">batch_name,</if>
+			<if test="planId != null  ">plan_id,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="pipeShape != null  and pipeShape != ''  ">pipe_shape,</if>
+			<if test="pipeNumber != null  ">pipe_number,</if>
+			<if test="cutSection != null  and cutSection != ''  ">cut_section,</if>
+			<if test="processSection != null  and processSection != ''  ">process_section,</if>
+			<if test="processOrderId != null  ">process_order_id,</if>
+			<if test="processStageId != null  ">process_stage_id,</if>
+			<if test="nextStageId != null  ">next_stage_id,</if>
+			<if test="unprocessNumber != null  ">unprocess_number,</if>
+			<if test="processingNumber != null  ">processing_number,</if>
+			<if test="processedNumber != null  ">processed_number,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="isFinished != null  ">is_finished,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="shipCode != null  and shipCode != ''  ">#{shipCode},</if>
+			<if test="batchId != null  ">#{batchId},</if>
+			<if test="batchName != null  and batchName != ''  ">#{batchName},</if>
+			<if test="planId != null  ">#{planId},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="pipeShape != null  and pipeShape != ''  ">#{pipeShape},</if>
+			<if test="pipeNumber != null  ">#{pipeNumber},</if>
+			<if test="cutSection != null  and cutSection != ''  ">#{cutSection},</if>
+			<if test="processSection != null  and processSection != ''  ">#{processSection},</if>
+			<if test="processOrderId != null  ">#{processOrderId},</if>
+			<if test="processStageId != null  ">#{processStageId},</if>
+			<if test="nextStageId != null  ">#{nextStageId},</if>
+			<if test="unprocessNumber != null  ">#{unprocessNumber},</if>
+			<if test="processingNumber != null  ">#{processingNumber},</if>
+			<if test="processedNumber != null  ">#{processedNumber},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="isFinished != null  ">#{isFinished},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateUnit" parameterType="Unit">
+        update pipe_unit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="shipCode != null  and shipCode != ''  ">ship_code = #{shipCode},</if>
+            <if test="batchId != null  ">batch_id = #{batchId},</if>
+            <if test="batchName != null  and batchName != ''  ">batch_name = #{batchName},</if>
+            <if test="planId != null  ">plan_id = #{planId},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="pipeShape != null  and pipeShape != ''  ">pipe_shape = #{pipeShape},</if>
+            <if test="pipeNumber != null  ">pipe_number = #{pipeNumber},</if>
+            <if test="cutSection != null  and cutSection != ''  ">cut_section = #{cutSection},</if>
+            <if test="processSection != null  and processSection != ''  ">process_section = #{processSection},</if>
+            <if test="processOrderId != null  ">process_order_id = #{processOrderId},</if>
+            <if test="processStageId != null  ">process_stage_id = #{processStageId},</if>
+            <if test="nextStageId != null  ">next_stage_id = #{nextStageId},</if>
+            <if test="unprocessNumber != null  ">unprocess_number = #{unprocessNumber},</if>
+            <if test="processingNumber != null  ">processing_number = #{processingNumber},</if>
+            <if test="processedNumber != null  ">processed_number = #{processedNumber},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteUnitById" parameterType="Integer">
+        delete from pipe_unit where id = #{id}
+    </delete>
+	
+    <delete id="deleteUnitByIds" parameterType="String">
+        delete from pipe_unit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

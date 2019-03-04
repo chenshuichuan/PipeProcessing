@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pipe.pipe.mapper.PipeMapper">
+    
+    <resultMap type="Pipe" id="PipeResult">
+        <result property="id"    column="id"    />
+        <result property="shipCode"    column="ship_code"    />
+        <result property="batchId"    column="batch_id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="collecteCode"    column="collecte_code"    />
+        <result property="callShipId"    column="call_ship_id"    />
+        <result property="assemblyPipeId"    column="assembly_pipe_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="processOrder"    column="process_order"    />
+        <result property="processStage"    column="process_stage"    />
+        <result property="nextStage"    column="next_stage"    />
+        <result property="processIndex"    column="process_index"    />
+        <result property="isOutOfUnit"    column="is_out_of_unit"    />
+    </resultMap>
+	
+	<sql id="selectPipeVo">
+        select id, ship_code, batch_id, unit_id, collecte_code, call_ship_id, assembly_pipe_id, update_time, process_order, process_stage, next_stage, process_index, is_out_of_unit from pipe_pipe
+    </sql>
+	
+    <select id="selectPipeList" parameterType="Pipe" resultMap="PipeResult">
+        <include refid="selectPipeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
+             <if test="batchId != null "> and batch_id = #{batchId}</if>
+             <if test="unitId != null "> and unit_id = #{unitId}</if>
+             <if test="collecteCode != null  and collecteCode != '' "> and collecte_code = #{collecteCode}</if>
+             <if test="callShipId != null "> and call_ship_id = #{callShipId}</if>
+             <if test="assemblyPipeId != null "> and assembly_pipe_id = #{assemblyPipeId}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="processOrder != null "> and process_order = #{processOrder}</if>
+             <if test="processStage != null "> and process_stage = #{processStage}</if>
+             <if test="nextStage != null "> and next_stage = #{nextStage}</if>
+             <if test="processIndex != null "> and process_index = #{processIndex}</if>
+             <if test="isOutOfUnit != null "> and is_out_of_unit = #{isOutOfUnit}</if>
+         </where>
+    </select>
+    
+    <select id="selectPipeById" parameterType="Integer" resultMap="PipeResult">
+        <include refid="selectPipeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPipe" parameterType="Pipe">
+        insert into pipe_pipe
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="shipCode != null  and shipCode != ''  ">ship_code,</if>
+			<if test="batchId != null  ">batch_id,</if>
+			<if test="unitId != null  ">unit_id,</if>
+			<if test="collecteCode != null  and collecteCode != ''  ">collecte_code,</if>
+			<if test="callShipId != null  ">call_ship_id,</if>
+			<if test="assemblyPipeId != null  ">assembly_pipe_id,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="processOrder != null  ">process_order,</if>
+			<if test="processStage != null  ">process_stage,</if>
+			<if test="nextStage != null  ">next_stage,</if>
+			<if test="processIndex != null  ">process_index,</if>
+			<if test="isOutOfUnit != null  ">is_out_of_unit,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="shipCode != null  and shipCode != ''  ">#{shipCode},</if>
+			<if test="batchId != null  ">#{batchId},</if>
+			<if test="unitId != null  ">#{unitId},</if>
+			<if test="collecteCode != null  and collecteCode != ''  ">#{collecteCode},</if>
+			<if test="callShipId != null  ">#{callShipId},</if>
+			<if test="assemblyPipeId != null  ">#{assemblyPipeId},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="processOrder != null  ">#{processOrder},</if>
+			<if test="processStage != null  ">#{processStage},</if>
+			<if test="nextStage != null  ">#{nextStage},</if>
+			<if test="processIndex != null  ">#{processIndex},</if>
+			<if test="isOutOfUnit != null  ">#{isOutOfUnit},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePipe" parameterType="Pipe">
+        update pipe_pipe
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shipCode != null  and shipCode != ''  ">ship_code = #{shipCode},</if>
+            <if test="batchId != null  ">batch_id = #{batchId},</if>
+            <if test="unitId != null  ">unit_id = #{unitId},</if>
+            <if test="collecteCode != null  and collecteCode != ''  ">collecte_code = #{collecteCode},</if>
+            <if test="callShipId != null  ">call_ship_id = #{callShipId},</if>
+            <if test="assemblyPipeId != null  ">assembly_pipe_id = #{assemblyPipeId},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="processOrder != null  ">process_order = #{processOrder},</if>
+            <if test="processStage != null  ">process_stage = #{processStage},</if>
+            <if test="nextStage != null  ">next_stage = #{nextStage},</if>
+            <if test="processIndex != null  ">process_index = #{processIndex},</if>
+            <if test="isOutOfUnit != null  ">is_out_of_unit = #{isOutOfUnit},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deletePipeById" parameterType="Integer">
+        delete from pipe_pipe where id = #{id}
+    </delete>
+	
+    <delete id="deletePipeByIds" parameterType="String">
+        delete from pipe_pipe where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

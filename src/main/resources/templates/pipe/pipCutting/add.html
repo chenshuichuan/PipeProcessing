@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-pipCutting-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">MidOID：</label>
+				<div class="col-sm-8">
+					<input id="midOid" name="midOid" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否删除：</label>
+				<div class="col-sm-8">
+					<input id="isDelete" name="isDelete" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否更新：</label>
+				<div class="col-sm-8">
+					<input id="isUpdate" name="isUpdate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">号船ID：</label>
+				<div class="col-sm-8">
+					<input id="callShipId" name="callShipId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">装配管ID：</label>
+				<div class="col-sm-8">
+					<input id="assemblyPipeId" name="assemblyPipeId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">加工单元ID：</label>
+				<div class="col-sm-8">
+					<input id="processUnitId" name="processUnitId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">套料批次：</label>
+				<div class="col-sm-8">
+					<input id="machiningBatch" name="machiningBatch" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">下料长：</label>
+				<div class="col-sm-8">
+					<input id="cutLength" name="cutLength" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">入级船级社：</label>
+				<div class="col-sm-8">
+					<input id="inClassShipLevel" name="inClassShipLevel" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">管材规格：</label>
+				<div class="col-sm-8">
+					<input id="pipeSpecification" name="pipeSpecification" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">管子形态：</label>
+				<div class="col-sm-8">
+					<input id="pipeShape" name="pipeShape" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">不校装：</label>
+				<div class="col-sm-8">
+					<input id="noInstalled" name="noInstalled" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "pipe/pipCutting";
+		$("#form-pipCutting-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-pipCutting-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

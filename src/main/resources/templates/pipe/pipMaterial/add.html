@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-pipMaterial-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">MidOID：</label>
+				<div class="col-sm-8">
+					<input id="midOid" name="midOid" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否删除：</label>
+				<div class="col-sm-8">
+					<input id="isDelete" name="isDelete" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否更新：</label>
+				<div class="col-sm-8">
+					<input id="isUpdate" name="isUpdate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">型船ID：</label>
+				<div class="col-sm-8">
+					<input id="shapeShipId" name="shapeShipId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">装配管ID：</label>
+				<div class="col-sm-8">
+					<input id="assemblyPipeId" name="assemblyPipeId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">部件ID：</label>
+				<div class="col-sm-8">
+					<input id="componentId" name="componentId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">管端标识：</label>
+				<div class="col-sm-8">
+					<input id="pipeEndFlag" name="pipeEndFlag" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">数量：</label>
+				<div class="col-sm-8">
+					<input id="number" name="number" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">重量：</label>
+				<div class="col-sm-8">
+					<input id="weight" name="weight" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">外场装配标记：</label>
+				<div class="col-sm-8">
+					<input id="outfieldFlag" name="outfieldFlag" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "pipe/pipMaterial";
+		$("#form-pipMaterial-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-pipMaterial-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

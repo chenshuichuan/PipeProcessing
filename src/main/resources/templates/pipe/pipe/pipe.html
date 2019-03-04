@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								号船代号：<input type="text" name="shipCode"/>
+							</li>
+
+							<li>
+								批次id：<input type="text" name="batchId"/>
+							</li>
+
+							<li>
+								单元序号：<input type="text" name="unitId"/>
+							</li>
+
+							<li>
+								集配管号：<input type="text" name="collecteCode"/>
+							</li>
+
+							<li>
+								号船id：<input type="text" name="callShipId"/>
+							</li>
+
+							<li>
+								装配管id：<input type="text" name="assemblyPipeId"/>
+							</li>
+
+							<li>
+								修改时间：<input type="text" name="updateTime"/>
+							</li>
+
+							<li>
+								加工工序：<input type="text" name="processOrder"/>
+							</li>
+
+							<li>
+								当前工序：<input type="text" name="processStage"/>
+							</li>
+
+							<li>
+								下一工序：<input type="text" name="nextStage"/>
+							</li>
+
+							<li>
+								当前工序排几：<input type="text" name="processIndex"/>
+							</li>
+
+							<li>
+								是否脱离单元工序：<input type="text" name="isOutOfUnit"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pipe:pipe:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="pipe:pipe:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pipe:pipe:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pipe:pipe:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('pipe:pipe:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('pipe:pipe:remove')}]];
+        ctx = ctx + webPrefix+"/";
+        var prefix = ctx + "pipe/pipe";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "管件",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '装配管号ID',
+					visible: false
+				},
+				{
+					field : 'shipCode', 
+					title : '号船代号',
+					sortable: true
+				},
+				{
+					field : 'batchId', 
+					title : '批次id',
+					sortable: true
+				},
+				{
+					field : 'unitId', 
+					title : '单元序号',
+					sortable: true
+				},
+				{
+					field : 'collecteCode', 
+					title : '集配管号',
+					sortable: true
+				},
+				{
+					field : 'callShipId', 
+					title : '号船id',
+					sortable: true
+				},
+				{
+					field : 'assemblyPipeId', 
+					title : '装配管id',
+					sortable: true
+				},
+				{
+					field : 'updateTime', 
+					title : '修改时间',
+					sortable: true
+				},
+				{
+					field : 'processOrder', 
+					title : '加工工序',
+					sortable: true
+				},
+				{
+					field : 'processStage', 
+					title : '当前工序',
+					sortable: true
+				},
+				{
+					field : 'nextStage', 
+					title : '下一工序',
+					sortable: true
+				},
+				{
+					field : 'processIndex', 
+					title : '当前工序排几',
+					sortable: true
+				},
+				{
+					field : 'isOutOfUnit', 
+					title : '是否脱离单元工序',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

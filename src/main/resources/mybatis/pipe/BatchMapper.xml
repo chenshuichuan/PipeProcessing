@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pipe.batch.mapper.BatchMapper">
+    
+    <resultMap type="Batch" id="BatchResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="remark"    column="remark"    />
+        <result property="shipCode"    column="ship_code"    />
+        <result property="unitNumber"    column="unit_number"    />
+        <result property="processingNumber"    column="processing_number"    />
+        <result property="unprocessNumber"    column="unprocess_number"    />
+        <result property="processedNumber"    column="processed_number"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="lackUnitNumber"    column="lack_unit_number"    />
+        <result property="lackPipeNumber"    column="lack_pipe_number"    />
+        <result property="isFinished"    column="is_finished"    />
+    </resultMap>
+	
+	<sql id="selectBatchVo">
+        select id, name, remark, ship_code, unit_number, processing_number, unprocess_number, processed_number, update_time, lack_unit_number, lack_pipe_number, is_finished from pipe_batch
+    </sql>
+	
+    <select id="selectBatchList" parameterType="Batch" resultMap="BatchResult">
+        <include refid="selectBatchVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
+             <if test="unitNumber != null "> and unit_number = #{unitNumber}</if>
+             <if test="processingNumber != null "> and processing_number = #{processingNumber}</if>
+             <if test="unprocessNumber != null "> and unprocess_number = #{unprocessNumber}</if>
+             <if test="processedNumber != null "> and processed_number = #{processedNumber}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="lackUnitNumber != null "> and lack_unit_number = #{lackUnitNumber}</if>
+             <if test="lackPipeNumber != null "> and lack_pipe_number = #{lackPipeNumber}</if>
+             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+         </where>
+    </select>
+    
+    <select id="selectBatchById" parameterType="Integer" resultMap="BatchResult">
+        <include refid="selectBatchVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBatch" parameterType="Batch">
+        insert into pipe_batch
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="shipCode != null  and shipCode != ''  ">ship_code,</if>
+			<if test="unitNumber != null  ">unit_number,</if>
+			<if test="processingNumber != null  ">processing_number,</if>
+			<if test="unprocessNumber != null  ">unprocess_number,</if>
+			<if test="processedNumber != null  ">processed_number,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="lackUnitNumber != null  ">lack_unit_number,</if>
+			<if test="lackPipeNumber != null  ">lack_pipe_number,</if>
+			<if test="isFinished != null  ">is_finished,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="shipCode != null  and shipCode != ''  ">#{shipCode},</if>
+			<if test="unitNumber != null  ">#{unitNumber},</if>
+			<if test="processingNumber != null  ">#{processingNumber},</if>
+			<if test="unprocessNumber != null  ">#{unprocessNumber},</if>
+			<if test="processedNumber != null  ">#{processedNumber},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="lackUnitNumber != null  ">#{lackUnitNumber},</if>
+			<if test="lackPipeNumber != null  ">#{lackPipeNumber},</if>
+			<if test="isFinished != null  ">#{isFinished},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBatch" parameterType="Batch">
+        update pipe_batch
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="shipCode != null  and shipCode != ''  ">ship_code = #{shipCode},</if>
+            <if test="unitNumber != null  ">unit_number = #{unitNumber},</if>
+            <if test="processingNumber != null  ">processing_number = #{processingNumber},</if>
+            <if test="unprocessNumber != null  ">unprocess_number = #{unprocessNumber},</if>
+            <if test="processedNumber != null  ">processed_number = #{processedNumber},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="lackUnitNumber != null  ">lack_unit_number = #{lackUnitNumber},</if>
+            <if test="lackPipeNumber != null  ">lack_pipe_number = #{lackPipeNumber},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBatchById" parameterType="Integer">
+        delete from pipe_batch where id = #{id}
+    </delete>
+	
+    <delete id="deleteBatchByIds" parameterType="String">
+        delete from pipe_batch where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

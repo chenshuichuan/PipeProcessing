@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pipe.pipStore.mapper.PipStoreMapper">
+    
+    <resultMap type="PipStore" id="PipStoreResult">
+        <result property="oldId"    column="old_id"    />
+        <result property="midOid"    column="mid_oid"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="isUpdate"    column="is_update"    />
+        <result property="callShipId"    column="call_ship_id"    />
+        <result property="assemblyPipeId"    column="assembly_pipe_id"    />
+        <result property="processUnitId"    column="process_unit_id"    />
+        <result property="storePlace"    column="store_place"    />
+        <result property="collectionDate"    column="collection_date"    />
+        <result property="outStoreDate"    column="out_store_date"    />
+        <result property="inStoreDate"    column="in__store_date"    />
+    </resultMap>
+	
+	<sql id="selectPipStoreVo">
+        select old_id, mid_oid, is_delete, is_update, call_ship_id, assembly_pipe_id, process_unit_id, store_place, collection_date, out_store_date, in__store_date from pipe_pip_store
+    </sql>
+	
+    <select id="selectPipStoreList" parameterType="PipStore" resultMap="PipStoreResult">
+        <include refid="selectPipStoreVo"/>
+        <where>  
+            <if test="oldId != null "> and old_id = #{oldId}</if>
+             <if test="midOid != null "> and mid_oid = #{midOid}</if>
+             <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+             <if test="isUpdate != null "> and is_update = #{isUpdate}</if>
+             <if test="callShipId != null "> and call_ship_id = #{callShipId}</if>
+             <if test="assemblyPipeId != null "> and assembly_pipe_id = #{assemblyPipeId}</if>
+             <if test="processUnitId != null "> and process_unit_id = #{processUnitId}</if>
+             <if test="storePlace != null  and storePlace != '' "> and store_place = #{storePlace}</if>
+             <if test="collectionDate != null "> and collection_date = #{collectionDate}</if>
+             <if test="outStoreDate != null "> and out_store_date = #{outStoreDate}</if>
+             <if test="inStoreDate != null "> and in__store_date = #{inStoreDate}</if>
+         </where>
+    </select>
+    
+    <select id="selectPipStoreById" parameterType="Integer" resultMap="PipStoreResult">
+        <include refid="selectPipStoreVo"/>
+        where old_id = #{oldId}
+    </select>
+        
+    <insert id="insertPipStore" parameterType="PipStore">
+        insert into pipe_pip_store
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="oldId != null  ">old_id,</if>
+			<if test="midOid != null  ">mid_oid,</if>
+			<if test="isDelete != null  ">is_delete,</if>
+			<if test="isUpdate != null  ">is_update,</if>
+			<if test="callShipId != null  ">call_ship_id,</if>
+			<if test="assemblyPipeId != null  ">assembly_pipe_id,</if>
+			<if test="processUnitId != null  ">process_unit_id,</if>
+			<if test="storePlace != null  and storePlace != ''  ">store_place,</if>
+			<if test="collectionDate != null  ">collection_date,</if>
+			<if test="outStoreDate != null  ">out_store_date,</if>
+			<if test="inStoreDate != null  ">in__store_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="oldId != null  ">#{oldId},</if>
+			<if test="midOid != null  ">#{midOid},</if>
+			<if test="isDelete != null  ">#{isDelete},</if>
+			<if test="isUpdate != null  ">#{isUpdate},</if>
+			<if test="callShipId != null  ">#{callShipId},</if>
+			<if test="assemblyPipeId != null  ">#{assemblyPipeId},</if>
+			<if test="processUnitId != null  ">#{processUnitId},</if>
+			<if test="storePlace != null  and storePlace != ''  ">#{storePlace},</if>
+			<if test="collectionDate != null  ">#{collectionDate},</if>
+			<if test="outStoreDate != null  ">#{outStoreDate},</if>
+			<if test="inStoreDate != null  ">#{inStoreDate},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePipStore" parameterType="PipStore">
+        update pipe_pip_store
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="midOid != null  ">mid_oid = #{midOid},</if>
+            <if test="isDelete != null  ">is_delete = #{isDelete},</if>
+            <if test="isUpdate != null  ">is_update = #{isUpdate},</if>
+            <if test="callShipId != null  ">call_ship_id = #{callShipId},</if>
+            <if test="assemblyPipeId != null  ">assembly_pipe_id = #{assemblyPipeId},</if>
+            <if test="processUnitId != null  ">process_unit_id = #{processUnitId},</if>
+            <if test="storePlace != null  and storePlace != ''  ">store_place = #{storePlace},</if>
+            <if test="collectionDate != null  ">collection_date = #{collectionDate},</if>
+            <if test="outStoreDate != null  ">out_store_date = #{outStoreDate},</if>
+            <if test="inStoreDate != null  ">in__store_date = #{inStoreDate},</if>
+        </trim>
+        where old_id = #{oldId}
+    </update>
+
+	<delete id="deletePipStoreById" parameterType="Integer">
+        delete from pipe_pip_store where old_id = #{oldId}
+    </delete>
+	
+    <delete id="deletePipStoreByIds" parameterType="String">
+        delete from pipe_pip_store where old_id in 
+        <foreach item="oldId" collection="array" open="(" separator="," close=")">
+            #{oldId}
+        </foreach>
+    </delete>
+    
+</mapper>

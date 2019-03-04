@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pipe.ship.mapper.ShipMapper">
+    
+    <resultMap type="Ship" id="ShipResult">
+        <result property="id"    column="id"    />
+        <result property="shipCode"    column="ship_code"    />
+        <result property="shipName"    column="ship_name"    />
+        <result property="shapeShipId"    column="shape_ship_id"    />
+        <result property="batchNumber"    column="batch_number"    />
+        <result property="unprocessNumber"    column="unprocess_number"    />
+        <result property="processingNumber"    column="processing_number"    />
+        <result property="processedNumber"    column="processed_number"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isFinished"    column="is_finished"    />
+    </resultMap>
+	
+	<sql id="selectShipVo">
+        select id, ship_code, ship_name, shape_ship_id, batch_number, unprocess_number, processing_number, processed_number, update_time, is_finished from pipe_ship
+    </sql>
+	
+    <select id="selectShipList" parameterType="Ship" resultMap="ShipResult">
+        <include refid="selectShipVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
+             <if test="shipName != null  and shipName != '' "> and ship_name = #{shipName}</if>
+             <if test="shapeShipId != null  and shapeShipId != '' "> and shape_ship_id = #{shapeShipId}</if>
+             <if test="batchNumber != null "> and batch_number = #{batchNumber}</if>
+             <if test="unprocessNumber != null "> and unprocess_number = #{unprocessNumber}</if>
+             <if test="processingNumber != null "> and processing_number = #{processingNumber}</if>
+             <if test="processedNumber != null "> and processed_number = #{processedNumber}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+         </where>
+    </select>
+    
+    <select id="selectShipById" parameterType="Integer" resultMap="ShipResult">
+        <include refid="selectShipVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertShip" parameterType="Ship">
+        insert into pipe_ship
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="shipCode != null  and shipCode != ''  ">ship_code,</if>
+			<if test="shipName != null  and shipName != ''  ">ship_name,</if>
+			<if test="shapeShipId != null  and shapeShipId != ''  ">shape_ship_id,</if>
+			<if test="batchNumber != null  ">batch_number,</if>
+			<if test="unprocessNumber != null  ">unprocess_number,</if>
+			<if test="processingNumber != null  ">processing_number,</if>
+			<if test="processedNumber != null  ">processed_number,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="isFinished != null  ">is_finished,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="shipCode != null  and shipCode != ''  ">#{shipCode},</if>
+			<if test="shipName != null  and shipName != ''  ">#{shipName},</if>
+			<if test="shapeShipId != null  and shapeShipId != ''  ">#{shapeShipId},</if>
+			<if test="batchNumber != null  ">#{batchNumber},</if>
+			<if test="unprocessNumber != null  ">#{unprocessNumber},</if>
+			<if test="processingNumber != null  ">#{processingNumber},</if>
+			<if test="processedNumber != null  ">#{processedNumber},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="isFinished != null  ">#{isFinished},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateShip" parameterType="Ship">
+        update pipe_ship
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shipCode != null  and shipCode != ''  ">ship_code = #{shipCode},</if>
+            <if test="shipName != null  and shipName != ''  ">ship_name = #{shipName},</if>
+            <if test="shapeShipId != null  and shapeShipId != ''  ">shape_ship_id = #{shapeShipId},</if>
+            <if test="batchNumber != null  ">batch_number = #{batchNumber},</if>
+            <if test="unprocessNumber != null  ">unprocess_number = #{unprocessNumber},</if>
+            <if test="processingNumber != null  ">processing_number = #{processingNumber},</if>
+            <if test="processedNumber != null  ">processed_number = #{processedNumber},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteShipById" parameterType="Integer">
+        delete from pipe_ship where id = #{id}
+    </delete>
+	
+    <delete id="deleteShipByIds" parameterType="String">
+        delete from pipe_ship where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

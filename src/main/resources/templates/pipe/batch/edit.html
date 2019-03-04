@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-batch-edit" th:object="${batch}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">批次名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">批次描述：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">船名代码：</label>
+				<div class="col-sm-8">
+					<input id="shipCode" name="shipCode" th:field="*{shipCode}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">包含单元数：</label>
+				<div class="col-sm-8">
+					<input id="unitNumber" name="unitNumber" th:field="*{unitNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">j加工中单元数：</label>
+				<div class="col-sm-8">
+					<input id="processingNumber" name="processingNumber" th:field="*{processingNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">未开工单元数：</label>
+				<div class="col-sm-8">
+					<input id="unprocessNumber" name="unprocessNumber" th:field="*{unprocessNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">完工单元数：</label>
+				<div class="col-sm-8">
+					<input id="processedNumber" name="processedNumber" th:field="*{processedNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">更新时间：</label>
+				<div class="col-sm-8">
+					<input id="updateTime" name="updateTime" th:field="*{updateTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">批次缺件单元数：</label>
+				<div class="col-sm-8">
+					<input id="lackUnitNumber" name="lackUnitNumber" th:field="*{lackUnitNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">批次缺件管件数：</label>
+				<div class="col-sm-8">
+					<input id="lackPipeNumber" name="lackPipeNumber" th:field="*{lackPipeNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否完工：</label>
+				<div class="col-sm-8">
+					<input id="isFinished" name="isFinished" th:field="*{isFinished}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "pipe/batch";
+		$("#form-batch-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-batch-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
