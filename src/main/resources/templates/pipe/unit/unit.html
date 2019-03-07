@@ -17,17 +17,11 @@
 							<li>
 								号船代号：<input type="text" name="shipCode"/>
 							</li>
-
-							<li>
-								p批次id：<input type="text" name="batchId"/>
-							</li>
-
 							<li>
 								批次名称：<input type="text" name="batchName"/>
 							</li>
-
 							<li>
-								计划id-process_id：<input type="text" name="planId"/>
+								计划id<input type="text" name="planId"/>
 							</li>
 
 							<li>
@@ -35,19 +29,11 @@
 							</li>
 
 							<li>
-								管形态：<input type="text" name="pipeShape"/>
-							</li>
-
-							<li>
-								包含管件数：<input type="text" name="pipeNumber"/>
-							</li>
-
-							<li>
 								下料工段：<input type="text" name="cutSection"/>
 							</li>
 
 							<li>
-								j加工工段：<input type="text" name="processSection"/>
+								加工工段：<input type="text" name="processSection"/>
 							</li>
 
 							<li>
@@ -61,19 +47,6 @@
 							<li>
 								下一工序id：<input type="text" name="nextStageId"/>
 							</li>
-
-							<li>
-								未加工管数量：<input type="text" name="unprocessNumber"/>
-							</li>
-
-							<li>
-								j加工中管数：<input type="text" name="processingNumber"/>
-							</li>
-
-							<li>
-								加工完成管数量：<input type="text" name="processedNumber"/>
-							</li>
-
 							<li>
 								更新时间：<input type="text" name="updateTime"/>
 							</li>
@@ -146,18 +119,13 @@
 					sortable: true
 				},
 				{
-					field : 'batchId', 
-					title : 'p批次id',
-					sortable: true
-				},
-				{
 					field : 'batchName', 
 					title : '批次名称',
 					sortable: true
 				},
 				{
 					field : 'planId', 
-					title : '计划id-process_id',
+					title : '计划',
 					sortable: true
 				},
 				{
@@ -166,13 +134,8 @@
 					sortable: true
 				},
 				{
-					field : 'pipeShape', 
-					title : '管形态',
-					sortable: true
-				},
-				{
 					field : 'pipeNumber', 
-					title : '包含管件数',
+					title : '包含管件',
 					sortable: true
 				},
 				{
@@ -182,37 +145,37 @@
 				},
 				{
 					field : 'processSection', 
-					title : 'j加工工段',
+					title : '加工工段',
 					sortable: true
 				},
 				{
 					field : 'processOrderId', 
-					title : '加工顺序id',
+					title : '加工顺序',
 					sortable: true
 				},
 				{
 					field : 'processStageId', 
-					title : '当前所在工序id',
+					title : '当前工序',
 					sortable: true
 				},
 				{
 					field : 'nextStageId', 
-					title : '下一工序id',
+					title : '下一工序',
 					sortable: true
 				},
 				{
 					field : 'unprocessNumber', 
-					title : '未加工管数量',
+					title : '未开始管数量',
 					sortable: true
 				},
 				{
 					field : 'processingNumber', 
-					title : 'j加工中管数',
+					title : '加工中管数',
 					sortable: true
 				},
 				{
 					field : 'processedNumber', 
-					title : '加工完成管数量',
+					title : '完成管数量',
 					sortable: true
 				},
 				{

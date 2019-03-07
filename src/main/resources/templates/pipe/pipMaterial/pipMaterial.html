@@ -11,18 +11,6 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								MidOID：<input type="text" name="midOid"/>
-							</li>
-
-							<li>
-								是否删除：<input type="text" name="isDelete"/>
-							</li>
-
-							<li>
-								是否更新：<input type="text" name="isUpdate"/>
-							</li>
-
-							<li>
 								型船ID：<input type="text" name="shapeShipId"/>
 							</li>
 
@@ -37,19 +25,9 @@
 							<li>
 								管端标识：<input type="text" name="pipeEndFlag"/>
 							</li>
-
-							<li>
-								数量：<input type="text" name="number"/>
-							</li>
-
-							<li>
-								重量：<input type="text" name="weight"/>
-							</li>
-
 							<li>
 								外场装配标记：<input type="text" name="outfieldFlag"/>
 							</li>
-
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -102,21 +80,6 @@
 					field : 'oldId', 
 					title : 'OID',
 					visible: false
-				},
-				{
-					field : 'midOid', 
-					title : 'MidOID',
-					sortable: true
-				},
-				{
-					field : 'isDelete', 
-					title : '是否删除',
-					sortable: true
-				},
-				{
-					field : 'isUpdate', 
-					title : '是否更新',
-					sortable: true
 				},
 				{
 					field : 'shapeShipId', 

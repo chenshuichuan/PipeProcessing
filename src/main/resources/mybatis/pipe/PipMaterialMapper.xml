@@ -33,8 +33,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="assemblyPipeId != null "> and assembly_pipe_id = #{assemblyPipeId}</if>
              <if test="componentId != null "> and component_id = #{componentId}</if>
              <if test="pipeEndFlag != null  and pipeEndFlag != '' "> and pipe_end_flag = #{pipeEndFlag}</if>
-             <if test="number != null "> and number = #{number}</if>
-             <if test="weight != null "> and weight = #{weight}</if>
              <if test="outfieldFlag != null  and outfieldFlag != '' "> and outfield_flag = #{outfieldFlag}</if>
          </where>
     </select>
