@@ -21,7 +21,6 @@ public class Ship extends BaseEntity
 	
 	/** id */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	private Integer id;
 	/** 船名代码 */

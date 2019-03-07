@@ -21,7 +21,6 @@ public class Unit extends BaseEntity
 	
 	/** id */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	private Integer id;
 	/** 单元名称 */

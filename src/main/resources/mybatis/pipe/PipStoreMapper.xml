@@ -15,11 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="storePlace"    column="store_place"    />
         <result property="collectionDate"    column="collection_date"    />
         <result property="outStoreDate"    column="out_store_date"    />
-        <result property="inStoreDate"    column="in__store_date"    />
+        <result property="inStoreDate"    column="in_store_date"    />
     </resultMap>
 	
 	<sql id="selectPipStoreVo">
-        select old_id, mid_oid, is_delete, is_update, call_ship_id, assembly_pipe_id, process_unit_id, store_place, collection_date, out_store_date, in__store_date from pipe_pip_store
+        select old_id, mid_oid, is_delete, is_update, call_ship_id, assembly_pipe_id, process_unit_id, store_place, collection_date, out_store_date, in_store_date from pipe_pip_store
     </sql>
 	
     <select id="selectPipStoreList" parameterType="PipStore" resultMap="PipStoreResult">
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="storePlace != null  and storePlace != '' "> and store_place = #{storePlace}</if>
              <if test="collectionDate != null "> and collection_date = #{collectionDate}</if>
              <if test="outStoreDate != null "> and out_store_date = #{outStoreDate}</if>
-             <if test="inStoreDate != null "> and in__store_date = #{inStoreDate}</if>
+             <if test="inStoreDate != null "> and in_store_date = #{inStoreDate}</if>
          </where>
     </select>
     
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="storePlace != null  and storePlace != ''  ">store_place,</if>
 			<if test="collectionDate != null  ">collection_date,</if>
 			<if test="outStoreDate != null  ">out_store_date,</if>
-			<if test="inStoreDate != null  ">in__store_date,</if>
+			<if test="inStoreDate != null  ">in_store_date,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="oldId != null  ">#{oldId},</if>
@@ -86,7 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="storePlace != null  and storePlace != ''  ">store_place = #{storePlace},</if>
             <if test="collectionDate != null  ">collection_date = #{collectionDate},</if>
             <if test="outStoreDate != null  ">out_store_date = #{outStoreDate},</if>
-            <if test="inStoreDate != null  ">in__store_date = #{inStoreDate},</if>
+            <if test="inStoreDate != null  ">in_store_date = #{inStoreDate},</if>
         </trim>
         where old_id = #{oldId}
     </update>

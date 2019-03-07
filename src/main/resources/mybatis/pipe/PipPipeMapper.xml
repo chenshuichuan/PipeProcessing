@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pipe.pipPipe.mapper.PipPipeMapper">
+    
+    <resultMap type="PipPipe" id="PipPipeResult">
+        <result property="id"    column="id"    />
+        <result property="areaCode"    column="area_code"    />
+        <result property="segmentCode"    column="segment_code"    />
+        <result property="trayCode"    column="tray_code"    />
+        <result property="assemblyCode"    column="assembly_code"    />
+        <result property="setCode"    column="set_code"    />
+    </resultMap>
+	
+	<sql id="selectPipPipeVo">
+        select id, area_code, segment_code, tray_code, assembly_code, set_code from pipe_pip_pipe
+    </sql>
+	
+    <select id="selectPipPipeList" parameterType="PipPipe" resultMap="PipPipeResult">
+        <include refid="selectPipPipeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="areaCode != null  and areaCode != '' "> and area_code = #{areaCode}</if>
+             <if test="segmentCode != null  and segmentCode != '' "> and segment_code = #{segmentCode}</if>
+             <if test="trayCode != null  and trayCode != '' "> and tray_code = #{trayCode}</if>
+             <if test="assemblyCode != null  and assemblyCode != '' "> and assembly_code = #{assemblyCode}</if>
+             <if test="setCode != null  and setCode != '' "> and set_code = #{setCode}</if>
+         </where>
+    </select>
+    
+    <select id="selectPipPipeById" parameterType="Integer" resultMap="PipPipeResult">
+        <include refid="selectPipPipeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPipPipe" parameterType="PipPipe">
+        insert into pipe_pip_pipe
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="areaCode != null  and areaCode != ''  ">area_code,</if>
+			<if test="segmentCode != null  and segmentCode != ''  ">segment_code,</if>
+			<if test="trayCode != null  and trayCode != ''  ">tray_code,</if>
+			<if test="assemblyCode != null  and assemblyCode != ''  ">assembly_code,</if>
+			<if test="setCode != null  and setCode != ''  ">set_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="areaCode != null  and areaCode != ''  ">#{areaCode},</if>
+			<if test="segmentCode != null  and segmentCode != ''  ">#{segmentCode},</if>
+			<if test="trayCode != null  and trayCode != ''  ">#{trayCode},</if>
+			<if test="assemblyCode != null  and assemblyCode != ''  ">#{assemblyCode},</if>
+			<if test="setCode != null  and setCode != ''  ">#{setCode},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePipPipe" parameterType="PipPipe">
+        update pipe_pip_pipe
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaCode != null  and areaCode != ''  ">area_code = #{areaCode},</if>
+            <if test="segmentCode != null  and segmentCode != ''  ">segment_code = #{segmentCode},</if>
+            <if test="trayCode != null  and trayCode != ''  ">tray_code = #{trayCode},</if>
+            <if test="assemblyCode != null  and assemblyCode != ''  ">assembly_code = #{assemblyCode},</if>
+            <if test="setCode != null  and setCode != ''  ">set_code = #{setCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deletePipPipeById" parameterType="Integer">
+        delete from pipe_pip_pipe where id = #{id}
+    </delete>
+	
+    <delete id="deletePipPipeByIds" parameterType="String">
+        delete from pipe_pip_pipe where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

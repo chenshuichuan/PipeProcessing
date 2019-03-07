@@ -20,10 +20,10 @@ import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 
 /**
- * 管件 信息操作处理
+ * 管件- 信息操作处理
  * 
  * @author ricardo
- * @date 2019-03-04
+ * @date 2019-03-07
  */
 @Controller
 @RequestMapping("/admin/pipe/workPipe")
@@ -42,7 +42,7 @@ public class WorkPipeController extends BaseController
 	}
 	
 	/**
-	 * 查询管件列表
+	 * 查询管件-列表
 	 */
 	@RequiresPermissions("pipe:workPipe:list")
 	@PostMapping("/list")
@@ -56,7 +56,7 @@ public class WorkPipeController extends BaseController
 	
 	
 	/**
-	 * 导出管件列表
+	 * 导出管件-列表
 	 */
 	@RequiresPermissions("pipe:workPipe:export")
     @PostMapping("/export")
@@ -69,7 +69,7 @@ public class WorkPipeController extends BaseController
     }
 	
 	/**
-	 * 新增管件
+	 * 新增管件-
 	 */
 	@GetMapping("/add")
 	public String add()
@@ -78,10 +78,10 @@ public class WorkPipeController extends BaseController
 	}
 	
 	/**
-	 * 新增保存管件
+	 * 新增保存管件-
 	 */
 	@RequiresPermissions("pipe:workPipe:add")
-	@Log(title = "管件", businessType = BusinessType.INSERT)
+	@Log(title = "管件-", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(WorkPipe workPipe)
@@ -90,7 +90,7 @@ public class WorkPipeController extends BaseController
 	}
 
 	/**
-	 * 修改管件
+	 * 修改管件-
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
@@ -101,10 +101,10 @@ public class WorkPipeController extends BaseController
 	}
 	
 	/**
-	 * 修改保存管件
+	 * 修改保存管件-
 	 */
 	@RequiresPermissions("pipe:workPipe:edit")
-	@Log(title = "管件", businessType = BusinessType.UPDATE)
+	@Log(title = "管件-", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(WorkPipe workPipe)
@@ -113,10 +113,10 @@ public class WorkPipeController extends BaseController
 	}
 	
 	/**
-	 * 删除管件
+	 * 删除管件-
 	 */
 	@RequiresPermissions("pipe:workPipe:remove")
-	@Log(title = "管件", businessType = BusinessType.DELETE)
+	@Log(title = "管件-", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)

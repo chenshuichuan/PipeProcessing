@@ -11,51 +11,23 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								型船ID：<input type="text" name="shapeShipId"/>
+								：<input type="text" name="areaCode"/>
 							</li>
 
 							<li>
-								装配管id：<input type="text" name="assemblyPipeId"/>
+								：<input type="text" name="segmentCode"/>
 							</li>
 
 							<li>
-								管子通径：<input type="text" name="pipeDiameter"/>
+								：<input type="text" name="trayCode"/>
 							</li>
 
 							<li>
-								管子外径：<input type="text" name="pipeOutDiameter"/>
+								：<input type="text" name="assemblyCode"/>
 							</li>
 
 							<li>
-								管子壁厚：<input type="text" name="pipeThickness"/>
-							</li>
-
-							<li>
-								管子材质：<input type="text" name="pipeMaterial"/>
-							</li>
-
-							<li>
-								管材级别：<input type="text" name="pipeMaterialLevel"/>
-							</li>
-
-							<li>
-								管段形态：<input type="text" name="pipeShape"/>
-							</li>
-
-							<li>
-								表处简称：<input type="text" name="surfaceTreat"/>
-							</li>
-
-							<li>
-								下料长：<input type="text" name="cutLength"/>
-							</li>
-
-							<li>
-								外场装配标记：<input type="text" name="outfield"/>
-							</li>
-
-							<li>
-								修改时间：<input type="text" name="updateTime"/>
+								：<input type="text" name="setCode"/>
 							</li>
 
 							<li>
@@ -68,16 +40,16 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pipe:workPipe:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pipe:pipPipe:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="pipe:workPipe:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="pipe:pipPipe:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pipe:workPipe:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pipe:pipPipe:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pipe:workPipe:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pipe:pipPipe:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -88,10 +60,10 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('pipe:workPipe:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('pipe:workPipe:remove')}]];
+        var editFlag = [[${@permission.hasPermi('pipe:pipPipe:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('pipe:pipPipe:remove')}]];
         ctx = ctx + webPrefix+"/";
-        var prefix = ctx + "pipe/workPipe";
+        var prefix = ctx + "pipe/pipPipe";
 
         $(function() {
             var options = {
@@ -100,7 +72,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "管件-",
+                modalName: "中间数据库Pipe",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -108,67 +80,32 @@
 		        },
 				{
 					field : 'id', 
-					title : 'id',
+					title : '',
 					visible: false
 				},
 				{
-					field : 'shapeShipId', 
-					title : '型船ID',
+					field : 'areaCode', 
+					title : '',
 					sortable: true
 				},
 				{
-					field : 'assemblyPipeId', 
-					title : '装配管id',
+					field : 'segmentCode', 
+					title : '',
 					sortable: true
 				},
 				{
-					field : 'pipeDiameter', 
-					title : '管子通径',
+					field : 'trayCode', 
+					title : '',
 					sortable: true
 				},
 				{
-					field : 'pipeOutDiameter', 
-					title : '管子外径',
+					field : 'assemblyCode', 
+					title : '',
 					sortable: true
 				},
 				{
-					field : 'pipeThickness', 
-					title : '管子壁厚',
-					sortable: true
-				},
-				{
-					field : 'pipeMaterial', 
-					title : '管子材质',
-					sortable: true
-				},
-				{
-					field : 'pipeMaterialLevel', 
-					title : '管材级别',
-					sortable: true
-				},
-				{
-					field : 'pipeShape', 
-					title : '管段形态',
-					sortable: true
-				},
-				{
-					field : 'surfaceTreat', 
-					title : '表处简称',
-					sortable: true
-				},
-				{
-					field : 'cutLength', 
-					title : '下料长',
-					sortable: true
-				},
-				{
-					field : 'outfield', 
-					title : '外场装配标记',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '修改时间',
+					field : 'setCode', 
+					title : '',
 					sortable: true
 				},
 		        {

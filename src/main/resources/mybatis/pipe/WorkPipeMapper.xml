@@ -6,15 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="WorkPipe" id="WorkPipeResult">
         <result property="id"    column="id"    />
-        <result property="shipCode"    column="ship_code"    />
-        <result property="batchId"    column="batch_id"    />
-        <result property="unitId"    column="unit_id"    />
-        <result property="areaCode"    column="area_code"    />
-        <result property="segmentCode"    column="segment_code"    />
-        <result property="trayCode"    column="tray_code"    />
-        <result property="assemblyCode"    column="assembly_code"    />
-        <result property="setCode"    column="set_code"    />
-        <result property="callShipId"    column="call_ship_id"    />
+        <result property="shapeShipId"    column="shape_ship_id"    />
         <result property="assemblyPipeId"    column="assembly_pipe_id"    />
         <result property="pipeDiameter"    column="pipe_diameter"    />
         <result property="pipeOutDiameter"    column="pipe_out_diameter"    />
@@ -23,38 +15,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pipeMaterialLevel"    column="pipe_material_level"    />
         <result property="pipeShape"    column="pipe_shape"    />
         <result property="surfaceTreat"    column="surface_treat"    />
-        <result property="surfaceName"    column="surface_name"    />
         <result property="cutLength"    column="cut_length"    />
         <result property="outfield"    column="outfield"    />
         <result property="updateTime"    column="update_time"    />
     </resultMap>
 	
 	<sql id="selectWorkPipeVo">
-        select id, ship_code, batch_id, unit_id, area_code, segment_code, tray_code, assembly_code, set_code, call_ship_id, assembly_pipe_id, pipe_diameter, pipe_out_diameter, pipe_thickness, pipe_material, pipe_material_level, pipe_shape, surface_treat, surface_name, cut_length, outfield, update_time from pipe_work_pipe
+        select id, shape_ship_id, assembly_pipe_id, pipe_diameter, pipe_out_diameter, pipe_thickness, pipe_material, pipe_material_level, pipe_shape, surface_treat, cut_length, outfield, update_time from pipe_work_pipe
     </sql>
 	
     <select id="selectWorkPipeList" parameterType="WorkPipe" resultMap="WorkPipeResult">
         <include refid="selectWorkPipeVo"/>
         <where>  
             <if test="id != null "> and id = #{id}</if>
-             <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
-             <if test="batchId != null "> and batch_id = #{batchId}</if>
-             <if test="unitId != null "> and unit_id = #{unitId}</if>
-             <if test="areaCode != null  and areaCode != '' "> and area_code = #{areaCode}</if>
-             <if test="segmentCode != null  and segmentCode != '' "> and segment_code = #{segmentCode}</if>
-             <if test="trayCode != null  and trayCode != '' "> and tray_code = #{trayCode}</if>
-             <if test="assemblyCode != null  and assemblyCode != '' "> and assembly_code = #{assemblyCode}</if>
-             <if test="setCode != null  and setCode != '' "> and set_code = #{setCode}</if>
-             <if test="callShipId != null "> and call_ship_id = #{callShipId}</if>
+             <if test="shapeShipId != null  and shapeShipId != '' "> and shape_ship_id = #{shapeShipId}</if>
              <if test="assemblyPipeId != null "> and assembly_pipe_id = #{assemblyPipeId}</if>
              <if test="pipeDiameter != null "> and pipe_diameter = #{pipeDiameter}</if>
-             <if test="pipeOutDiameter != null  and pipeOutDiameter != '' "> and pipe_out_diameter = #{pipeOutDiameter}</if>
-             <if test="pipeThickness != null  and pipeThickness != '' "> and pipe_thickness = #{pipeThickness}</if>
+             <if test="pipeOutDiameter != null "> and pipe_out_diameter = #{pipeOutDiameter}</if>
+             <if test="pipeThickness != null "> and pipe_thickness = #{pipeThickness}</if>
              <if test="pipeMaterial != null  and pipeMaterial != '' "> and pipe_material = #{pipeMaterial}</if>
              <if test="pipeMaterialLevel != null  and pipeMaterialLevel != '' "> and pipe_material_level = #{pipeMaterialLevel}</if>
              <if test="pipeShape != null  and pipeShape != '' "> and pipe_shape = #{pipeShape}</if>
              <if test="surfaceTreat != null  and surfaceTreat != '' "> and surface_treat = #{surfaceTreat}</if>
-             <if test="surfaceName != null  and surfaceName != '' "> and surface_name = #{surfaceName}</if>
              <if test="cutLength != null "> and cut_length = #{cutLength}</if>
              <if test="outfield != null  and outfield != '' "> and outfield = #{outfield}</if>
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
@@ -70,48 +52,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into pipe_work_pipe
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">id,</if>
-			<if test="shipCode != null  and shipCode != ''  ">ship_code,</if>
-			<if test="batchId != null  ">batch_id,</if>
-			<if test="unitId != null  ">unit_id,</if>
-			<if test="areaCode != null  and areaCode != ''  ">area_code,</if>
-			<if test="segmentCode != null  and segmentCode != ''  ">segment_code,</if>
-			<if test="trayCode != null  and trayCode != ''  ">tray_code,</if>
-			<if test="assemblyCode != null  and assemblyCode != ''  ">assembly_code,</if>
-			<if test="setCode != null  and setCode != ''  ">set_code,</if>
-			<if test="callShipId != null  ">call_ship_id,</if>
+			<if test="shapeShipId != null  and shapeShipId != ''  ">shape_ship_id,</if>
 			<if test="assemblyPipeId != null  ">assembly_pipe_id,</if>
 			<if test="pipeDiameter != null  ">pipe_diameter,</if>
-			<if test="pipeOutDiameter != null  and pipeOutDiameter != ''  ">pipe_out_diameter,</if>
-			<if test="pipeThickness != null  and pipeThickness != ''  ">pipe_thickness,</if>
+			<if test="pipeOutDiameter != null  ">pipe_out_diameter,</if>
+			<if test="pipeThickness != null  ">pipe_thickness,</if>
 			<if test="pipeMaterial != null  and pipeMaterial != ''  ">pipe_material,</if>
 			<if test="pipeMaterialLevel != null  and pipeMaterialLevel != ''  ">pipe_material_level,</if>
 			<if test="pipeShape != null  and pipeShape != ''  ">pipe_shape,</if>
 			<if test="surfaceTreat != null  and surfaceTreat != ''  ">surface_treat,</if>
-			<if test="surfaceName != null  and surfaceName != ''  ">surface_name,</if>
 			<if test="cutLength != null  ">cut_length,</if>
 			<if test="outfield != null  and outfield != ''  ">outfield,</if>
 			<if test="updateTime != null  ">update_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
-			<if test="shipCode != null  and shipCode != ''  ">#{shipCode},</if>
-			<if test="batchId != null  ">#{batchId},</if>
-			<if test="unitId != null  ">#{unitId},</if>
-			<if test="areaCode != null  and areaCode != ''  ">#{areaCode},</if>
-			<if test="segmentCode != null  and segmentCode != ''  ">#{segmentCode},</if>
-			<if test="trayCode != null  and trayCode != ''  ">#{trayCode},</if>
-			<if test="assemblyCode != null  and assemblyCode != ''  ">#{assemblyCode},</if>
-			<if test="setCode != null  and setCode != ''  ">#{setCode},</if>
-			<if test="callShipId != null  ">#{callShipId},</if>
+			<if test="shapeShipId != null  and shapeShipId != ''  ">#{shapeShipId},</if>
 			<if test="assemblyPipeId != null  ">#{assemblyPipeId},</if>
 			<if test="pipeDiameter != null  ">#{pipeDiameter},</if>
-			<if test="pipeOutDiameter != null  and pipeOutDiameter != ''  ">#{pipeOutDiameter},</if>
-			<if test="pipeThickness != null  and pipeThickness != ''  ">#{pipeThickness},</if>
+			<if test="pipeOutDiameter != null  ">#{pipeOutDiameter},</if>
+			<if test="pipeThickness != null  ">#{pipeThickness},</if>
 			<if test="pipeMaterial != null  and pipeMaterial != ''  ">#{pipeMaterial},</if>
 			<if test="pipeMaterialLevel != null  and pipeMaterialLevel != ''  ">#{pipeMaterialLevel},</if>
 			<if test="pipeShape != null  and pipeShape != ''  ">#{pipeShape},</if>
 			<if test="surfaceTreat != null  and surfaceTreat != ''  ">#{surfaceTreat},</if>
-			<if test="surfaceName != null  and surfaceName != ''  ">#{surfaceName},</if>
 			<if test="cutLength != null  ">#{cutLength},</if>
 			<if test="outfield != null  and outfield != ''  ">#{outfield},</if>
 			<if test="updateTime != null  ">#{updateTime},</if>
@@ -121,24 +85,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateWorkPipe" parameterType="WorkPipe">
         update pipe_work_pipe
         <trim prefix="SET" suffixOverrides=",">
-            <if test="shipCode != null  and shipCode != ''  ">ship_code = #{shipCode},</if>
-            <if test="batchId != null  ">batch_id = #{batchId},</if>
-            <if test="unitId != null  ">unit_id = #{unitId},</if>
-            <if test="areaCode != null  and areaCode != ''  ">area_code = #{areaCode},</if>
-            <if test="segmentCode != null  and segmentCode != ''  ">segment_code = #{segmentCode},</if>
-            <if test="trayCode != null  and trayCode != ''  ">tray_code = #{trayCode},</if>
-            <if test="assemblyCode != null  and assemblyCode != ''  ">assembly_code = #{assemblyCode},</if>
-            <if test="setCode != null  and setCode != ''  ">set_code = #{setCode},</if>
-            <if test="callShipId != null  ">call_ship_id = #{callShipId},</if>
+            <if test="shapeShipId != null  and shapeShipId != ''  ">shape_ship_id = #{shapeShipId},</if>
             <if test="assemblyPipeId != null  ">assembly_pipe_id = #{assemblyPipeId},</if>
             <if test="pipeDiameter != null  ">pipe_diameter = #{pipeDiameter},</if>
-            <if test="pipeOutDiameter != null  and pipeOutDiameter != ''  ">pipe_out_diameter = #{pipeOutDiameter},</if>
-            <if test="pipeThickness != null  and pipeThickness != ''  ">pipe_thickness = #{pipeThickness},</if>
+            <if test="pipeOutDiameter != null  ">pipe_out_diameter = #{pipeOutDiameter},</if>
+            <if test="pipeThickness != null  ">pipe_thickness = #{pipeThickness},</if>
             <if test="pipeMaterial != null  and pipeMaterial != ''  ">pipe_material = #{pipeMaterial},</if>
             <if test="pipeMaterialLevel != null  and pipeMaterialLevel != ''  ">pipe_material_level = #{pipeMaterialLevel},</if>
             <if test="pipeShape != null  and pipeShape != ''  ">pipe_shape = #{pipeShape},</if>
             <if test="surfaceTreat != null  and surfaceTreat != ''  ">surface_treat = #{surfaceTreat},</if>
-            <if test="surfaceName != null  and surfaceName != ''  ">surface_name = #{surfaceName},</if>
             <if test="cutLength != null  ">cut_length = #{cutLength},</if>
             <if test="outfield != null  and outfield != ''  ">outfield = #{outfield},</if>
             <if test="updateTime != null  ">update_time = #{updateTime},</if>

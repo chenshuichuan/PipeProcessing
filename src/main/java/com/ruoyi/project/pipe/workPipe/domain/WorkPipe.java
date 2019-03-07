@@ -3,88 +3,68 @@ package com.ruoyi.project.pipe.workPipe.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import java.util.Date;
 
 /**
- * 管件表 pipe_work_pipe
+ * 管件-表 pipe_work_pipe
  * 
  * @author ricardo
- * @date 2019-03-04
+ * @date 2019-03-07
  */
 @Entity
 @Table(name="pipe_work_pipe")
 public class WorkPipe extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/** 装配管号ID */
-    @Column(name = "id")
+	@Column(name = "id")
 	@Id
 	private Integer id;
-	/** 号船代号 */
-    @Column(name = "ship_code")
-	private String shipCode;
-	/** 批次id */
-    @Column(name = "batch_id")
-	private Integer batchId;
-	/** 单元序号 */
-    @Column(name = "unit_id")
-	private Integer unitId;
-	/** 设计区号 */
-    @Column(name = "area_code")
-	private String areaCode;
-	/** 分段号 */
-    @Column(name = "segment_code")
-	private String segmentCode;
-	/** 托盘号 */
-    @Column(name = "tray_code")
-	private String trayCode;
-	/** 装配管号 */
-    @Column(name = "assembly_code")
-	private String assemblyCode;
-	/** 集配管号 */
-    @Column(name = "set_code")
-	private String setCode;
+
 	/** 号船id */
-    @Column(name = "call_shipId")
-	private Integer callShipId;
+	@Column(name = "shape_ship_id")
+	private Integer shapeShipId;
 	/** 装配管id */
-    @Column(name = "assembly_pipe_id")
+	@Column(name = "assembly_pipe_id")
 	private Integer assemblyPipeId;
 	/** 管子通径 */
-    @Column(name = "pipe_diameter")
+	@Column(name = "pipe_diameter")
 	private double pipeDiameter;
 	/** 管子外径 */
-    @Column(name = "pipe_out_diameter")
-	private String pipeOutDiameter;
+	@Column(name = "pipe_out_diameter")
+	private double pipeOutDiameter;
 	/** 管子壁厚 */
-    @Column(name = "pipe_thickness")
-	private String pipeThickness;
+	@Column(name = "pipe_thickness")
+	private double pipeThickness;
 	/** 管子材质 */
-    @Column(name = "pipe_material")
+	@Column(name = "pipe_material")
 	private String pipeMaterial;
 	/** 管材级别 */
-    @Column(name = "pipe_material_level")
+	@Column(name = "pipe_material_level")
 	private String pipeMaterialLevel;
 	/** 管段形态 */
-    @Column(name = "pipe_shape")
+	@Column(name = "pipe_shape")
 	private String pipeShape;
 	/** 表处简称 */
-    @Column(name = "surface_treat")
+	@Column(name = "surface_treat")
 	private String surfaceTreat;
-	/** 表面处理 */
-    @Column(name = "surface_name")
-	private String surfaceName;
+
 	/** 下料长 */
-    @Column(name = "cut_length")
+	@Column(name = "cut_length")
 	private double cutLength;
 	/** 外场装配标记 */
-    @Column(name = "outfield")
+	@Column(name = "outfield")
 	private String outfield;
 	/** 修改时间 */
-    @Column(name = "update_time")
+	@Column(name = "update_time")
 	private Date updateTime;
 
 	public void setId(Integer id) 
@@ -96,86 +76,14 @@ public class WorkPipe extends BaseEntity
 	{
 		return id;
 	}
-	public void setShipCode(String shipCode) 
+	public void setShapeShipId(Integer shapeShipId)
 	{
-		this.shipCode = shipCode;
+		this.shapeShipId = shapeShipId;
 	}
 
-	public String getShipCode() 
+	public double getShapeShipId()
 	{
-		return shipCode;
-	}
-	public void setBatchId(Integer batchId) 
-	{
-		this.batchId = batchId;
-	}
-
-	public Integer getBatchId() 
-	{
-		return batchId;
-	}
-	public void setUnitId(Integer unitId) 
-	{
-		this.unitId = unitId;
-	}
-
-	public Integer getUnitId() 
-	{
-		return unitId;
-	}
-	public void setAreaCode(String areaCode) 
-	{
-		this.areaCode = areaCode;
-	}
-
-	public String getAreaCode() 
-	{
-		return areaCode;
-	}
-	public void setSegmentCode(String segmentCode) 
-	{
-		this.segmentCode = segmentCode;
-	}
-
-	public String getSegmentCode() 
-	{
-		return segmentCode;
-	}
-	public void setTrayCode(String trayCode) 
-	{
-		this.trayCode = trayCode;
-	}
-
-	public String getTrayCode() 
-	{
-		return trayCode;
-	}
-	public void setAssemblyCode(String assemblyCode) 
-	{
-		this.assemblyCode = assemblyCode;
-	}
-
-	public String getAssemblyCode() 
-	{
-		return assemblyCode;
-	}
-	public void setSetCode(String setCode) 
-	{
-		this.setCode = setCode;
-	}
-
-	public String getSetCode() 
-	{
-		return setCode;
-	}
-	public void setCallShipId(Integer callShipId) 
-	{
-		this.callShipId = callShipId;
-	}
-
-	public Integer getCallShipId() 
-	{
-		return callShipId;
+		return shapeShipId;
 	}
 	public void setAssemblyPipeId(Integer assemblyPipeId) 
 	{
@@ -195,21 +103,21 @@ public class WorkPipe extends BaseEntity
 	{
 		return pipeDiameter;
 	}
-	public void setPipeOutDiameter(String pipeOutDiameter) 
+	public void setPipeOutDiameter(double pipeOutDiameter)
 	{
 		this.pipeOutDiameter = pipeOutDiameter;
 	}
 
-	public String getPipeOutDiameter() 
+	public double getPipeOutDiameter()
 	{
 		return pipeOutDiameter;
 	}
-	public void setPipeThickness(String pipeThickness) 
+	public void setPipeThickness(Double pipeThickness) 
 	{
 		this.pipeThickness = pipeThickness;
 	}
 
-	public String getPipeThickness() 
+	public Double getPipeThickness() 
 	{
 		return pipeThickness;
 	}
@@ -249,15 +157,6 @@ public class WorkPipe extends BaseEntity
 	{
 		return surfaceTreat;
 	}
-	public void setSurfaceName(String surfaceName) 
-	{
-		this.surfaceName = surfaceName;
-	}
-
-	public String getSurfaceName() 
-	{
-		return surfaceName;
-	}
 	public void setCutLength(double cutLength)
 	{
 		this.cutLength = cutLength;
@@ -281,25 +180,16 @@ public class WorkPipe extends BaseEntity
 	{
 		this.updateTime = updateTime;
 	}
-    @Override
+	@Override
 	public Date getUpdateTime() 
 	{
 		return updateTime;
 	}
-
 	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("shipCode", getShipCode())
-            .append("batchId", getBatchId())
-            .append("unitId", getUnitId())
-            .append("areaCode", getAreaCode())
-            .append("segmentCode", getSegmentCode())
-            .append("trayCode", getTrayCode())
-            .append("assemblyCode", getAssemblyCode())
-            .append("setCode", getSetCode())
-            .append("callShipId", getCallShipId())
+            .append("shapeShipId", getShapeShipId())
             .append("assemblyPipeId", getAssemblyPipeId())
             .append("pipeDiameter", getPipeDiameter())
             .append("pipeOutDiameter", getPipeOutDiameter())
@@ -308,7 +198,6 @@ public class WorkPipe extends BaseEntity
             .append("pipeMaterialLevel", getPipeMaterialLevel())
             .append("pipeShape", getPipeShape())
             .append("surfaceTreat", getSurfaceTreat())
-            .append("surfaceName", getSurfaceName())
             .append("cutLength", getCutLength())
             .append("outfield", getOutfield())
             .append("updateTime", getUpdateTime())

@@ -6,7 +6,7 @@ import com.ruoyi.project.pipe.cutPlan.domain.CutPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Created by: ricardo
+ * @author  ricardo
  * Description: 下料类的repository类
  * Date: 2018/8/22
  */

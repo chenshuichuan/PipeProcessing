@@ -1,7 +1,7 @@
 package com.ruoyi.project.pipe.workPipe.service;
 
 
-import com.ruoyi.project.pipe.pipCutting.domain.PipCutting;
+import com.ruoyi.project.pipe.unit.domain.Unit;
 import com.ruoyi.project.pipe.workPipe.domain.WorkPipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 

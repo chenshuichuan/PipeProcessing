@@ -21,7 +21,6 @@ public class Pipe extends BaseEntity
 	
 	/** 装配管号ID */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	private Integer id;
 	/** 号船代号 */
