@@ -1,5 +1,6 @@
 package com.ruoyi.project.system.files.service;
 
+import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.system.files.domain.Files;
 
 import java.util.List;
@@ -55,4 +56,9 @@ public interface IFilesService
     String checkFileNameUnqiue(Files files);
 
     List<Files> selectFilesListNoSave(Files files);
+
+	/**
+	 *读取和保存PlanTable数据
+	 */
+	AjaxResult readXlsFile(Files files);
 }

@@ -3,14 +3,22 @@ package com.ruoyi.project.system.files.service;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.support.Convert;
 import com.ruoyi.common.utils.file.FileUploadUtils;
+import com.ruoyi.common.utils.poi.ReadPlanTable;
 import com.ruoyi.common.utils.security.ShiroUtils;
+import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.project.pipe.common.PlanTable;
+import com.ruoyi.project.pipe.cutPlan.service.CutPlanRepository;
+import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
+import com.ruoyi.project.pipe.processPlan.service.ProcessPlanRepository;
 import com.ruoyi.project.system.files.domain.Files;
 import com.ruoyi.project.system.files.mapper.FilesMapper;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -25,6 +33,10 @@ public class FilesServiceImpl implements IFilesService {
     @Autowired
     private FilesMapper filesMapper;
 
+    @Autowired
+    private CutPlanRepository cutPlanRepository;
+    @Autowired
+    private ProcessPlanRepository processPlanRepository;
     /**
      * 查询文件上传信息
      *
@@ -132,6 +144,40 @@ public class FilesServiceImpl implements IFilesService {
         List<Files> list = filesMapper.selectFilesListNoSave(files);
 
         return list;
+    }
+
+    @Override
+    public AjaxResult readXlsFile(Files files) {
+        try {
+            List<PlanTable> planTableList = ReadPlanTable.readExcel(files);
+            for (PlanTable planTable: planTableList) {
+                ProcessPlan plan = planTable.getProcessPlan();
+                /**
+                 * 通过“序号+船名+批次+加工点”作为唯一数据判断，进而覆盖更新数据，防止重复解析计划
+                 */
+                ProcessPlan processPlan = processPlanRepository.findBySerialNumberAndShipNameAndBatchNameAndProcessPlace(
+                        plan.getSerialNumber(),plan.getShipName(),plan.getBatchName(),plan.getProcessPlace()
+                );
+                //如果已经存在，则覆盖原mysql中的数据进行更新
+                if (processPlan!=null){
+                    plan.setId(processPlan.getId());
+                }
+
+                //cutPlan的id是引用processPlan的id的 保证他们同属一个计划id
+                plan = processPlanRepository.save(plan);
+                if(plan!=null&&plan.getId()>0){
+                    planTable.getCutPlan().setId(plan.getId());
+                    cutPlanRepository.save(planTable.getCutPlan());
+                }
+
+            }
+            return AjaxResult.success("解析计划成功！");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
+        return AjaxResult.error("解析计划失败！");
     }
 
 }

@@ -16,7 +16,7 @@
 							</select>
 							</li>
 							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick=""><i class="fa fa-file-excel-o"></i>&nbsp;生成计划</a>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="readXlsFile()"><i class="fa fa-file-excel-o"></i>&nbsp;生成计划</a>
 							</li>
 						</ul>
 					</div>
@@ -224,6 +224,15 @@
             };
             $.table.init(options);
         });
+
+        // 生成计划确认
+        function readXlsFile() {
+            var selectFileId = $("#selectPlan").val();
+            $.modal.confirm("确定要生成该批次计划吗？", function() {
+                var data = { "id": selectFileId };
+                $.operate.post("/admin/file/readXlsFile", data);
+            })
+        }
     </script>
 </body>
 </html>

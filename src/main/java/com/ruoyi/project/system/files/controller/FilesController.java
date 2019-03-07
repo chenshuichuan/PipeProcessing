@@ -4,11 +4,14 @@ import com.ruoyi.common.exception.base.BaseException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.utils.poi.ReadPlanTable;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
+import com.ruoyi.project.pipe.common.PlanTable;
+import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
 import com.ruoyi.project.system.files.domain.Files;
 import com.ruoyi.project.system.files.domain.PlaysOrder;
 import com.ruoyi.project.system.files.service.FilesRepository;
@@ -16,6 +19,7 @@ import com.ruoyi.project.system.files.service.IFilesService;
 import com.ruoyi.project.system.files.service.IPlayOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 文件上传 信息操作处理
@@ -315,8 +320,24 @@ public class FilesController extends BaseController {
     @GetMapping("/listOfXls")
     @ResponseBody
     public List<Files> listOfXls(){
-        List<Files> list = filesRepository.findBySuffix("xls");
-        return list;
+        return filesRepository.findBySuffix("xls");
+    }
+
+    /**
+     * 根据选择的文件生成计划(仅xls计划文件)
+     * 默认计划文件为xls后缀的文件
+     */
+    @PostMapping("/readXlsFile")
+    @Log(title = "生成计划", businessType = BusinessType.OTHER)
+    @ResponseBody
+    public AjaxResult readXlsFile(Integer id) {
+        Optional<Files> optionalFiles = filesRepository.findById(id);
+        if(optionalFiles.isPresent()){
+            Files files = optionalFiles.get();
+            System.out.println();
+            return filesService.readXlsFile(files);
+        }
+        return AjaxResult.error("未找到要解析的xls文件记录！");
     }
 
 }

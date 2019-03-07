@@ -52,14 +52,17 @@ public class ReadPlanTable {
 
         formulaEvaluator = new HSSFFormulaEvaluator((HSSFWorkbook) workbook);
         int sheetCount = workbook.getNumberOfSheets();
-        // 遍历每个sheet
+        // 可以遍历每个sheet
+        //当前仅读取第一个sheet
 
         Sheet sheet = workbook.getSheetAt(0);
-        int rowCount = sheet.getPhysicalNumberOfRows();// 获取总行数
+        // 获取总行数
+        int rowCount = sheet.getPhysicalNumberOfRows();
         //int planId = planTableService.selectMaxId() + 1;
         for (int r = 3; r < rowCount; r++) {
             Row row = sheet.getRow(r);
-            int cellCount = row.getPhysicalNumberOfCells();
+            //int cellCount = row.getPhysicalNumberOfCells();
+            int cellCount = 31;
             PlanTable planTable = new PlanTable();
             planTable.setPlanName(planTableName);
 
@@ -112,18 +115,30 @@ public class ReadPlanTable {
                         if (cellTypeEnum.equals(CellType.STRING))
                             planTable.getProcessPlan().setProcessPlace(cell.getStringCellValue());
                         break;
-                        //加工数量
+                    //加工数量
                     case 7:
-                        if (cellTypeEnum.equals(CellType.NUMERIC))
+                        if (cellTypeEnum.equals(CellType.NUMERIC)){
                             planTable.getProcessPlan().setNumber((int) cell.getNumericCellValue());
+                        }
+                        else if (cellTypeEnum.equals(CellType.STRING)){
+                            int number = Integer.parseInt(cell.getStringCellValue());
+                            planTable.getProcessPlan().setNumber(number);
+                        }else{
+                            planTable.getProcessPlan().setNumber(0);
+                        }
                         break;
                         //含光身管
                     case 8:
                         if (cellTypeEnum.equals(CellType.NUMERIC)){
                             planTable.getProcessPlan().setLightBodyPipe(String.valueOf((int)cell.getNumericCellValue()));
                         }
-                        else if (cellTypeEnum.equals(CellType.STRING))
-                            planTable.getProcessPlan().setLightBodyPipe(cell.getStringCellValue());
+                        else if (cellTypeEnum.equals(CellType.STRING)){
+                            String str = cell.getStringCellValue();
+                            planTable.getProcessPlan().setLightBodyPipe(str.length()>0?str:"0");
+                        }
+                        else{
+                            planTable.getProcessPlan().setLightBodyPipe("0");
+                        }
                         break;
                         //计划开工时间
                     case 11:
@@ -181,23 +196,48 @@ public class ReadPlanTable {
                         break;
                         //一部大管下料管数
                     case 20:
-                        if (cellTypeEnum.equals(CellType.NUMERIC))
+                        if (cellTypeEnum.equals(CellType.NUMERIC)){
                             planTable.getCutPlan().setOnebigCutNumber((int) cell.getNumericCellValue());
+                        }
+                        else if (cellTypeEnum.equals(CellType.STRING)){
+                            int number = Integer.parseInt(cell.getStringCellValue());
+                            planTable.getCutPlan().setOnebigCutNumber(number);
+                        }else{
+                            planTable.getCutPlan().setOnebigCutNumber(0);
+                        }
                         break;
                         //一部下料加工弯管下料数
                     case 22:
-                        if (cellTypeEnum.equals(CellType.NUMERIC))
+                        if (cellTypeEnum.equals(CellType.NUMERIC)){
                             planTable.getCutPlan().setOneBendCutNumber((int) cell.getNumericCellValue());
+                        }else if (cellTypeEnum.equals(CellType.STRING)){
+                            int number = Integer.parseInt(cell.getStringCellValue());
+                            planTable.getCutPlan().setOneBendCutNumber(number);
+                        }else{
+                            planTable.getCutPlan().setOneBendCutNumber(0);
+                        }
                         break;
                     //一部下料加工直管下料数
                     case 23:
                         if (cellTypeEnum.equals(CellType.NUMERIC))
                             planTable.getCutPlan().setOneVerCutNumber((int) cell.getNumericCellValue());
+                        else if (cellTypeEnum.equals(CellType.STRING)){
+                            int number = Integer.parseInt(cell.getStringCellValue());
+                            planTable.getCutPlan().setOneVerCutNumber(number);
+                        }else{
+                            planTable.getCutPlan().setOneVerCutNumber(0);
+                        }
                         break;
                     //一部下料加工大管下料数
                     case 24:
                         if (cellTypeEnum.equals(CellType.NUMERIC))
                             planTable.getCutPlan().setOneBigCutNumber((int) cell.getNumericCellValue());
+                        else if (cellTypeEnum.equals(CellType.STRING)){
+                            int number = Integer.parseInt(cell.getStringCellValue());
+                            planTable.getCutPlan().setOneBigCutNumber(number);
+                        }else{
+                            planTable.getCutPlan().setOneBigCutNumber(0);
+                        }
                         break;
 //                    //一部下料加工汇总数
 //                    case 25:
@@ -208,11 +248,23 @@ public class ReadPlanTable {
                     case 27:
                         if (cellTypeEnum.equals(CellType.NUMERIC))
                             planTable.getCutPlan().setTwoBendNumber((int) cell.getNumericCellValue());
+                        else if (cellTypeEnum.equals(CellType.STRING)){
+                            int number = Integer.parseInt(cell.getStringCellValue());
+                            planTable.getCutPlan().setTwoBendNumber(number);
+                        }else{
+                            planTable.getCutPlan().setTwoBendNumber(0);
+                        }
                         break;
                         //二部下料加工直管数
                     case 28:
                         if (cellTypeEnum.equals(CellType.NUMERIC))
                             planTable.getCutPlan().setTwoVerNumber((int) cell.getNumericCellValue());
+                        else if (cellTypeEnum.equals(CellType.STRING)){
+                            int number = Integer.parseInt(cell.getStringCellValue());
+                            planTable.getCutPlan().setTwoVerNumber(number);
+                        }else{
+                            planTable.getCutPlan().setTwoVerNumber(0);
+                        }
                         break;
 //                    //二部下料加工汇总数
 //                    case 29:
@@ -231,7 +283,7 @@ public class ReadPlanTable {
             }
 
             if(planTable.getSerialNumber()!=null){
-                //这个日期是减的！
+                //这个日期是减的！//
                 Date cutFinishedDate = DateUtils2.addDate(planTable.getProcessPlan().getPlanStart(),0,0,
                         -planTable.getCutDelDateNumber(),0,0,0,0);
                 //这个日期是加的！
@@ -248,6 +300,9 @@ public class ReadPlanTable {
 
                 planTable.getCutPlan().setTotalCutNumber(planTable.getCutPlan().getOnebigCutNumber()+
                         planTable.getCutPlan().getOneTotalNumber()+planTable.getCutPlan().getTwoTotalNumber());
+
+                //通过“序号+船名+批次+加工点”作为唯一数据判断，防止重复解析计划 可以在存入数据库的时候做这个
+
                 resultList.add(planTable);
             }
 
@@ -257,8 +312,8 @@ public class ReadPlanTable {
         return resultList;
     }
 
-    //根据excel公式处理下料（计划）完工时间
-    /**
+
+    /**根据excel公式处理下料（计划）完工时间
      *@param cellFomula cell的字符串内容：L4+28
      * @param  mod 加减格式解析："-"/"+"
      * @return 返回加减的天数*/
@@ -270,6 +325,17 @@ public class ReadPlanTable {
             return Integer.parseInt(date);
         }
         return  0;
+    }
+
+
+    /**
+     * 通过“序号+船名+批次+加工点”作为唯一数据判断，防止重复解析计划
+     *@param planTable 将要加到plantable的计划数据
+     * @return 返回加减的天数*/
+    public static PlanTable CheckRepeatPlanTableData(PlanTable planTable) {
+        System.out.println("fomula = "+planTable);
+
+        return null;
     }
 
 }
