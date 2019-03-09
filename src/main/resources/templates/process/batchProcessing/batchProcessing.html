@@ -11,41 +11,11 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								批次_id：<input type="text" name="batchId"/>
+								批次：<input type="text" name="batchId"/>
 							</li>
-
-							<li>
-								包含管子数：<input type="text" name="pipeNumber"/>
-							</li>
-
-							<li>
-								包含单元数：<input type="text" name="unitNumber"/>
-							</li>
-
-							<li>
-								加工中单元数：<input type="text" name="unitProcessingNumber"/>
-							</li>
-
-							<li>
-								加工完成单元数：<input type="text" name="unitFinishedNumber"/>
-							</li>
-
-							<li>
-								加工中管件：<input type="text" name="pipeProcessingNumber"/>
-							</li>
-
-							<li>
-								加工完成管件：<input type="text" name="pipeFinishedNumber"/>
-							</li>
-
-							<li>
-								下料派工记录id：<input type="text" name="arrangeId"/>
-							</li>
-
 							<li>
 								更新时间：<input type="text" name="updateTime"/>
 							</li>
-
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -96,34 +66,34 @@
 		        },
 				{
 					field : 'id', 
-					title : '批次加工序号，对应cut_plan表格的数据',
+					title : '批次序号',
 					visible: false
 				},
 				{
 					field : 'batchId', 
-					title : '批次_id',
-					sortable: true
-				},
-				{
-					field : 'pipeNumber', 
-					title : '包含管子数',
+					title : '批次',
 					sortable: true
 				},
 				{
 					field : 'unitNumber', 
-					title : '包含单元数',
+					title : '包含单元',
 					sortable: true
 				},
 				{
 					field : 'unitProcessingNumber', 
-					title : '加工中单元数',
+					title : '加工中单元',
 					sortable: true
 				},
 				{
 					field : 'unitFinishedNumber', 
-					title : '加工完成单元数',
+					title : '加工完成单元',
 					sortable: true
 				},
+                    {
+                        field : 'pipeNumber',
+                        title : '包含管件',
+                        sortable: true
+                    },
 				{
 					field : 'pipeProcessingNumber', 
 					title : '加工中管件',
@@ -132,11 +102,6 @@
 				{
 					field : 'pipeFinishedNumber', 
 					title : '加工完成管件',
-					sortable: true
-				},
-				{
-					field : 'arrangeId', 
-					title : '下料派工记录id',
 					sortable: true
 				},
 				{

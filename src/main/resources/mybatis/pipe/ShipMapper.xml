@@ -28,10 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
              <if test="shipName != null  and shipName != '' "> and ship_name = #{shipName}</if>
              <if test="shapeShipId != null  and shapeShipId != '' "> and shape_ship_id = #{shapeShipId}</if>
-             <if test="batchNumber != null "> and batch_number = #{batchNumber}</if>
-             <if test="unprocessNumber != null "> and unprocess_number = #{unprocessNumber}</if>
-             <if test="processingNumber != null "> and processing_number = #{processingNumber}</if>
-             <if test="processedNumber != null "> and processed_number = #{processedNumber}</if>
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
              <if test="isFinished != null "> and is_finished = #{isFinished}</if>
          </where>
