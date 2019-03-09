@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-unitProcessing-edit" th:object="${unitProcessing}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">单元pipe_unit 的id：</label>
+				<div class="col-sm-8">
+					<input id="unitId" name="unitId" th:field="*{unitId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">所属批次：</label>
+				<div class="col-sm-8">
+					<input id="batchId" name="batchId" th:field="*{batchId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">当前工序：</label>
+				<div class="col-sm-8">
+					<input id="processStage" name="processStage" th:field="*{processStage}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">当前工序排几，从下料算1开始算：</label>
+				<div class="col-sm-8">
+					<input id="processIndex" name="processIndex" th:field="*{processIndex}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">加工中管数量：</label>
+				<div class="col-sm-8">
+					<input id="pipeProcessingNumber" name="pipeProcessingNumber" th:field="*{pipeProcessingNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">加工完成管数量：</label>
+				<div class="col-sm-8">
+					<input id="pipeFinishedNumber" name="pipeFinishedNumber" th:field="*{pipeFinishedNumber}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">单元派工id：</label>
+				<div class="col-sm-8">
+					<input id="arrangeId" name="arrangeId" th:field="*{arrangeId}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "process/unitProcessing";
+		$("#form-unitProcessing-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-unitProcessing-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

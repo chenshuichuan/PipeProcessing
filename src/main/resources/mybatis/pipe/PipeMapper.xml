@@ -18,10 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="nextStage"    column="next_stage"    />
         <result property="processIndex"    column="process_index"    />
         <result property="isOutOfUnit"    column="is_out_of_unit"    />
+        <result property="isFinished"    column="is_finished"    />
     </resultMap>
 	
 	<sql id="selectPipeVo">
-        select id, ship_code, batch_id, unit_id, collecte_code, call_ship_id, assembly_pipe_id, update_time, process_order, process_stage, next_stage, process_index, is_out_of_unit from pipe_pipe
+        select id, ship_code, batch_id, unit_id, collecte_code, call_ship_id, assembly_pipe_id, update_time, process_order, process_stage, next_stage, process_index, is_out_of_unit,is_finished from pipe_pipe
     </sql>
 	
     <select id="selectPipeList" parameterType="Pipe" resultMap="PipeResult">
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="nextStage != null "> and next_stage = #{nextStage}</if>
              <if test="processIndex != null "> and process_index = #{processIndex}</if>
              <if test="isOutOfUnit != null "> and is_out_of_unit = #{isOutOfUnit}</if>
+            <if test="isOutOfUnit != null "> and is_finished = #{isFinished}</if>
          </where>
     </select>
     
@@ -64,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="nextStage != null  ">next_stage,</if>
 			<if test="processIndex != null  ">process_index,</if>
 			<if test="isOutOfUnit != null  ">is_out_of_unit,</if>
+            <if test="isFinished != null  ">is_finished,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -79,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="nextStage != null  ">#{nextStage},</if>
 			<if test="processIndex != null  ">#{processIndex},</if>
 			<if test="isOutOfUnit != null  ">#{isOutOfUnit},</if>
+            <if test="isFinished != null  ">#{isFinished},</if>
          </trim>
     </insert>
 	 
@@ -97,6 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="nextStage != null  ">next_stage = #{nextStage},</if>
             <if test="processIndex != null  ">process_index = #{processIndex},</if>
             <if test="isOutOfUnit != null  ">is_out_of_unit = #{isOutOfUnit},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished}</if>
         </trim>
         where id = #{id}
     </update>

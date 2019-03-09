@@ -27,14 +27,6 @@
 							</li>
 
 							<li>
-								号船id：<input type="text" name="callShipId"/>
-							</li>
-
-							<li>
-								装配管id：<input type="text" name="assemblyPipeId"/>
-							</li>
-
-							<li>
 								修改时间：<input type="text" name="updateTime"/>
 							</li>
 
@@ -50,14 +42,16 @@
 								下一工序：<input type="text" name="nextStage"/>
 							</li>
 
+							<!--<li>-->
+								<!--是否脱离单元工序：<input type="text" name="isOutOfUnit"/>-->
+							<!--</li>-->
 							<li>
-								当前工序排几：<input type="text" name="processIndex"/>
+								是否完工：
+								<select id="isFinished" name="isFinished"  th:with="type=${@dict.getType('user_yes_no')}">
+									<option>所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
 							</li>
-
-							<li>
-								是否脱离单元工序：<input type="text" name="isOutOfUnit"/>
-							</li>
-
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -90,6 +84,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('pipe:pipe:edit')}]];
         var removeFlag = [[${@permission.hasPermi('pipe:pipe:remove')}]];
+        var datas = [[${@dict.getType('user_yes_no')}]];
         ctx = ctx + webPrefix+"/";
         var prefix = ctx + "pipe/pipe";
 
@@ -137,11 +132,6 @@
 					sortable: true
 				},
 				{
-					field : 'assemblyPipeId', 
-					title : '装配管id',
-					sortable: true
-				},
-				{
 					field : 'updateTime', 
 					title : '修改时间',
 					sortable: true
@@ -171,6 +161,14 @@
 					title : '是否脱离单元工序',
 					sortable: true
 				},
+					{
+                        field : 'isFinished',
+                        title : '是否完工',
+                        align: 'center',
+                        formatter: function(value, row, index) {
+                            return $.table.selectDictLabel(datas, value);
+                        }
+                    },
 		        {
 		            title: '操作',
 		            align: 'center',

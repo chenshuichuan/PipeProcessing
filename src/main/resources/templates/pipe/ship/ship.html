@@ -11,39 +11,17 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								船名代码：<input type="text" name="shipCode"/>
+								号船代号：<input type="text" name="shipCode"/>
 							</li>
-
 							<li>
-								船名：<input type="text" name="shipName"/>
+								号船名称：<input type="text" name="shipName"/>
 							</li>
-
 							<li>
-								型船id：<input type="text" name="shapeShipId"/>
-							</li>
-
-							<li>
-								包含批次数：<input type="text" name="batchNumber"/>
-							</li>
-
-							<li>
-								未开工批次数：<input type="text" name="unprocessNumber"/>
-							</li>
-
-							<li>
-								加工中批次数：<input type="text" name="processingNumber"/>
-							</li>
-
-							<li>
-								完工批次数：<input type="text" name="processedNumber"/>
-							</li>
-
-							<li>
-								更新时间：<input type="text" name="updateTime"/>
-							</li>
-
-							<li>
-								是否完成：<input type="text" name="isFinished"/>
+								是否完成：
+								<select id="isFinished" name="isFinished"  th:with="type=${@dict.getType('user_yes_no')}">
+									<option>所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
 							</li>
 
 							<li>
@@ -78,6 +56,8 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('pipe:ship:edit')}]];
         var removeFlag = [[${@permission.hasPermi('pipe:ship:remove')}]];
+        var datas = [[${@dict.getType('user_yes_no')}]];
+
         ctx = ctx + webPrefix+"/";
         var prefix = ctx + "pipe/ship";
 
@@ -110,11 +90,6 @@
 					sortable: true
 				},
 				{
-					field : 'shapeShipId', 
-					title : '型船id',
-					sortable: true
-				},
-				{
 					field : 'batchNumber', 
 					title : '包含批次数',
 					sortable: true
@@ -142,7 +117,10 @@
 				{
 					field : 'isFinished', 
 					title : '是否完成',
-					sortable: true
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(datas, value);
+                    }
 				},
 		        {
 		            title: '操作',

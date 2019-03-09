@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.pipeProcessing.mapper.PipeProcessingMapper">
+    
+    <resultMap type="PipeProcessing" id="PipeProcessingResult">
+        <result property="id"    column="id"    />
+        <result property="pipeId"    column="pipe_id"    />
+        <result property="processStage"    column="process_stage"    />
+        <result property="processIndex"    column="process_index"    />
+        <result property="arrangeId"    column="arrange_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="batchId"    column="batch_id"    />
+        <result property="unitId"    column="unit_id"    />
+    </resultMap>
+	
+	<sql id="selectPipeProcessingVo">
+        select id, pipe_id, process_stage, process_index, arrange_id, update_time, batch_id, unit_id from process_pipe_processing
+    </sql>
+	
+    <select id="selectPipeProcessingList" parameterType="PipeProcessing" resultMap="PipeProcessingResult">
+        <include refid="selectPipeProcessingVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="pipeId != null "> and pipe_id = #{pipeId}</if>
+             <if test="processStage != null "> and process_stage = #{processStage}</if>
+             <if test="processIndex != null "> and process_index = #{processIndex}</if>
+             <if test="arrangeId != null "> and arrange_id = #{arrangeId}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="batchId != null "> and batch_id = #{batchId}</if>
+             <if test="unitId != null "> and unit_id = #{unitId}</if>
+         </where>
+    </select>
+    
+    <select id="selectPipeProcessingById" parameterType="Integer" resultMap="PipeProcessingResult">
+        <include refid="selectPipeProcessingVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPipeProcessing" parameterType="PipeProcessing">
+        insert into process_pipe_processing
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="pipeId != null  ">pipe_id,</if>
+			<if test="processStage != null  ">process_stage,</if>
+			<if test="processIndex != null  ">process_index,</if>
+			<if test="arrangeId != null  ">arrange_id,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="batchId != null  ">batch_id,</if>
+			<if test="unitId != null  ">unit_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="pipeId != null  ">#{pipeId},</if>
+			<if test="processStage != null  ">#{processStage},</if>
+			<if test="processIndex != null  ">#{processIndex},</if>
+			<if test="arrangeId != null  ">#{arrangeId},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="batchId != null  ">#{batchId},</if>
+			<if test="unitId != null  ">#{unitId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePipeProcessing" parameterType="PipeProcessing">
+        update process_pipe_processing
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pipeId != null  ">pipe_id = #{pipeId},</if>
+            <if test="processStage != null  ">process_stage = #{processStage},</if>
+            <if test="processIndex != null  ">process_index = #{processIndex},</if>
+            <if test="arrangeId != null  ">arrange_id = #{arrangeId},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="batchId != null  ">batch_id = #{batchId},</if>
+            <if test="unitId != null  ">unit_id = #{unitId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deletePipeProcessingById" parameterType="Integer">
+        delete from process_pipe_processing where id = #{id}
+    </delete>
+	
+    <delete id="deletePipeProcessingByIds" parameterType="String">
+        delete from process_pipe_processing where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

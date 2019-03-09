@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.taoliao.mapper.TaoliaoMapper">
+    
+    <resultMap type="Taoliao" id="TaoliaoResult">
+        <result property="id"    column="id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="batchId"    column="batch_id"    />
+        <result property="pipeMaterial"    column="pipe_material"    />
+        <result property="totalLength"    column="total_length"    />
+        <result property="pipeNumber"    column="pipe_number"    />
+        <result property="isTaoliao"    column="is_taoliao"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectTaoliaoVo">
+        select id, plan_id, batch_id, pipe_material, total_length, pipe_number, is_taoliao, update_time from process_taoliao
+    </sql>
+	
+    <select id="selectTaoliaoList" parameterType="Taoliao" resultMap="TaoliaoResult">
+        <include refid="selectTaoliaoVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="planId != null "> and plan_id = #{planId}</if>
+             <if test="batchId != null "> and batch_id = #{batchId}</if>
+             <if test="pipeMaterial != null  and pipeMaterial != '' "> and pipe_material = #{pipeMaterial}</if>
+             <if test="totalLength != null "> and total_length = #{totalLength}</if>
+             <if test="pipeNumber != null "> and pipe_number = #{pipeNumber}</if>
+             <if test="isTaoliao != null "> and is_taoliao = #{isTaoliao}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectTaoliaoById" parameterType="Integer" resultMap="TaoliaoResult">
+        <include refid="selectTaoliaoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTaoliao" parameterType="Taoliao">
+        insert into process_taoliao
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="planId != null  ">plan_id,</if>
+			<if test="batchId != null  ">batch_id,</if>
+			<if test="pipeMaterial != null  and pipeMaterial != ''  ">pipe_material,</if>
+			<if test="totalLength != null  ">total_length,</if>
+			<if test="pipeNumber != null  ">pipe_number,</if>
+			<if test="isTaoliao != null  ">is_taoliao,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="planId != null  ">#{planId},</if>
+			<if test="batchId != null  ">#{batchId},</if>
+			<if test="pipeMaterial != null  and pipeMaterial != ''  ">#{pipeMaterial},</if>
+			<if test="totalLength != null  ">#{totalLength},</if>
+			<if test="pipeNumber != null  ">#{pipeNumber},</if>
+			<if test="isTaoliao != null  ">#{isTaoliao},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTaoliao" parameterType="Taoliao">
+        update process_taoliao
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planId != null  ">plan_id = #{planId},</if>
+            <if test="batchId != null  ">batch_id = #{batchId},</if>
+            <if test="pipeMaterial != null  and pipeMaterial != ''  ">pipe_material = #{pipeMaterial},</if>
+            <if test="totalLength != null  ">total_length = #{totalLength},</if>
+            <if test="pipeNumber != null  ">pipe_number = #{pipeNumber},</if>
+            <if test="isTaoliao != null  ">is_taoliao = #{isTaoliao},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteTaoliaoById" parameterType="Integer">
+        delete from process_taoliao where id = #{id}
+    </delete>
+	
+    <delete id="deleteTaoliaoByIds" parameterType="String">
+        delete from process_taoliao where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.arrangeTable.mapper.ArrangeTableMapper">
+    
+    <resultMap type="ArrangeTable" id="ArrangeTableResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="section"    column="section"    />
+        <result property="stage"    column="stage"    />
+        <result property="arrangerId"    column="arranger_id"    />
+        <result property="workplace"    column="workplace"    />
+        <result property="workerId"    column="worker_id"    />
+        <result property="isFinished"    column="is_finished"    />
+        <result property="finishedTime"    column="finished_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="accessTime"    column="access_time"    />
+    </resultMap>
+	
+	<sql id="selectArrangeTableVo">
+        select id, type, name, plan_id, section, stage, arranger_id, workplace, worker_id, is_finished, finished_time, create_time, access_time from process_arrange_table
+    </sql>
+	
+    <select id="selectArrangeTableList" parameterType="ArrangeTable" resultMap="ArrangeTableResult">
+        <include refid="selectArrangeTableVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="type != null "> and type = #{type}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="planId != null "> and plan_id = #{planId}</if>
+             <if test="section != null  and section != '' "> and section = #{section}</if>
+             <if test="stage != null  and stage != '' "> and stage = #{stage}</if>
+             <if test="arrangerId != null "> and arranger_id = #{arrangerId}</if>
+             <if test="workplace != null  and workplace != '' "> and workplace = #{workplace}</if>
+             <if test="workerId != null "> and worker_id = #{workerId}</if>
+             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+             <if test="finishedTime != null "> and finished_time = #{finishedTime}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="accessTime != null "> and access_time = #{accessTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectArrangeTableById" parameterType="Integer" resultMap="ArrangeTableResult">
+        <include refid="selectArrangeTableVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertArrangeTable" parameterType="ArrangeTable">
+        insert into process_arrange_table
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="type != null  ">type,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="planId != null  ">plan_id,</if>
+			<if test="section != null  and section != ''  ">section,</if>
+			<if test="stage != null  and stage != ''  ">stage,</if>
+			<if test="arrangerId != null  ">arranger_id,</if>
+			<if test="workplace != null  and workplace != ''  ">workplace,</if>
+			<if test="workerId != null  ">worker_id,</if>
+			<if test="isFinished != null  ">is_finished,</if>
+			<if test="finishedTime != null  ">finished_time,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="accessTime != null  ">access_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="type != null  ">#{type},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="planId != null  ">#{planId},</if>
+			<if test="section != null  and section != ''  ">#{section},</if>
+			<if test="stage != null  and stage != ''  ">#{stage},</if>
+			<if test="arrangerId != null  ">#{arrangerId},</if>
+			<if test="workplace != null  and workplace != ''  ">#{workplace},</if>
+			<if test="workerId != null  ">#{workerId},</if>
+			<if test="isFinished != null  ">#{isFinished},</if>
+			<if test="finishedTime != null  ">#{finishedTime},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="accessTime != null  ">#{accessTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateArrangeTable" parameterType="ArrangeTable">
+        update process_arrange_table
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null  ">type = #{type},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="planId != null  ">plan_id = #{planId},</if>
+            <if test="section != null  and section != ''  ">section = #{section},</if>
+            <if test="stage != null  and stage != ''  ">stage = #{stage},</if>
+            <if test="arrangerId != null  ">arranger_id = #{arrangerId},</if>
+            <if test="workplace != null  and workplace != ''  ">workplace = #{workplace},</if>
+            <if test="workerId != null  ">worker_id = #{workerId},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+            <if test="finishedTime != null  ">finished_time = #{finishedTime},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="accessTime != null  ">access_time = #{accessTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteArrangeTableById" parameterType="Integer">
+        delete from process_arrange_table where id = #{id}
+    </delete>
+	
+    <delete id="deleteArrangeTableByIds" parameterType="String">
+        delete from process_arrange_table where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

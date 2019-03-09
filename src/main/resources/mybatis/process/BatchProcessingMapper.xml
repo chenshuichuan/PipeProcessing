@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.batchProcessing.mapper.BatchProcessingMapper">
+    
+    <resultMap type="BatchProcessing" id="BatchProcessingResult">
+        <result property="id"    column="id"    />
+        <result property="batchId"    column="batch_id"    />
+        <result property="pipeNumber"    column="pipe_number"    />
+        <result property="unitNumber"    column="unit_number"    />
+        <result property="unitProcessingNumber"    column="unit_processing_number"    />
+        <result property="unitFinishedNumber"    column="unit_finished_number"    />
+        <result property="pipeProcessingNumber"    column="pipe_processing_number"    />
+        <result property="pipeFinishedNumber"    column="pipe_finished_number"    />
+        <result property="arrangeId"    column="arrange_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectBatchProcessingVo">
+        select id, batch_id, pipe_number, unit_number, unit_processing_number, unit_finished_number, pipe_processing_number, pipe_finished_number, arrange_id, update_time from process_batch_processing
+    </sql>
+	
+    <select id="selectBatchProcessingList" parameterType="BatchProcessing" resultMap="BatchProcessingResult">
+        <include refid="selectBatchProcessingVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="batchId != null "> and batch_id = #{batchId}</if>
+             <if test="pipeNumber != null "> and pipe_number = #{pipeNumber}</if>
+             <if test="unitNumber != null "> and unit_number = #{unitNumber}</if>
+             <if test="unitProcessingNumber != null "> and unit_processing_number = #{unitProcessingNumber}</if>
+             <if test="unitFinishedNumber != null "> and unit_finished_number = #{unitFinishedNumber}</if>
+             <if test="pipeProcessingNumber != null "> and pipe_processing_number = #{pipeProcessingNumber}</if>
+             <if test="pipeFinishedNumber != null "> and pipe_finished_number = #{pipeFinishedNumber}</if>
+             <if test="arrangeId != null "> and arrange_id = #{arrangeId}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectBatchProcessingById" parameterType="Integer" resultMap="BatchProcessingResult">
+        <include refid="selectBatchProcessingVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBatchProcessing" parameterType="BatchProcessing">
+        insert into process_batch_processing
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="batchId != null  ">batch_id,</if>
+			<if test="pipeNumber != null  ">pipe_number,</if>
+			<if test="unitNumber != null  ">unit_number,</if>
+			<if test="unitProcessingNumber != null  ">unit_processing_number,</if>
+			<if test="unitFinishedNumber != null  ">unit_finished_number,</if>
+			<if test="pipeProcessingNumber != null  ">pipe_processing_number,</if>
+			<if test="pipeFinishedNumber != null  ">pipe_finished_number,</if>
+			<if test="arrangeId != null  ">arrange_id,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="batchId != null  ">#{batchId},</if>
+			<if test="pipeNumber != null  ">#{pipeNumber},</if>
+			<if test="unitNumber != null  ">#{unitNumber},</if>
+			<if test="unitProcessingNumber != null  ">#{unitProcessingNumber},</if>
+			<if test="unitFinishedNumber != null  ">#{unitFinishedNumber},</if>
+			<if test="pipeProcessingNumber != null  ">#{pipeProcessingNumber},</if>
+			<if test="pipeFinishedNumber != null  ">#{pipeFinishedNumber},</if>
+			<if test="arrangeId != null  ">#{arrangeId},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBatchProcessing" parameterType="BatchProcessing">
+        update process_batch_processing
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="batchId != null  ">batch_id = #{batchId},</if>
+            <if test="pipeNumber != null  ">pipe_number = #{pipeNumber},</if>
+            <if test="unitNumber != null  ">unit_number = #{unitNumber},</if>
+            <if test="unitProcessingNumber != null  ">unit_processing_number = #{unitProcessingNumber},</if>
+            <if test="unitFinishedNumber != null  ">unit_finished_number = #{unitFinishedNumber},</if>
+            <if test="pipeProcessingNumber != null  ">pipe_processing_number = #{pipeProcessingNumber},</if>
+            <if test="pipeFinishedNumber != null  ">pipe_finished_number = #{pipeFinishedNumber},</if>
+            <if test="arrangeId != null  ">arrange_id = #{arrangeId},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBatchProcessingById" parameterType="Integer">
+        delete from process_batch_processing where id = #{id}
+    </delete>
+	
+    <delete id="deleteBatchProcessingByIds" parameterType="String">
+        delete from process_batch_processing where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

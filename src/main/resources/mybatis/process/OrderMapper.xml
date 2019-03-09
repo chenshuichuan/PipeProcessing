@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.order.mapper.OrderMapper">
+    
+    <resultMap type="Order" id="OrderResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="orderList"    column="order_list"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="unitHasF"    column="unit_has_f"    />
+        <result property="pipeShapeHasBend"    column="pipe_shape_has_bend"    />
+        <result property="hasSurfaceTreat"    column="has_surface_treat"    />
+    </resultMap>
+	
+	<sql id="selectOrderVo">
+        select id, name, order_list, update_time, unit_has_f, pipe_shape_has_bend, has_surface_treat from process_order
+    </sql>
+	
+    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="orderList != null  and orderList != '' "> and order_list = #{orderList}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="unitHasF != null "> and unit_has_f = #{unitHasF}</if>
+             <if test="pipeShapeHasBend != null "> and pipe_shape_has_bend = #{pipeShapeHasBend}</if>
+             <if test="hasSurfaceTreat != null "> and has_surface_treat = #{hasSurfaceTreat}</if>
+         </where>
+    </select>
+    
+    <select id="selectOrderById" parameterType="Integer" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrder" parameterType="Order">
+        insert into process_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="orderList != null  and orderList != ''  ">order_list,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="unitHasF != null  ">unit_has_f,</if>
+			<if test="pipeShapeHasBend != null  ">pipe_shape_has_bend,</if>
+			<if test="hasSurfaceTreat != null  ">has_surface_treat,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="orderList != null  and orderList != ''  ">#{orderList},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="unitHasF != null  ">#{unitHasF},</if>
+			<if test="pipeShapeHasBend != null  ">#{pipeShapeHasBend},</if>
+			<if test="hasSurfaceTreat != null  ">#{hasSurfaceTreat},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateOrder" parameterType="Order">
+        update process_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="orderList != null  and orderList != ''  ">order_list = #{orderList},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="unitHasF != null  ">unit_has_f = #{unitHasF},</if>
+            <if test="pipeShapeHasBend != null  ">pipe_shape_has_bend = #{pipeShapeHasBend},</if>
+            <if test="hasSurfaceTreat != null  ">has_surface_treat = #{hasSurfaceTreat},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteOrderById" parameterType="Integer">
+        delete from process_order where id = #{id}
+    </delete>
+	
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from process_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

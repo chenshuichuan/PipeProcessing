@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-arrangeTable-edit" th:object="${arrangeTable}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">派工类型：</label>
+				<div class="col-sm-8">
+					<input id="type" name="type" th:field="*{type}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">派工名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">对应计划id：</label>
+				<div class="col-sm-8">
+					<input id="planId" name="planId" th:field="*{planId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工段：</label>
+				<div class="col-sm-8">
+					<input id="section" name="section" th:field="*{section}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工序：</label>
+				<div class="col-sm-8">
+					<input id="stage" name="stage" th:field="*{stage}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">派工者：</label>
+				<div class="col-sm-8">
+					<input id="arrangerId" name="arrangerId" th:field="*{arrangerId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工位：</label>
+				<div class="col-sm-8">
+					<input id="workplace" name="workplace" th:field="*{workplace}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工作者：</label>
+				<div class="col-sm-8">
+					<input id="workerId" name="workerId" th:field="*{workerId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否完工：</label>
+				<div class="col-sm-8">
+					<input id="isFinished" name="isFinished" th:field="*{isFinished}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">完工时间：</label>
+				<div class="col-sm-8">
+					<input id="finishedTime" name="finishedTime" th:field="*{finishedTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">派工时间：</label>
+				<div class="col-sm-8">
+					<input id="createTime" name="createTime" th:field="*{createTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工人接单时间：</label>
+				<div class="col-sm-8">
+					<input id="accessTime" name="accessTime" th:field="*{accessTime}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "process/arrangeTable";
+		$("#form-arrangeTable-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-arrangeTable-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

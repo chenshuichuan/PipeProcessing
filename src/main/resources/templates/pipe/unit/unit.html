@@ -52,7 +52,11 @@
 							</li>
 
 							<li>
-								是否完工：<input type="text" name="isFinished"/>
+								是否完工：
+								<select id="isFinished" name="isFinished"  th:with="type=${@dict.getType('user_yes_no')}">
+									<option>所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
 							</li>
 
 							<li>
@@ -87,6 +91,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('pipe:unit:edit')}]];
         var removeFlag = [[${@permission.hasPermi('pipe:unit:remove')}]];
+        var datas = [[${@dict.getType('user_yes_no')}]];
         ctx = ctx + webPrefix+"/";
         var prefix = ctx + "pipe/unit";
 
@@ -186,7 +191,10 @@
 				{
 					field : 'isFinished', 
 					title : '是否完工',
-					sortable: true
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(datas, value);
+                    }
 				},
 		        {
 		            title: '操作',

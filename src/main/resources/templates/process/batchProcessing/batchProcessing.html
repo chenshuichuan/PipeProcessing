@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								批次_id：<input type="text" name="batchId"/>
+							</li>
+
+							<li>
+								包含管子数：<input type="text" name="pipeNumber"/>
+							</li>
+
+							<li>
+								包含单元数：<input type="text" name="unitNumber"/>
+							</li>
+
+							<li>
+								加工中单元数：<input type="text" name="unitProcessingNumber"/>
+							</li>
+
+							<li>
+								加工完成单元数：<input type="text" name="unitFinishedNumber"/>
+							</li>
+
+							<li>
+								加工中管件：<input type="text" name="pipeProcessingNumber"/>
+							</li>
+
+							<li>
+								加工完成管件：<input type="text" name="pipeFinishedNumber"/>
+							</li>
+
+							<li>
+								下料派工记录id：<input type="text" name="arrangeId"/>
+							</li>
+
+							<li>
+								更新时间：<input type="text" name="updateTime"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="process:batchProcessing:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="process:batchProcessing:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="process:batchProcessing:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="process:batchProcessing:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('process:batchProcessing:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('process:batchProcessing:remove')}]];
+        ctx = ctx + webPrefix+"/";
+        var prefix = ctx + "process/batchProcessing";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "批次加工",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '批次加工序号，对应cut_plan表格的数据',
+					visible: false
+				},
+				{
+					field : 'batchId', 
+					title : '批次_id',
+					sortable: true
+				},
+				{
+					field : 'pipeNumber', 
+					title : '包含管子数',
+					sortable: true
+				},
+				{
+					field : 'unitNumber', 
+					title : '包含单元数',
+					sortable: true
+				},
+				{
+					field : 'unitProcessingNumber', 
+					title : '加工中单元数',
+					sortable: true
+				},
+				{
+					field : 'unitFinishedNumber', 
+					title : '加工完成单元数',
+					sortable: true
+				},
+				{
+					field : 'pipeProcessingNumber', 
+					title : '加工中管件',
+					sortable: true
+				},
+				{
+					field : 'pipeFinishedNumber', 
+					title : '加工完成管件',
+					sortable: true
+				},
+				{
+					field : 'arrangeId', 
+					title : '下料派工记录id',
+					sortable: true
+				},
+				{
+					field : 'updateTime', 
+					title : '更新时间',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

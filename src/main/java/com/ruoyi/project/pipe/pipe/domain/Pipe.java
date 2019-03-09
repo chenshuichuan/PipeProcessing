@@ -59,8 +59,48 @@ public class Pipe extends BaseEntity
 	/** 是否脱离单元工序 */
     @Column(name = "is_out_of_unit")
 	private Integer isOutOfUnit;
+	/** 是否完工 */
+	@Column(name = "is_finished")
+	private Integer isFinished;
 
-	public void setId(Integer id) 
+	public Pipe() {
+		this.updateTime = new Date();
+		this.processOrder = 0;
+		this.processStage = 0;
+		this.nextStage = 0;
+		this.processIndex = 0;
+		this.isOutOfUnit = 0;
+		this.isFinished = 0;
+	}
+
+	public Pipe(Integer id, String shipCode, Integer batchId, Integer unitId, String collecteCode,
+				Integer callShipId, Integer assemblyPipeId, Date updateTime, Integer processOrder, Integer processStage,
+				Integer nextStage, Integer processIndex, Integer isOutOfUnit, Integer isFinished) {
+		this.id = id;
+		this.shipCode = shipCode;
+		this.batchId = batchId;
+		this.unitId = unitId;
+		this.collecteCode = collecteCode;
+		this.callShipId = callShipId;
+		this.assemblyPipeId = assemblyPipeId;
+		this.updateTime = new Date();
+		this.processOrder = processOrder;
+		this.processStage = processStage;
+		this.nextStage = nextStage;
+		this.processIndex = processIndex;
+		this.isOutOfUnit = isOutOfUnit;
+		this.isFinished = isFinished;
+	}
+
+	public Integer getIsFinished() {
+		return isFinished;
+	}
+
+	public void setIsFinished(Integer isFinished) {
+		this.isFinished = isFinished;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
