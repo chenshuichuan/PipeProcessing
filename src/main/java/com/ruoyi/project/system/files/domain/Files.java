@@ -69,6 +69,9 @@ public class Files extends BaseEntity
 	@Transient
 	private Long channelId;
 
+	public Files() {
+	}
+
 	public String getContent() {
 		return content;
 	}

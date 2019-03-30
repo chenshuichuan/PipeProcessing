@@ -303,6 +303,7 @@ public class CutPlan extends BaseEntity
 		return twoTotalFinished;
 	}
 
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())

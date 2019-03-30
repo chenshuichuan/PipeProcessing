@@ -53,7 +53,10 @@ public class BatchProcessing extends BaseEntity
     @Column(name = "update_time")
 	private Date updateTime;
 
-	public void setId(Integer id) 
+	public BatchProcessing() {
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

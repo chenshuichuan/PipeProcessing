@@ -10,17 +10,6 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-							<li>
-								加工顺序名称：<input type="text" name="name"/>
-							</li>
-
-							<li>
-								顺序列表，以逗号隔开：<input type="text" name="orderList"/>
-							</li>
-
-							<li>
-								规则更新时间：<input type="text" name="updateTime"/>
-							</li>
 
 							<li>
 								单元名称包含F：<input type="text" name="unitHasF"/>
@@ -66,8 +55,9 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('process:order:edit')}]];
         var removeFlag = [[${@permission.hasPermi('process:order:remove')}]];
-        ctx = ctx + webPrefix+"/";
-        var prefix = ctx + "process/order";
+        var user_yes_no = [[${@dict.getType('user_yes_no')}]];
+
+        var prefix = ctx +webPrefix+ "/process/order";
 
         $(function() {
             var options = {
@@ -94,7 +84,7 @@
 				},
 				{
 					field : 'orderList', 
-					title : '顺序列表，以逗号隔开',
+					title : '加工顺序列表',
 					sortable: true
 				},
 				{
@@ -105,17 +95,26 @@
 				{
 					field : 'unitHasF', 
 					title : '单元名称包含F',
-					sortable: true
+					sortable: true,
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(user_yes_no, item.unitHasF);
+                    }
 				},
 				{
 					field : 'pipeShapeHasBend', 
-					title : '管形态包含‘弯字’',
-					sortable: true
+					title : '管形态包含‘弯’字',
+					sortable: true,
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(user_yes_no, item.pipeShapeHasBend);
+                    }
 				},
 				{
 					field : 'hasSurfaceTreat', 
 					title : '需要进行表面处理',
-					sortable: true
+					sortable: true,
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(user_yes_no, item.hasSurfaceTreat);
+                    }
 				},
 		        {
 		            title: '操作',

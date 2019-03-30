@@ -47,7 +47,10 @@ public class PipeProcessing extends BaseEntity
     @Column(name = "unit_id")
 	private Integer unitId;
 
-	public void setId(Integer id) 
+	public PipeProcessing() {
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

@@ -65,8 +65,8 @@
         var editFlag = [[${@permission.hasPermi('process:unitArrange:edit')}]];
         var removeFlag = [[${@permission.hasPermi('process:unitArrange:remove')}]];
         var datas = [[${@dict.getType('user_yes_no')}]];
-        ctx = ctx + webPrefix+"/";
-        var prefix = ctx + "process/unitArrange";
+
+        var prefix = ctx +webPrefix+ "/process/unitArrange";
 
         $(function() {
             var options = {

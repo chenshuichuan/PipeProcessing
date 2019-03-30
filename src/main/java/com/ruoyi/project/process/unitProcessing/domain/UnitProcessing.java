@@ -51,6 +51,8 @@ public class UnitProcessing extends BaseEntity
 	@Column(name = "update_time")
 	private Date updateTime;
 
+	public UnitProcessing() {
+	}
 
 	public void setId(Integer id)
 	{

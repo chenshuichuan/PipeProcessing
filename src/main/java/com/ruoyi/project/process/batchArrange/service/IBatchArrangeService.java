@@ -1,6 +1,5 @@
 package com.ruoyi.project.process.batchArrange.service;
 
-import com.ruoyi.project.process.batchArrange.domain.BatchArrange;
 import java.util.List;
 
 /**

@@ -89,8 +89,8 @@
         var editFlag = [[${@permission.hasPermi('pipe:processPlan:edit')}]];
         var removeFlag = [[${@permission.hasPermi('pipe:processPlan:remove')}]];
         var datas = [[${@dict.getType('user_yes_no')}]];
-        ctx = ctx + webPrefix+"/";
-        var prefix = ctx + "pipe/processPlan";
+
+        var prefix = ctx +webPrefix+ "/pipe/processPlan";
 
         $(function() {
             var options = {

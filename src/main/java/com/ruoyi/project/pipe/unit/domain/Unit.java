@@ -78,7 +78,10 @@ public class Unit extends BaseEntity
     @Column(name = "is_finished")
 	private Integer isFinished;
 
-	public void setId(Integer id) 
+	public Unit() {
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

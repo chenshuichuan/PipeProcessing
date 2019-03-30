@@ -49,8 +49,8 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('process:unitProcessing:edit')}]];
         var removeFlag = [[${@permission.hasPermi('process:unitProcessing:remove')}]];
-        ctx = ctx + webPrefix+"/";
-        var prefix = ctx + "process/unitProcessing";
+
+        var prefix = ctx +webPrefix+ "/process/unitProcessing";
 
         $(function() {
             var options = {

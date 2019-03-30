@@ -1,6 +1,9 @@
 package com.ruoyi.project.process.unitArrange.controller;
 
 import java.util.List;
+
+import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
+import com.ruoyi.project.pipe.processPlan.service.IProcessPlanService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.project.process.unitArrange.domain.UnitArrange;
-import com.ruoyi.project.process.unitArrange.service.IUnitArrangeService;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
@@ -32,7 +33,7 @@ public class UnitArrangeController extends BaseController
     private String prefix = "process/unitArrange";
 	
 	@Autowired
-	private IUnitArrangeService unitArrangeService;
+	private IProcessPlanService processPlanService;
 	
 	@RequiresPermissions("process:unitArrange:view")
 	@GetMapping()
@@ -47,10 +48,10 @@ public class UnitArrangeController extends BaseController
 	@RequiresPermissions("process:unitArrange:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(UnitArrange unitArrange)
+	public TableDataInfo list(ProcessPlan processPlan)
 	{
 		startPage();
-        List<UnitArrange> list = unitArrangeService.selectUnitArrangeList(unitArrange);
+        List<ProcessPlan> list = processPlanService.selectProcessPlanList(processPlan);
 		return getDataTable(list);
 	}
 	
@@ -61,10 +62,10 @@ public class UnitArrangeController extends BaseController
 	@RequiresPermissions("process:unitArrange:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(UnitArrange unitArrange)
+    public AjaxResult export(ProcessPlan processPlan)
     {
-    	List<UnitArrange> list = unitArrangeService.selectUnitArrangeList(unitArrange);
-        ExcelUtil<UnitArrange> util = new ExcelUtil<UnitArrange>(UnitArrange.class);
+    	List<ProcessPlan> list = processPlanService.selectProcessPlanList(processPlan);
+        ExcelUtil<ProcessPlan> util = new ExcelUtil<ProcessPlan>(ProcessPlan.class);
         return util.exportExcel(list, "unitArrange");
     }
 	
@@ -84,9 +85,9 @@ public class UnitArrangeController extends BaseController
 	@Log(title = "单元派工", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(UnitArrange unitArrange)
+	public AjaxResult addSave(ProcessPlan processPlan)
 	{		
-		return toAjax(unitArrangeService.insertUnitArrange(unitArrange));
+		return toAjax(processPlanService.insertProcessPlan(processPlan));
 	}
 
 	/**
@@ -95,8 +96,8 @@ public class UnitArrangeController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
-		UnitArrange unitArrange = unitArrangeService.selectUnitArrangeById(id);
-		mmap.put("unitArrange", unitArrange);
+		ProcessPlan processPlan = processPlanService.selectProcessPlanById(id);
+		mmap.put("unitArrange", processPlan);
 	    return prefix + "/edit";
 	}
 	
@@ -107,9 +108,9 @@ public class UnitArrangeController extends BaseController
 	@Log(title = "单元派工", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(UnitArrange unitArrange)
+	public AjaxResult editSave(ProcessPlan processPlan)
 	{		
-		return toAjax(unitArrangeService.updateUnitArrange(unitArrange));
+		return toAjax(processPlanService.updateProcessPlan(processPlan));
 	}
 	
 	/**
@@ -121,7 +122,7 @@ public class UnitArrangeController extends BaseController
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{		
-		return toAjax(unitArrangeService.deleteUnitArrangeByIds(ids));
+		return toAjax(processPlanService.deleteProcessPlanByIds(ids));
 	}
 	
 }

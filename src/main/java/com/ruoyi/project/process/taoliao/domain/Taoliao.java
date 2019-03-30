@@ -47,7 +47,10 @@ public class Taoliao extends BaseEntity
     @Column(name = "update_time")
 	private Date updateTime;
 
-	public void setId(Integer id) 
+	public Taoliao() {
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

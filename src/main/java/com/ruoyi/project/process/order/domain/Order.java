@@ -45,6 +45,9 @@ public class Order extends BaseEntity
 	@Column(name = "has_surface_treat")
 	private Integer hasSurfaceTreat;
 
+	public Order() {
+	}
+
 	public void setId(Integer id)
 	{
 		this.id = id;

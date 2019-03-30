@@ -62,7 +62,10 @@ public class ArrangeTable extends BaseEntity
     @Column(name = "access_time")
 	private Date accessTime;
 
-	public void setId(Integer id) 
+	public ArrangeTable() {
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

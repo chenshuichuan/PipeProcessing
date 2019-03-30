@@ -51,7 +51,10 @@ public class Ship extends BaseEntity
     @Column(name = "is_finished")
 	private Integer isFinished;
 
-	public void setId(Integer id) 
+	public Ship() {
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}

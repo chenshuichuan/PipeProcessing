@@ -90,8 +90,8 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('pipe:workPipe:edit')}]];
         var removeFlag = [[${@permission.hasPermi('pipe:workPipe:remove')}]];
-        ctx = ctx + webPrefix+"/";
-        var prefix = ctx + "pipe/workPipe";
+
+        var prefix = ctx +webPrefix+ "/pipe/workPipe";
 
         $(function() {
             var options = {
