@@ -1,5 +1,6 @@
 package com.ruoyi.project.pipe.processPlan.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -40,6 +41,7 @@ public class ProcessPlan extends BaseEntity
 	@Column(name = "batch_description")
 	private String batchDescription;
 	/** 上传时间 */
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "create_time")
 	private Date createTime;
 	/** 更新时间 */
@@ -61,21 +63,26 @@ public class ProcessPlan extends BaseEntity
 	@Column(name = "light_body_pipe")
 	private String lightBodyPipe;
 	/** 计划结束时间 */
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "plan_start")
 	private Date planStart;
 	/** 计划开始时间 */
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "plan_end")
 	private Date planEnd;
 	/** 实际开始时间 */
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "actual_start")
 	private Date actualStart;
 	/** 实际结束时间 */
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "actual_end")
 	private Date actualEnd;
 	/** 10-12计划 */
 	@Column(name = "middle_date")
 	private Date middleDate;
 	/** 发图时间 */
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "send_pic_time")
 	private Date sendPicTime;
 	/**  */

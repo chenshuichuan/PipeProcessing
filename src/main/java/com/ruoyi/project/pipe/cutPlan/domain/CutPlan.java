@@ -1,5 +1,6 @@
 package com.ruoyi.project.pipe.cutPlan.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
@@ -48,6 +49,7 @@ public class CutPlan extends BaseEntity
 	@Column(name = "is_finished")
 	private Integer isFinished;
 	/** 完工时间 */
+	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "finished_date")
 	private Date finishedDate;
 	/** 该次计划下料总数 */

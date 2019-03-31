@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="nextStage != null "> and next_stage = #{nextStage}</if>
              <if test="processIndex != null "> and process_index = #{processIndex}</if>
              <if test="isOutOfUnit != null "> and is_out_of_unit = #{isOutOfUnit}</if>
-            <if test="isOutOfUnit != null "> and is_finished = #{isFinished}</if>
+            <if test="isFinished != null "> and is_finished = #{isFinished}</if>
          </where>
     </select>
     

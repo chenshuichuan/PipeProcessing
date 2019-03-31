@@ -64,13 +64,13 @@ public class Pipe extends BaseEntity
 	private Integer isFinished;
 
 	public Pipe() {
-		this.updateTime = new Date();
-		this.processOrder = 0;
-		this.processStage = 0;
-		this.nextStage = 0;
-		this.processIndex = 0;
-		this.isOutOfUnit = 0;
-		this.isFinished = 0;
+//		this.updateTime = new Date();
+//		this.processOrder = 0;
+//		this.processStage = 0;
+//		this.nextStage = 0;
+//		this.processIndex = 0;
+//		this.isOutOfUnit = 0;
+//		this.isFinished = 0;
 	}
 
 	public Pipe(Integer id, String shipCode, Integer batchId, Integer unitId, String collecteCode,

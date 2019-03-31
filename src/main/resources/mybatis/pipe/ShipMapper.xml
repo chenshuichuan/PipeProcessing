@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="isFinished"    column="is_finished"    />
     </resultMap>
-	
+
 	<sql id="selectShipVo">
         select id, ship_code, ship_name, shape_ship_id, batch_number, unprocess_number, processing_number, processed_number, update_time, is_finished from pipe_ship
     </sql>
@@ -92,5 +92,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-    
+
+     <!--用于查询船的简单列表-->
+    <resultMap type="ShipSimple" id="ShipSimpleResult">
+        <result property="id"    column="id"    />
+        <result property="shipCode"    column="ship_code"    />
+        <result property="shipName"    column="ship_name"    />
+        <result property="isFinished"    column="is_finished"    />
+    </resultMap>
+    <sql id="selectShipSimpleVo">
+        select id, ship_code, ship_name, shape_ship_id, is_finished from pipe_ship
+    </sql>
+    <select id="selectShipSimpleList" parameterType="Integer" resultMap="ShipSimpleResult">
+        <include refid="selectShipSimpleVo"/>
+        <where>
+            <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+        </where>
+    </select>
+
 </mapper>

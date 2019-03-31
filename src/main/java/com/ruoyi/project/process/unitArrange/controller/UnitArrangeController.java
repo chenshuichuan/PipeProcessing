@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
 import com.ruoyi.project.pipe.processPlan.service.IProcessPlanService;
+import com.ruoyi.project.pipe.unit.domain.Unit;
+import com.ruoyi.project.pipe.unit.service.IUnitService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,7 @@ public class UnitArrangeController extends BaseController
     private String prefix = "process/unitArrange";
 	
 	@Autowired
-	private IProcessPlanService processPlanService;
+	private IUnitService unitService;
 	
 	@RequiresPermissions("process:unitArrange:view")
 	@GetMapping()
@@ -48,10 +50,10 @@ public class UnitArrangeController extends BaseController
 	@RequiresPermissions("process:unitArrange:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(ProcessPlan processPlan)
+	public TableDataInfo list(Unit unit)
 	{
 		startPage();
-        List<ProcessPlan> list = processPlanService.selectProcessPlanList(processPlan);
+        List<Unit> list = unitService.selectUnitList(unit);
 		return getDataTable(list);
 	}
 	
@@ -62,10 +64,10 @@ public class UnitArrangeController extends BaseController
 	@RequiresPermissions("process:unitArrange:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(ProcessPlan processPlan)
+    public AjaxResult export(Unit unit)
     {
-    	List<ProcessPlan> list = processPlanService.selectProcessPlanList(processPlan);
-        ExcelUtil<ProcessPlan> util = new ExcelUtil<ProcessPlan>(ProcessPlan.class);
+    	List<Unit> list = unitService.selectUnitList(unit);
+        ExcelUtil<Unit> util = new ExcelUtil<Unit>(Unit.class);
         return util.exportExcel(list, "unitArrange");
     }
 	
@@ -85,9 +87,9 @@ public class UnitArrangeController extends BaseController
 	@Log(title = "单元派工", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(ProcessPlan processPlan)
+	public AjaxResult addSave(Unit unit)
 	{		
-		return toAjax(processPlanService.insertProcessPlan(processPlan));
+		return toAjax(unitService.insertUnit(unit));
 	}
 
 	/**
@@ -96,8 +98,8 @@ public class UnitArrangeController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
-		ProcessPlan processPlan = processPlanService.selectProcessPlanById(id);
-		mmap.put("unitArrange", processPlan);
+		Unit unit = unitService.selectUnitById(id);
+		mmap.put("unitArrange", unit);
 	    return prefix + "/edit";
 	}
 	
@@ -108,9 +110,9 @@ public class UnitArrangeController extends BaseController
 	@Log(title = "单元派工", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(ProcessPlan processPlan)
+	public AjaxResult editSave(Unit unit)
 	{		
-		return toAjax(processPlanService.updateProcessPlan(processPlan));
+		return toAjax(unitService.updateUnit(unit));
 	}
 	
 	/**
@@ -122,7 +124,7 @@ public class UnitArrangeController extends BaseController
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{		
-		return toAjax(processPlanService.deleteProcessPlanByIds(ids));
+		return toAjax(unitService.deleteUnitByIds(ids));
 	}
 	
 }

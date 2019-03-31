@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
         <result property="orderList"    column="order_list"    />
+        <result property="orderListName"    column="order_list_name"    />
         <result property="updateTime"    column="update_time"    />
         <result property="unitHasF"    column="unit_has_f"    />
         <result property="pipeShapeHasBend"    column="pipe_shape_has_bend"    />
@@ -15,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectOrderVo">
-        select id, name, order_list, update_time, unit_has_f, pipe_shape_has_bend, has_surface_treat from process_order
+        select id, name, order_list,order_list_name, update_time, unit_has_f, pipe_shape_has_bend, has_surface_treat from process_order
     </sql>
 	
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
@@ -24,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null "> and id = #{id}</if>
              <if test="name != null  and name != '' "> and name = #{name}</if>
              <if test="orderList != null  and orderList != '' "> and order_list = #{orderList}</if>
+             <if test="orderListName != null  and orderListName != '' "> and order_list_name = #{orderListName}</if>
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
              <if test="unitHasF != null "> and unit_has_f = #{unitHasF}</if>
              <if test="pipeShapeHasBend != null "> and pipe_shape_has_bend = #{pipeShapeHasBend}</if>
@@ -42,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="id != null  ">id,</if>
 			<if test="name != null  and name != ''  ">name,</if>
 			<if test="orderList != null  and orderList != ''  ">order_list,</if>
+            <if test="orderListName != null  and orderListName != ''  ">order_list_name,</if>
 			<if test="updateTime != null  ">update_time,</if>
 			<if test="unitHasF != null  ">unit_has_f,</if>
 			<if test="pipeShapeHasBend != null  ">pipe_shape_has_bend,</if>
@@ -51,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="id != null  ">#{id},</if>
 			<if test="name != null  and name != ''  ">#{name},</if>
 			<if test="orderList != null  and orderList != ''  ">#{orderList},</if>
+            <if test="orderListName != null  and orderListName != ''  ">#{orderListName},</if>
 			<if test="updateTime != null  ">#{updateTime},</if>
 			<if test="unitHasF != null  ">#{unitHasF},</if>
 			<if test="pipeShapeHasBend != null  ">#{pipeShapeHasBend},</if>
@@ -63,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null  and name != ''  ">name = #{name},</if>
             <if test="orderList != null  and orderList != ''  ">order_list = #{orderList},</if>
+            <if test="orderListName != null  and orderListName != ''  ">order_list_name = #{orderListName},</if>
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="unitHasF != null  ">unit_has_f = #{unitHasF},</if>
             <if test="pipeShapeHasBend != null  ">pipe_shape_has_bend = #{pipeShapeHasBend},</if>

@@ -144,5 +144,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-    
+
+    <!--用于查询计划的简单列表-->
+
+    <select id="selectPlanNameList" parameterType="Integer" resultType="String">
+        select DISTINCT plan_name  from pipe_process_plan
+        <where>
+            <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+        </where>
+    </select>
+
 </mapper>

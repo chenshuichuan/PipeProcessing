@@ -58,5 +58,12 @@ public interface ProcessPlanMapper
      * @return 结果
      */
 	public int deleteProcessPlanByIds(String[] ids);
+
+	/**
+	 * 查询下料计划的名称列表
+	 * @param isFinished
+	 * @return 名称列表
+	 */
+	public List<String> selectPlanNameList(Integer isFinished);
 	
 }

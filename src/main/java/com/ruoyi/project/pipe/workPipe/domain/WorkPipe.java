@@ -84,7 +84,7 @@ public class WorkPipe extends BaseEntity
 		this.shapeShipId = shapeShipId;
 	}
 
-	public double getShapeShipId()
+	public Integer getShapeShipId()
 	{
 		return shapeShipId;
 	}
