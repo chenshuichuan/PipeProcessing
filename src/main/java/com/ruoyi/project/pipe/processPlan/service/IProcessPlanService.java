@@ -50,5 +50,11 @@ public interface IProcessPlanService
      * @return 结果
      */
 	public int deleteProcessPlanByIds(String ids);
-	
+
+	/**
+	 * 判断某加工计划下包含的单元、管件
+	 * @param processPlan 要分析判断的计划
+	 * @return int 分析成功返回1，否则返回0
+	 * */
+	public int judgeBatchUnitOfPlan(ProcessPlan processPlan);
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.middleStatus.mapper.MiddleStatusMapper">
+    
+    <resultMap type="MiddleStatus" id="MiddleStatusResult">
+        <result property="id"    column="id"    />
+        <result property="infor"    column="infor"    />
+        <result property="relateTable"    column="relate_table"    />
+        <result property="relateData"    column="relate_data"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="operateType"    column="operate_type"    />
+        <result property="isRead"    column="is_read"    />
+    </resultMap>
+	
+	<sql id="selectMiddleStatusVo">
+        select id, infor, relate_table, relate_data, create_time, operate_type, is_read from pipe_middle_status
+    </sql>
+	
+    <select id="selectMiddleStatusList" parameterType="MiddleStatus" resultMap="MiddleStatusResult">
+        <include refid="selectMiddleStatusVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="infor != null  and infor != '' "> and infor = #{infor}</if>
+             <if test="relateTable != null  and relateTable != '' "> and relate_table = #{relateTable}</if>
+             <if test="relateData != null  and relateData != '' "> and relate_data = #{relateData}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="operateType != null  and operateType != '' "> and operate_type = #{operateType}</if>
+             <if test="isRead != null "> and is_read = #{isRead}</if>
+         </where>
+    </select>
+    
+    <select id="selectMiddleStatusById" parameterType="Integer" resultMap="MiddleStatusResult">
+        <include refid="selectMiddleStatusVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMiddleStatus" parameterType="MiddleStatus">
+        insert into pipe_middle_status
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="infor != null  and infor != ''  ">infor,</if>
+			<if test="relateTable != null  and relateTable != ''  ">relate_table,</if>
+			<if test="relateData != null  and relateData != ''  ">relate_data,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="operateType != null  and operateType != ''  ">operate_type,</if>
+			<if test="isRead != null  ">is_read,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="infor != null  and infor != ''  ">#{infor},</if>
+			<if test="relateTable != null  and relateTable != ''  ">#{relateTable},</if>
+			<if test="relateData != null  and relateData != ''  ">#{relateData},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="operateType != null  and operateType != ''  ">#{operateType},</if>
+			<if test="isRead != null  ">#{isRead},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMiddleStatus" parameterType="MiddleStatus">
+        update pipe_middle_status
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infor != null  and infor != ''  ">infor = #{infor},</if>
+            <if test="relateTable != null  and relateTable != ''  ">relate_table = #{relateTable},</if>
+            <if test="relateData != null  and relateData != ''  ">relate_data = #{relateData},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="operateType != null  and operateType != ''  ">operate_type = #{operateType},</if>
+            <if test="isRead != null  ">is_read = #{isRead},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteMiddleStatusById" parameterType="Integer">
+        delete from pipe_middle_status where id = #{id}
+    </delete>
+	
+    <delete id="deleteMiddleStatusByIds" parameterType="String">
+        delete from pipe_middle_status where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
