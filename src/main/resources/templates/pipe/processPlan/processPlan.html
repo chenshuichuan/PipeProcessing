@@ -96,6 +96,7 @@
     var editFlag = [[${@permission.hasPermi('pipe:processPlan:edit')}]];
     var removeFlag = [[${@permission.hasPermi('pipe:processPlan:remove')}]];
     var datas = [[${@dict.getType('user_yes_no')}]];
+    var user_analysis_status = [[${@dict.getType('user_analysis_status')}]];
 
     var prefix = ctx + webPrefix + "/pipe/processPlan";
 
@@ -219,6 +220,13 @@
                     title: '是否完工',
                     formatter: function (value, item, index) {
                         return $.table.selectDictLabel(datas, item.isFinished);
+                    }
+                },
+                {
+                    field: 'analysisStatus',
+                    title: '解析状态',
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(user_analysis_status, item.analysisStatus);
                     }
                 },
                 {

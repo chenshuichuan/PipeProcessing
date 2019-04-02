@@ -91,12 +91,23 @@ public class ProcessPlan extends BaseEntity
 	/** 是否完工 */
 	@Column(name = "is_finished")
 	private Integer isFinished;
+	/** 计划解析状态，0未解析/1已经解析/-1解析失败 */
+	@Column(name = "analysis_status")
+	private Integer analysisStatus;
 
 	public ProcessPlan() {
 		this.createTime = new Date();
 		this.updateTime = new Date();
 		this.number = 0;
 		this.isFinished = 0;
+	}
+
+	public Integer getAnalysisStatus() {
+		return analysisStatus;
+	}
+
+	public void setAnalysisStatus(Integer analysisStatus) {
+		this.analysisStatus = analysisStatus;
 	}
 
 	public void setId(Integer id)

@@ -58,6 +58,20 @@ public class MiddleStatus extends BaseEntity {
     @Column(name = "is_read")
     private Integer isRead;
 
+    public MiddleStatus() {
+        createTime = new Date();
+        isRead = 0;
+    }
+
+    public MiddleStatus(String infor, String relateTable, String relateData, String operateType) {
+        this.infor = infor;
+        this.relateTable = relateTable;
+        this.relateData = relateData;
+        this.createTime = new Date();
+        this.operateType = operateType;
+        this.isRead = 0;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

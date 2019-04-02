@@ -19,6 +19,8 @@ import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
 import com.ruoyi.project.pipe.processPlan.service.ProcessPlanRepository;
 import com.ruoyi.project.pipe.ship.domain.Ship;
 import com.ruoyi.project.pipe.ship.service.ShipRepository;
+import com.ruoyi.project.pipe.unit.domain.Unit;
+import com.ruoyi.project.pipe.unit.service.UnitRepository;
 import com.ruoyi.project.pipe.workPipe.domain.WorkPipe;
 import com.ruoyi.project.pipe.workPipe.service.WorkPipeRepository;
 import org.junit.Assert;
@@ -67,6 +69,9 @@ public class PipeRepositoryTest {
     private ShipRepository shipRepository;
     @Autowired
     private WorkPipeRepository workPipeRepository;
+    @Autowired
+    private UnitRepository unitRepository;
+
     @Test
     public void pipeRepository() {
         List<Pipe> pipeList = pipeRepository.findAll();
@@ -143,6 +148,24 @@ public class PipeRepositoryTest {
         List<WorkPipe> pipeList = workPipeRepository.findAll();
         Assert.assertThat(pipeList,notNullValue());
         //Assert.assertThat(pipeList.size(),greaterThan(0));
+        System.out.println("find size = "+pipeList.size());
+    }
+    @Test
+    public void unitRepository() {
+        List<Unit> pipeList = unitRepository.findAll();
+        Assert.assertThat(pipeList,notNullValue());
+        Assert.assertThat(pipeList.size(),greaterThan(0));
+        System.out.println("find size = "+pipeList.size());
+
+        pipeList = unitRepository.findByBatchNameAndNameLike("G01","M%");
+
+        Assert.assertThat(pipeList,notNullValue());
+        Assert.assertThat(pipeList.size(),greaterThan(0));
+        System.out.println("find size = "+pipeList.size());
+
+        pipeList = unitRepository.findByBatchNameAndNameLike("G01","%");
+        Assert.assertThat(pipeList,notNullValue());
+        Assert.assertThat(pipeList.size(),greaterThan(0));
         System.out.println("find size = "+pipeList.size());
     }
 }

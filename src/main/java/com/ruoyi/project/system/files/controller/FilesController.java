@@ -327,6 +327,7 @@ public class FilesController extends BaseController {
      * 根据选择的文件生成计划(仅xls计划文件)
      * 默认计划文件为xls后缀的文件
      */
+    @RequiresPermissions("file:add")
     @PostMapping("/readXlsFile")
     @Log(title = "生成计划", businessType = BusinessType.OTHER)
     @ResponseBody

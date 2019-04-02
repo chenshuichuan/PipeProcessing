@@ -26,10 +26,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sendPicTime"    column="send_pic_time"    />
         <result property="remark"    column="remark"    />
         <result property="isFinished"    column="is_finished"    />
+        <result property="analysisStatus"    column="analysis_status"    />
     </resultMap>
 	
 	<sql id="selectProcessPlanVo">
-        select id, serial_number, plan_name, ship_name, batch_name, batch_description, create_time, update_time, stocks, sections, process_place, number, light_body_pipe, plan_start, plan_end, actual_start, actual_end, middle_date, send_pic_time, remark, is_finished from pipe_process_plan
+        select id, serial_number, plan_name, ship_name, batch_name, batch_description, create_time, update_time, stocks, sections, process_place, number, light_body_pipe, plan_start, plan_end, actual_start, actual_end, middle_date, send_pic_time, remark, is_finished, analysis_status from pipe_process_plan
     </sql>
 	
     <select id="selectProcessPlanList" parameterType="ProcessPlan" resultMap="ProcessPlanResult">
@@ -49,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
              <if test="isFinished != null and isFinished != 0"> and is_finished = #{isFinished}</if>
+             <if test="analysisStatus != null and analysisStatus != 0"> and analysis_status = #{analysisStatus}</if>
          </where>
     </select>
     
@@ -81,6 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="sendPicTime != null  ">send_pic_time,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="isFinished != null  ">is_finished,</if>
+            <if test="analysisStatus != null  ">analysis_status,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -104,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="sendPicTime != null  ">#{sendPicTime},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="isFinished != null  ">#{isFinished},</if>
+            <if test="analysisStatus != null  ">#{analysisStatus},</if>
          </trim>
     </insert>
 	 
@@ -130,6 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sendPicTime != null  ">send_pic_time = #{sendPicTime},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+            <if test="analysisStatus != null  ">analysis_status = #{analysisStatus},</if>
         </trim>
         where id = #{id}
     </update>
