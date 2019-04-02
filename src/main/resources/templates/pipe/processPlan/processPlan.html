@@ -37,7 +37,12 @@
                         </li>
 
                         <li>
-                            船名：<input type="text" name="shipName"/>
+                            船名：
+                            <select id="shipName" name="shipName">
+                                <option th:each="ship,iterStat : ${shipSimpleList}" th:text="${ship.shipName}"
+                                        th:value="${ship.shipName}"></option>
+                            </select>
+                            <!--<input type="text" name="shipName"/>-->
                         </li>
 
                         <li>
@@ -252,21 +257,19 @@
             $.operate.post("/admin/file/readXlsFile", data);
         })
     }
-
     // 解析计划确认
     function AnalysisPlan(planId) {
-        var selectFileId = $("#selectPlan").val();
         $.modal.confirm("确定要解析该批次的生产计划吗？", function () {
-            var data = {"id": selectFileId};
-            $.operate.post("/admin/file/readXlsFile", data);
+            var data = {"id": planId};
+            $.operate.post("/admin/pipe/processPlan/analysisPlanByPlanName", data);
         })
     }
     // 解析计划确认
     function AnalysisPlans() {
         var selectFileId = $("#selectPlan").val();
         $.modal.confirm("确定要解析该生产计划吗？", function () {
-            var data = {"id": selectFileId};
-            $.operate.post("/admin/file/readXlsFile", data);
+            var data = {"name": selectFileId};
+            $.operate.post("/admin/pipe/processPlan/analysisProcessPlan", data);
         })
     }
 </script>

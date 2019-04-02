@@ -11,6 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Date: 2018/8/22
  */
 public interface OrderRepository extends JpaRepository<Order,Integer> {
-
-
+    Order findByUnitHasFAndPipeShapeHasBendAndHasSurfaceTreat(Integer hasF, Integer hasBend, Integer hasTreat);
 }

@@ -1,6 +1,8 @@
 package com.ruoyi.project.pipe.pipe.service;
 
 import java.util.List;
+
+import com.ruoyi.project.process.order.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.pipe.pipe.mapper.PipeMapper;
@@ -79,5 +81,7 @@ public class PipeServiceImpl implements IPipeService
 	{
 		return pipeMapper.deletePipeByIds(Convert.toStrArray(ids));
 	}
-	
+
+
+
 }

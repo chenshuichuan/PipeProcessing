@@ -177,6 +177,9 @@ public class ProcessPlanServiceImpl implements IProcessPlanService {
      *@param: batchName :
      **/
     private String getCutSectionsOfPlan(ProcessPlan processPlan){
+        if(processPlan ==null){
+            return null;
+        }
         CutPlan cutPlan = cutPlanMapper.selectCutPlanById(processPlan.getId());
         if(null == cutPlan){
             String message = processPlan.getId()+"---"+processPlan.getBatchName()+": 该加工计划没有找到对应的下料计划！请检查数据完整性！";

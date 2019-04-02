@@ -1,6 +1,8 @@
 package com.ruoyi.project.pipe.ship.service;
 
 import com.ruoyi.project.pipe.ship.domain.Ship;
+import com.ruoyi.project.pipe.ship.domain.ShipSimple;
+
 import java.util.List;
 
 /**
@@ -50,5 +52,11 @@ public interface IShipService
      * @return 结果
      */
 	public int deleteShipByIds(String ids);
-	
+	/**
+	 * 查询号船列表
+	 *
+	 * @param isFinished 是否完成的船，null，返回所有
+	 * @return 号船集合
+	 */
+	public List<ShipSimple> selectShipSimpleList(Integer isFinished);
 }

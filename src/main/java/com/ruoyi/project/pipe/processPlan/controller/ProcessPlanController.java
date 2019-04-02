@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import com.ruoyi.common.utils.file.FileUploadUtils;
+import com.ruoyi.project.common.ProjectThreadService;
+import com.ruoyi.project.pipe.ship.service.IShipService;
 import com.ruoyi.project.system.files.domain.Files;
 import com.ruoyi.project.system.files.service.FilesRepository;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,21 +40,26 @@ public class ProcessPlanController extends BaseController {
 
     @Autowired
     private IProcessPlanService processPlanService;
-
+    @Autowired
+    private ProjectThreadService projectThreadService;
     @Autowired
     private FilesRepository filesRepository;
-
+    @Autowired
+    private IShipService shipService;
 
     @RequiresPermissions("pipe:processPlan:view")
     @GetMapping()
     public String processPlan(ModelMap mmap) {
         List<Files> list = filesRepository.findBySuffix("xls");
         mmap.put("planFiles", list);
+
+        //根据实际调整页面显示的需求
+        mmap.put("shipSimpleList",shipService.selectShipSimpleList(null));
         return prefix + "/processPlan";
     }
 
     /**
-     * 查询下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan列表
+     * 查询加工计划，，，请查看pipe_process_plan列表
      */
     @RequiresPermissions("pipe:processPlan:list")
     @PostMapping("/list")
@@ -66,7 +73,7 @@ public class ProcessPlanController extends BaseController {
 
 
     /**
-     * 导出下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan列表
+     * 导出加工计划
      */
     @RequiresPermissions("pipe:processPlan:export")
     @PostMapping("/export")
@@ -78,7 +85,7 @@ public class ProcessPlanController extends BaseController {
     }
 
     /**
-     * 新增下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan
+     * 新增加工计划请
      */
     @GetMapping("/add")
     public String add() {
@@ -86,10 +93,10 @@ public class ProcessPlanController extends BaseController {
     }
 
     /**
-     * 新增保存下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan
+     * 新增保存加工计划
      */
     @RequiresPermissions("pipe:processPlan:add")
-    @Log(title = "下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan", businessType = BusinessType.INSERT)
+    @Log(title = "加工计划添加", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(ProcessPlan processPlan) {
@@ -97,7 +104,7 @@ public class ProcessPlanController extends BaseController {
     }
 
     /**
-     * 修改下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan
+     * 修改加工计划
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
@@ -107,10 +114,10 @@ public class ProcessPlanController extends BaseController {
     }
 
     /**
-     * 修改保存下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan
+     * 修改保存加工计划
      */
     @RequiresPermissions("pipe:processPlan:edit")
-    @Log(title = "下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan", businessType = BusinessType.UPDATE)
+    @Log(title = "加工计划修改", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(ProcessPlan processPlan) {
@@ -118,10 +125,10 @@ public class ProcessPlanController extends BaseController {
     }
 
     /**
-     * 删除下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan
+     * 删除加工计划
      */
     @RequiresPermissions("pipe:processPlan:remove")
-    @Log(title = "下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan", businessType = BusinessType.DELETE)
+    @Log(title = "加工计划删除", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
@@ -129,25 +136,29 @@ public class ProcessPlanController extends BaseController {
     }
 
     /**
-     * 修改保存下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan
+     * 加工计划解析By计划名称
      */
     @RequiresPermissions("pipe:processPlan:edit")
-    @Log(title = "下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan", businessType = BusinessType.UPDATE)
-    @GetMapping("/analysisPlanByPlanName")
+    @Log(title = "加工计划解析By计划名称", businessType = BusinessType.UPDATE)
+    @PostMapping("/analysisPlanByPlanName")
     @ResponseBody
     public AjaxResult analysisPlansByPlanName(String name) {
-        return toAjax(processPlanService.judgeBatchUnitByPlanName(name));
+        int result = processPlanService.judgeBatchUnitByPlanName(name);
+        //springboot 开线程，异步解析计划下的单元的加工顺序
+        projectThreadService.judgeBatchUnitByPlanName(name);
+        return toAjax(result);
     }
 
     /**
-     * 修改保存下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan
+     * 加工计划添加By计划id
      */
     @RequiresPermissions("pipe:processPlan:edit")
-    @Log(title = "下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan", businessType = BusinessType.UPDATE)
+    @Log(title = "加工计划添加By计划id", businessType = BusinessType.UPDATE)
     @PostMapping("/analysisProcessPlan")
     @ResponseBody
-    public AjaxResult analysisPlan(ProcessPlan processPlan)
+    public AjaxResult analysisPlan(Integer id)
     {
+        ProcessPlan processPlan = processPlanService.selectProcessPlanById(id);
         return toAjax(processPlanService.judgeBatchUnitOfPlan(processPlan));
     }
 }
