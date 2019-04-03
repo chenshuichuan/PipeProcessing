@@ -14,10 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pipeFinishedNumber"    column="pipe_finished_number"    />
         <result property="arrangeId"    column="arrange_id"    />
         <result property="updateTime"    column="update_time"    />
+        <result property="isFinished"    column="is_finished"    />
     </resultMap>
 	
 	<sql id="selectUnitProcessingVo">
-        select id, unit_id, batch_id, process_stage, process_index, pipe_processing_number, pipe_finished_number, arrange_id from process_unit_processing
+        select id, unit_id, batch_id, process_stage, process_index, pipe_processing_number, pipe_finished_number, arrange_id, is_finished from process_unit_processing
     </sql>
 	
     <select id="selectUnitProcessingList" parameterType="UnitProcessing" resultMap="UnitProcessingResult">
@@ -31,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="pipeProcessingNumber != null "> and pipe_processing_number = #{pipeProcessingNumber}</if>
              <if test="pipeFinishedNumber != null "> and pipe_finished_number = #{pipeFinishedNumber}</if>
              <if test="arrangeId != null "> and arrange_id = #{arrangeId}</if>
+            <if test="isFinished != null "> and is_finished = #{isFinished}</if>
          </where>
     </select>
     
@@ -51,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="pipeFinishedNumber != null  ">pipe_finished_number,</if>
 			<if test="arrangeId != null  ">arrange_id,</if>
             <if test="updateTime != null  ">update_time,</if>
+            <if test="isFinished != null  ">is_finished,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -62,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="pipeFinishedNumber != null  ">#{pipeFinishedNumber},</if>
 			<if test="arrangeId != null  ">#{arrangeId},</if>
             <if test="updateTime != null  ">#{updateTime},</if>
+            <if test="isFinished != null  ">#{isFinished},</if>
          </trim>
     </insert>
 	 
@@ -76,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="pipeFinishedNumber != null  ">pipe_finished_number = #{pipeFinishedNumber},</if>
             <if test="arrangeId != null  ">arrange_id = #{arrangeId},</if>
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished},</if>
         </trim>
         where id = #{id}
     </update>

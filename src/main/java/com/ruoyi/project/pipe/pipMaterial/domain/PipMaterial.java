@@ -8,168 +8,178 @@ import javax.persistence.*;
 
 /**
  * 管子材料表 pipe_pip_material
- * 
+ *
  * @author ricardo
  * @date 2019-03-04
  */
 @Entity
-@Table(name="pipe_pip_material")
-public class PipMaterial extends BaseEntity
-{
-	private static final long serialVersionUID = 1L;
-	
-	/** OID */
-	@Id
+@Table(name = "pipe_pip_material")
+public class PipMaterial extends BaseEntity {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * OID
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "old_id")
-	private Integer oldId;
-	/** MidOID */
+    private Integer oldId;
+    /**
+     * MidOID
+     */
     @Column(name = "mid_oid")
-	private Integer midOid;
-	/** 是否删除 */
+    private Integer midOid;
+    /**
+     * 是否删除
+     */
     @Column(name = "is_delete")
-	private Integer isDelete;
-	/** 是否更新 */
+    private Integer isDelete;
+    /**
+     * 是否更新
+     */
     @Column(name = "is_update")
-	private Integer isUpdate;
-	/** 型船ID */
+    private Integer isUpdate;
+    /**
+     * 型船ID
+     */
     @Column(name = "shape_ship_id")
-	private Integer shapeShipId;
-	/** 装配管ID */
+    private Integer shapeShipId;
+    /**
+     * 装配管ID
+     */
     @Column(name = "assembly_pipe_id")
-	private Integer assemblyPipeId;
-	/** 部件ID */
+    private Integer assemblyPipeId;
+    /**
+     * 部件ID
+     */
     @Column(name = "component_id")
-	private Integer componentId;
-	/** 管端标识 */
+    private Integer componentId;
+    /**
+     * 管端标识
+     */
     @Column(name = "pipe_end_flag")
-	private String pipeEndFlag;
-	/** 数量 */
+    private String pipeEndFlag;
+    /**
+     * 数量
+     */
     @Column(name = "number")
-	private double number;
-	/** 重量 */
+    private double number;
+    /**
+     * 重量
+     */
     @Column(name = "weight")
-	private double weight;
-	/** 外场装配标记 */
+    private double weight;
+    /**
+     * 外场装配标记
+     */
     @Column(name = "outfield_flag")
-	private String outfieldFlag;
+    private String outfieldFlag;
 
-	public PipMaterial() {
-	}
+    public PipMaterial() {
+    }
 
-	public void setOldId(Integer oldId)
-	{
-		this.oldId = oldId;
-	}
+    public void setOldId(Integer oldId) {
+        this.oldId = oldId;
+    }
 
-	public Integer getOldId() 
-	{
-		return oldId;
-	}
-	public void setMidOid(Integer midOid) 
-	{
-		this.midOid = midOid;
-	}
+    public Integer getOldId() {
+        return oldId;
+    }
 
-	public Integer getMidOid() 
-	{
-		return midOid;
-	}
-	public void setIsDelete(Integer isDelete) 
-	{
-		this.isDelete = isDelete;
-	}
+    public void setMidOid(Integer midOid) {
+        this.midOid = midOid;
+    }
 
-	public Integer getIsDelete() 
-	{
-		return isDelete;
-	}
-	public void setIsUpdate(Integer isUpdate) 
-	{
-		this.isUpdate = isUpdate;
-	}
+    public Integer getMidOid() {
+        return midOid;
+    }
 
-	public Integer getIsUpdate() 
-	{
-		return isUpdate;
-	}
-	public void setShapeShipId(Integer shapeShipId) 
-	{
-		this.shapeShipId = shapeShipId;
-	}
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
 
-	public Integer getShapeShipId() 
-	{
-		return shapeShipId;
-	}
-	public void setAssemblyPipeId(Integer assemblyPipeId) 
-	{
-		this.assemblyPipeId = assemblyPipeId;
-	}
+    public Integer getIsDelete() {
+        return isDelete;
+    }
 
-	public Integer getAssemblyPipeId() 
-	{
-		return assemblyPipeId;
-	}
-	public void setComponentId(Integer componentId) 
-	{
-		this.componentId = componentId;
-	}
+    public void setIsUpdate(Integer isUpdate) {
+        this.isUpdate = isUpdate;
+    }
 
-	public Integer getComponentId() 
-	{
-		return componentId;
-	}
-	public void setPipeEndFlag(String pipeEndFlag) 
-	{
-		this.pipeEndFlag = pipeEndFlag;
-	}
+    public Integer getIsUpdate() {
+        return isUpdate;
+    }
 
-	public String getPipeEndFlag() 
-	{
-		return pipeEndFlag;
-	}
-	public void setNumber(double number)
-	{
-		this.number = number;
-	}
+    public void setShapeShipId(Integer shapeShipId) {
+        this.shapeShipId = shapeShipId;
+    }
 
-	public double getNumber()
-	{
-		return number;
-	}
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
-	}
+    public Integer getShapeShipId() {
+        return shapeShipId;
+    }
 
-	public double getWeight()
-	{
-		return weight;
-	}
-	public void setOutfieldFlag(String outfieldFlag) 
-	{
-		this.outfieldFlag = outfieldFlag;
-	}
+    public void setAssemblyPipeId(Integer assemblyPipeId) {
+        this.assemblyPipeId = assemblyPipeId;
+    }
 
-	public String getOutfieldFlag() 
-	{
-		return outfieldFlag;
-	}
+    public Integer getAssemblyPipeId() {
+        return assemblyPipeId;
+    }
 
-	@Override
+    public void setComponentId(Integer componentId) {
+        this.componentId = componentId;
+    }
+
+    public Integer getComponentId() {
+        return componentId;
+    }
+
+    public void setPipeEndFlag(String pipeEndFlag) {
+        this.pipeEndFlag = pipeEndFlag;
+    }
+
+    public String getPipeEndFlag() {
+        return pipeEndFlag;
+    }
+
+    public void setNumber(double number) {
+        this.number = number;
+    }
+
+    public double getNumber() {
+        return number;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setOutfieldFlag(String outfieldFlag) {
+        this.outfieldFlag = outfieldFlag;
+    }
+
+    public String getOutfieldFlag() {
+        return outfieldFlag;
+    }
+
+    @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("oldId", getOldId())
-            .append("midOid", getMidOid())
-            .append("isDelete", getIsDelete())
-            .append("isUpdate", getIsUpdate())
-            .append("shapeShipId", getShapeShipId())
-            .append("assemblyPipeId", getAssemblyPipeId())
-            .append("componentId", getComponentId())
-            .append("pipeEndFlag", getPipeEndFlag())
-            .append("number", getNumber())
-            .append("weight", getWeight())
-            .append("outfieldFlag", getOutfieldFlag())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("oldId", getOldId())
+                .append("midOid", getMidOid())
+                .append("isDelete", getIsDelete())
+                .append("isUpdate", getIsUpdate())
+                .append("shapeShipId", getShapeShipId())
+                .append("assemblyPipeId", getAssemblyPipeId())
+                .append("componentId", getComponentId())
+                .append("pipeEndFlag", getPipeEndFlag())
+                .append("number", getNumber())
+                .append("weight", getWeight())
+                .append("outfieldFlag", getOutfieldFlag())
+                .toString();
     }
 }

@@ -10,130 +10,152 @@ import java.util.Date;
 
 /**
  * 管件加工表 process_pipe_processing
- * 
+ *
  * @author ricardo
  * @date 2019-03-08
  */
 @Entity
-@Table(name="process_pipe_processing")
-public class PipeProcessing extends BaseEntity
-{
-	private static final long serialVersionUID = 1L;
-	
-	/** id */
-	@Id
-	@GeneratedValue
+@Table(name = "process_pipe_processing")
+public class PipeProcessing extends BaseEntity {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-	private Integer id;
-	/** 对应pipe_pipe的管id */
+    private Integer id;
+    /**
+     * 对应pipe_pipe的管id
+     */
     @Column(name = "pipe_id")
-	private Integer pipeId;
-	/** 当前工序 */
+    private Integer pipeId;
+    /**
+     * 当前工序
+     */
     @Column(name = "process_stage")
-	private Integer processStage;
-	/** 当前工序排几 */
+    private Integer processStage;
+    /**
+     * 当前工序排几
+     */
     @Column(name = "process_index")
-	private Integer processIndex;
-	/** 派工单id */
+    private Integer processIndex;
+    /**
+     * 派工单id
+     */
     @Column(name = "arrange_id")
-	private Integer arrangeId;
-	/** 更新时间 */
+    private Integer arrangeId;
+    /**
+     * 更新时间
+     */
     @Column(name = "update_time")
-	private Date updateTime;
-	/** 所属批次 */
+    private Date updateTime;
+    /**
+     * 所属批次
+     */
     @Column(name = "batch_id")
-	private Integer batchId;
-	/** 所属单元 */
+    private Integer batchId;
+    /**
+     * 所属单元
+     */
     @Column(name = "unit_id")
-	private Integer unitId;
+    private Integer unitId;
 
-	public PipeProcessing() {
-	}
+    /**
+     * 是否完工
+     */
+    @Column(name = "is_finished")
+    private Integer isFinished;
 
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
+    public Integer getIsFinished() {
+        return isFinished;
+    }
 
-	public Integer getId() 
-	{
-		return id;
-	}
-	public void setPipeId(Integer pipeId) 
-	{
-		this.pipeId = pipeId;
-	}
+    public void setIsFinished(Integer isFinished) {
+        this.isFinished = isFinished;
+    }
 
-	public Integer getPipeId() 
-	{
-		return pipeId;
-	}
-	public void setProcessStage(Integer processStage) 
-	{
-		this.processStage = processStage;
-	}
+    public PipeProcessing() {
+    }
 
-	public Integer getProcessStage() 
-	{
-		return processStage;
-	}
-	public void setProcessIndex(Integer processIndex) 
-	{
-		this.processIndex = processIndex;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getProcessIndex() 
-	{
-		return processIndex;
-	}
-	public void setArrangeId(Integer arrangeId) 
-	{
-		this.arrangeId = arrangeId;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Integer getArrangeId() 
-	{
-		return arrangeId;
-	}
-	@Override
-	public void setUpdateTime(Date updateTime) 
-	{
-		this.updateTime = updateTime;
-	}
-	@Override
-	public Date getUpdateTime() 
-	{
-		return updateTime;
-	}
-	public void setBatchId(Integer batchId) 
-	{
-		this.batchId = batchId;
-	}
+    public void setPipeId(Integer pipeId) {
+        this.pipeId = pipeId;
+    }
 
-	public Integer getBatchId() 
-	{
-		return batchId;
-	}
-	public void setUnitId(Integer unitId) 
-	{
-		this.unitId = unitId;
-	}
+    public Integer getPipeId() {
+        return pipeId;
+    }
 
-	public Integer getUnitId() 
-	{
-		return unitId;
-	}
-	@Override
+    public void setProcessStage(Integer processStage) {
+        this.processStage = processStage;
+    }
+
+    public Integer getProcessStage() {
+        return processStage;
+    }
+
+    public void setProcessIndex(Integer processIndex) {
+        this.processIndex = processIndex;
+    }
+
+    public Integer getProcessIndex() {
+        return processIndex;
+    }
+
+    public void setArrangeId(Integer arrangeId) {
+        this.arrangeId = arrangeId;
+    }
+
+    public Integer getArrangeId() {
+        return arrangeId;
+    }
+
+    @Override
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setBatchId(Integer batchId) {
+        this.batchId = batchId;
+    }
+
+    public Integer getBatchId() {
+        return batchId;
+    }
+
+    public void setUnitId(Integer unitId) {
+        this.unitId = unitId;
+    }
+
+    public Integer getUnitId() {
+        return unitId;
+    }
+
+    @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("pipeId", getPipeId())
-            .append("processStage", getProcessStage())
-            .append("processIndex", getProcessIndex())
-            .append("arrangeId", getArrangeId())
-            .append("updateTime", getUpdateTime())
-            .append("batchId", getBatchId())
-            .append("unitId", getUnitId())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("id", getId())
+                .append("pipeId", getPipeId())
+                .append("processStage", getProcessStage())
+                .append("processIndex", getProcessIndex())
+                .append("arrangeId", getArrangeId())
+                .append("updateTime", getUpdateTime())
+                .append("batchId", getBatchId())
+                .append("unitId", getUnitId())
+                .toString();
     }
 }

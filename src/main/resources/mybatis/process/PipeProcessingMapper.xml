@@ -13,10 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="batchId"    column="batch_id"    />
         <result property="unitId"    column="unit_id"    />
+        <result property="isFinished"    column="is_finished"    />
     </resultMap>
 	
 	<sql id="selectPipeProcessingVo">
-        select id, pipe_id, process_stage, process_index, arrange_id, update_time, batch_id, unit_id from process_pipe_processing
+        select id, pipe_id, process_stage, process_index, arrange_id, update_time, batch_id, unit_id, is_finished from process_pipe_processing
     </sql>
 	
     <select id="selectPipeProcessingList" parameterType="PipeProcessing" resultMap="PipeProcessingResult">
@@ -30,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
              <if test="batchId != null "> and batch_id = #{batchId}</if>
              <if test="unitId != null "> and unit_id = #{unitId}</if>
+             <if test="isFinished != null "> and is_finished = #{isFinished}</if>
          </where>
     </select>
     
@@ -49,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateTime != null  ">update_time,</if>
 			<if test="batchId != null  ">batch_id,</if>
 			<if test="unitId != null  ">unit_id,</if>
+            <if test="isFinished != null  ">is_finished,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -59,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateTime != null  ">#{updateTime},</if>
 			<if test="batchId != null  ">#{batchId},</if>
 			<if test="unitId != null  ">#{unitId},</if>
+            <if test="isFinished != null  ">#{isFinished},</if>
          </trim>
     </insert>
 	 
@@ -72,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="batchId != null  ">batch_id = #{batchId},</if>
             <if test="unitId != null  ">unit_id = #{unitId},</if>
+            <if test="isFinished != null  ">is_finished = #{isFinished},</if>
         </trim>
         where id = #{id}
     </update>

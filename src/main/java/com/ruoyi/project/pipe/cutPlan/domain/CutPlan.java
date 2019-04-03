@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * 加工计划，不包含下料计划，下料计划请查看pipe_cut_plan表 pipe_cut_plan
- * 
+ *
  * @author ricardo
  * @date 2019-03-02
  */
@@ -19,8 +19,12 @@ import java.util.Date;
 public class CutPlan extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
-	/** plan id *///@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	/** plan id
+     * //@GeneratedValue(strategy = GenerationType.IDENTITY)
+     * 不能使用自增策略！因为下料计划的id是要和加工计划id对应的！
+     * 这个自增策略，在添加记录时候，如果指定id在数据库中没有则忽略该id，使用数据库自增的id
+     * */
 	@Id
 	@Column(name = "id")
 	private Integer id;
@@ -111,196 +115,196 @@ public class CutPlan extends BaseEntity
 		this.id = id;
 	}
 
-	public Integer getId() 
+	public Integer getId()
 	{
 		return id;
 	}
-	public void setSerialNumber(String serialNumber) 
+	public void setSerialNumber(String serialNumber)
 	{
 		this.serialNumber = serialNumber;
 	}
 
-	public String getSerialNumber() 
+	public String getSerialNumber()
 	{
 		return serialNumber;
 	}
-	public void setPlanName(String planName) 
+	public void setPlanName(String planName)
 	{
 		this.planName = planName;
 	}
 
-	public String getPlanName() 
+	public String getPlanName()
 	{
 		return planName;
 	}
-	public void setShipName(String shipName) 
+	public void setShipName(String shipName)
 	{
 		this.shipName = shipName;
 	}
 
-	public String getShipName() 
+	public String getShipName()
 	{
 		return shipName;
 	}
-	public void setBatchName(String batchName) 
+	public void setBatchName(String batchName)
 	{
 		this.batchName = batchName;
 	}
 
-	public String getBatchName() 
+	public String getBatchName()
 	{
 		return batchName;
 	}
-	public void setBatchDescription(String batchDescription) 
+	public void setBatchDescription(String batchDescription)
 	{
 		this.batchDescription = batchDescription;
 	}
 
-	public String getBatchDescription() 
+	public String getBatchDescription()
 	{
 		return batchDescription;
 	}
-	public void setUpdateTime(Date updateTime) 
+	public void setUpdateTime(Date updateTime)
 	{
 		this.updateTime = updateTime;
 	}
 
-	public Date getUpdateTime() 
+	public Date getUpdateTime()
 	{
 		return updateTime;
 	}
-	public void setRemark(String remark) 
+	public void setRemark(String remark)
 	{
 		this.remark = remark;
 	}
 
-	public String getRemark() 
+	public String getRemark()
 	{
 		return remark;
 	}
-	public void setIsFinished(Integer isFinished) 
+	public void setIsFinished(Integer isFinished)
 	{
 		this.isFinished = isFinished;
 	}
 
-	public Integer getIsFinished() 
+	public Integer getIsFinished()
 	{
 		return isFinished;
 	}
-	public void setFinishedDate(Date finishedDate) 
+	public void setFinishedDate(Date finishedDate)
 	{
 		this.finishedDate = finishedDate;
 	}
 
-	public Date getFinishedDate() 
+	public Date getFinishedDate()
 	{
 		return finishedDate;
 	}
-	public void setTotalCutNumber(Integer totalCutNumber) 
+	public void setTotalCutNumber(Integer totalCutNumber)
 	{
 		this.totalCutNumber = totalCutNumber;
 	}
 
-	public Integer getTotalCutNumber() 
+	public Integer getTotalCutNumber()
 	{
 		return totalCutNumber;
 	}
-	public void setOnebigCutNumber(Integer onebigCutNumber) 
+	public void setOnebigCutNumber(Integer onebigCutNumber)
 	{
 		this.onebigCutNumber = onebigCutNumber;
 	}
 
-	public Integer getOnebigCutNumber() 
+	public Integer getOnebigCutNumber()
 	{
 		return onebigCutNumber;
 	}
-	public void setOnebigCutFinished(Integer onebigCutFinished) 
+	public void setOnebigCutFinished(Integer onebigCutFinished)
 	{
 		this.onebigCutFinished = onebigCutFinished;
 	}
 
-	public Integer getOnebigCutFinished() 
+	public Integer getOnebigCutFinished()
 	{
 		return onebigCutFinished;
 	}
-	public void setOneBendCutNumber(Integer oneBendCutNumber) 
+	public void setOneBendCutNumber(Integer oneBendCutNumber)
 	{
 		this.oneBendCutNumber = oneBendCutNumber;
 	}
 
-	public Integer getOneBendCutNumber() 
+	public Integer getOneBendCutNumber()
 	{
 		return oneBendCutNumber;
 	}
-	public void setOneVerCutNumber(Integer oneVerCutNumber) 
+	public void setOneVerCutNumber(Integer oneVerCutNumber)
 	{
 		this.oneVerCutNumber = oneVerCutNumber;
 	}
 
-	public Integer getOneVerCutNumber() 
+	public Integer getOneVerCutNumber()
 	{
 		return oneVerCutNumber;
 	}
-	public void setOneBigCutNumber(Integer oneBigCutNumber) 
+	public void setOneBigCutNumber(Integer oneBigCutNumber)
 	{
 		this.oneBigCutNumber = oneBigCutNumber;
 	}
 
-	public Integer getOneBigCutNumber() 
+	public Integer getOneBigCutNumber()
 	{
 		return oneBigCutNumber;
 	}
-	public void setOneTotalNumber(Integer oneTotalNumber) 
+	public void setOneTotalNumber(Integer oneTotalNumber)
 	{
 		this.oneTotalNumber = oneTotalNumber;
 	}
 
-	public Integer getOneTotalNumber() 
+	public Integer getOneTotalNumber()
 	{
 		return oneTotalNumber;
 	}
-	public void setOneTotalFinished(Integer oneTotalFinished) 
+	public void setOneTotalFinished(Integer oneTotalFinished)
 	{
 		this.oneTotalFinished = oneTotalFinished;
 	}
 
-	public Integer getOneTotalFinished() 
+	public Integer getOneTotalFinished()
 	{
 		return oneTotalFinished;
 	}
-	public void setTwoBendNumber(Integer twoBendNumber) 
+	public void setTwoBendNumber(Integer twoBendNumber)
 	{
 		this.twoBendNumber = twoBendNumber;
 	}
 
-	public Integer getTwoBendNumber() 
+	public Integer getTwoBendNumber()
 	{
 		return twoBendNumber;
 	}
-	public void setTwoVerNumber(Integer twoVerNumber) 
+	public void setTwoVerNumber(Integer twoVerNumber)
 	{
 		this.twoVerNumber = twoVerNumber;
 	}
 
-	public Integer getTwoVerNumber() 
+	public Integer getTwoVerNumber()
 	{
 		return twoVerNumber;
 	}
-	public void setTwoTotalNumber(Integer twoTotalNumber) 
+	public void setTwoTotalNumber(Integer twoTotalNumber)
 	{
 		this.twoTotalNumber = twoTotalNumber;
 	}
 
-	public Integer getTwoTotalNumber() 
+	public Integer getTwoTotalNumber()
 	{
 		return twoTotalNumber;
 	}
-	public void setTwoTotalFinished(Integer twoTotalFinished) 
+	public void setTwoTotalFinished(Integer twoTotalFinished)
 	{
 		this.twoTotalFinished = twoTotalFinished;
 	}
 
-	public Integer getTwoTotalFinished() 
+	public Integer getTwoTotalFinished()
 	{
 		return twoTotalFinished;
 	}

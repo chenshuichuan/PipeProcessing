@@ -3,187 +3,183 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    
-     <div class="container-div">
-		<div class="row">
-			<div class="col-sm-12 search-collapse">
-				<form id="formId">
-					<div class="select-list">
-						<ul>
-							<li>
-								MidOID：<input type="text" name="midOid"/>
-							</li>
 
-							<li>
-								是否删除：<input type="text" name="isDelete"/>
-							</li>
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            号船ID：<input type="text" name="callShipId"/>
+                        </li>
 
-							<li>
-								是否更新：<input type="text" name="isUpdate"/>
-							</li>
+                        <li>
+                            装配管ID：<input type="text" name="assemblyPipeId"/>
+                        </li>
 
-							<li>
-								号船ID：<input type="text" name="callShipId"/>
-							</li>
+                        <li>
+                            加工单元ID：<input type="text" name="processUnitId"/>
+                        </li>
 
-							<li>
-								装配管ID：<input type="text" name="assemblyPipeId"/>
-							</li>
+                        <li>
+                            套料批次：<input type="text" name="machiningBatch"/>
+                        </li>
 
-							<li>
-								加工单元ID：<input type="text" name="processUnitId"/>
-							</li>
+                        <li>
+                            下料长：<input type="text" name="cutLength"/>
+                        </li>
 
-							<li>
-								套料批次：<input type="text" name="machiningBatch"/>
-							</li>
+                        <li>
+                            入级船级社：<input type="text" name="inClassShipLevel"/>
+                        </li>
 
-							<li>
-								下料长：<input type="text" name="cutLength"/>
-							</li>
+                        <li>
+                            管材规格：<input type="text" name="pipeSpecification"/>
+                        </li>
 
-							<li>
-								入级船级社：<input type="text" name="inClassShipLevel"/>
-							</li>
+                        <li>
+                            管子形态：<input type="text" name="pipeShape"/>
+                        </li>
 
-							<li>
-								管材规格：<input type="text" name="pipeSpecification"/>
-							</li>
+                        <li>
+                            不校装：
+                            <select name="noInstalled">
+                                <option value="">所有</option>
+                                <option value="▲">校桩</option>
+                            </select>
+                        </li>
 
-							<li>
-								管子形态：<input type="text" name="pipeShape"/>
-							</li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
 
-							<li>
-								不校装：<input type="text" name="noInstalled"/>
-							</li>
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pipe:pipCutting:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="pipe:pipCutting:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="pipe:pipCutting:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pipe:pipCutting:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('pipe:pipCutting:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('pipe:pipCutting:remove')}]];
 
-							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
-	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pipe:pipCutting:add">
-					<i class="fa fa-plus"></i> 添加
-				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="pipe:pipCutting:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pipe:pipCutting:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pipe:pipCutting:export">
-						<i class="fa fa-download"></i> 导出
-				 </a>
-			</div>
-			<div class="col-sm-12 select-table table-striped">
-				<table id="bootstrap-table" data-mobile-responsive="true"></table>
-			</div>
-		</div>
-	</div>
-    <div th:include="include :: footer"></div>
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('pipe:pipCutting:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('pipe:pipCutting:remove')}]];
+    var prefix = ctx + webPrefix + "/pipe/pipCutting";
 
-        var prefix = ctx +webPrefix+ "/pipe/pipCutting";
-
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-				exportUrl: prefix + "/export",
-                modalName: "下料",
-				search: false,
-		        showExport: true,
-                columns: [{
-		            checkbox: true
-		        },
-				{
-					field : 'oldId', 
-					title : 'OID',
-					visible: false
-				},
-				{
-					field : 'midOid', 
-					title : 'MidOID',
-					sortable: true
-				},
-				{
-					field : 'isDelete', 
-					title : '是否删除',
-					sortable: true
-				},
-				{
-					field : 'isUpdate', 
-					title : '是否更新',
-					sortable: true
-				},
-				{
-					field : 'callShipId', 
-					title : '号船ID',
-					sortable: true
-				},
-				{
-					field : 'assemblyPipeId', 
-					title : '装配管ID',
-					sortable: true
-				},
-				{
-					field : 'processUnitId', 
-					title : '加工单元ID',
-					sortable: true
-				},
-				{
-					field : 'machiningBatch', 
-					title : '套料批次',
-					sortable: true
-				},
-				{
-					field : 'cutLength', 
-					title : '下料长',
-					sortable: true
-				},
-				{
-					field : 'inClassShipLevel', 
-					title : '入级船级社',
-					sortable: true
-				},
-				{
-					field : 'pipeSpecification', 
-					title : '管材规格',
-					sortable: true
-				},
-				{
-					field : 'pipeShape', 
-					title : '管子形态',
-					sortable: true
-				},
-				{
-					field : 'noInstalled', 
-					title : '不校装',
-					sortable: true
-				},
-		        {
-		            title: '操作',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.oldId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "下料",
+            search: false,
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'oldId',
+                    title: 'OID',
+                    visible: false
+                },
+                {
+                    field: 'midOid',
+                    title: 'MidOID',
+                    sortable: true
+                },
+                {
+                    field: 'isDelete',
+                    title: '是否删除',
+                    sortable: true
+                },
+                {
+                    field: 'isUpdate',
+                    title: '是否更新',
+                    sortable: true
+                },
+                {
+                    field: 'callShipId',
+                    title: '号船ID',
+                    sortable: true
+                },
+                {
+                    field: 'assemblyPipeId',
+                    title: '装配管ID',
+                    sortable: true
+                },
+                {
+                    field: 'processUnitId',
+                    title: '加工单元ID',
+                    sortable: true
+                },
+                {
+                    field: 'machiningBatch',
+                    title: '套料批次',
+                    sortable: true
+                },
+                {
+                    field: 'cutLength',
+                    title: '下料长',
+                    sortable: true
+                },
+                {
+                    field: 'inClassShipLevel',
+                    title: '入级船级社',
+                    sortable: true
+                },
+                {
+                    field: 'pipeSpecification',
+                    title: '管材规格',
+                    sortable: true
+                },
+                {
+                    field: 'pipeShape',
+                    title: '管子形态',
+                    sortable: true
+                },
+                {
+                    field: 'noInstalled',
+                    title: '不校装',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.oldId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.oldId + '\')"><i class="fa fa-remove"></i>删除</a>');
-						return actions.join('');
-		            }
-		        }]
-            };
-            $.table.init(options);
-        });
-    </script>
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
 </body>
 </html>

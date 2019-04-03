@@ -38,7 +38,8 @@
 
                         <li>
                             船名：
-                            <select id="shipName" name="shipName">
+                            <select name="shipName">
+                                <option value="">所有船只</option>
                                 <option th:each="ship,iterStat : ${shipSimpleList}" th:text="${ship.shipName}"
                                         th:value="${ship.shipName}"></option>
                             </select>
@@ -61,13 +62,23 @@
                         </li>
 
                         <li>
-                            是否完工：<input type="text" name="isFinished"/>
+                            是否完工：
+                            <select name="isFinished" th:with="type=${@dict.getType('user_yes_no')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
                         </li>
-
                         <li>
-                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                            解析状态：
+                            <select name="analysisStatus" th:with="type=${@dict.getType('user_analysis_status')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search('formId')"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset('formId')"><i
                                     class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
                     </ul>

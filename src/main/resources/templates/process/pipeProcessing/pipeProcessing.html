@@ -3,142 +3,162 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    
-     <div class="container-div">
-		<div class="row">
-			<div class="col-sm-12 search-collapse">
-				<form id="formId">
-					<div class="select-list">
-						<ul>
-							<li>
-								对应pipe_pipe的管id：<input type="text" name="pipeId"/>
-							</li>
 
-							<li>
-								当前工序：<input type="text" name="processStage"/>
-							</li>
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            对应pipe_pipe的管id：<input type="text" name="pipeId"/>
+                        </li>
 
-							<li>
-								当前工序排几：<input type="text" name="processIndex"/>
-							</li>
+                        <li>
+                            当前工序：<input type="text" name="processStage"/>
+                        </li>
 
-							<li>
-								派工单id：<input type="text" name="arrangeId"/>
-							</li>
+                        <li>
+                            当前工序排几：<input type="text" name="processIndex"/>
+                        </li>
 
-							<li>
-								更新时间：<input type="text" name="updateTime"/>
-							</li>
+                        <li>
+                            派工单id：<input type="text" name="arrangeId"/>
+                        </li>
 
-							<li>
-								所属批次：<input type="text" name="batchId"/>
-							</li>
+                        <li>
+                            更新时间：<input type="text" name="updateTime"/>
+                        </li>
 
-							<li>
-								所属单元：<input type="text" name="unitId"/>
-							</li>
+                        <li>
+                            所属批次：<input type="text" name="batchId"/>
+                        </li>
 
-							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
-	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="process:pipeProcessing:add">
-					<i class="fa fa-plus"></i> 添加
-				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="process:pipeProcessing:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="process:pipeProcessing:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="process:pipeProcessing:export">
-						<i class="fa fa-download"></i> 导出
-				 </a>
-			</div>
-			<div class="col-sm-12 select-table table-striped">
-				<table id="bootstrap-table" data-mobile-responsive="true"></table>
-			</div>
-		</div>
-	</div>
-    <div th:include="include :: footer"></div>
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('process:pipeProcessing:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('process:pipeProcessing:remove')}]];
+                        <li>
+                            所属单元：<input type="text" name="unitId"/>
+                        </li>
+                        <li>
+                            是否完工：
+                            <select name="isFinished" th:with="type=${@dict.getType('user_yes_no')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
 
-        var prefix = ctx +webPrefix+ "/process/pipeProcessing";
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="process:pipeProcessing:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="process:pipeProcessing:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="process:pipeProcessing:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()"
+               shiro:hasPermission="process:pipeProcessing:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('process:pipeProcessing:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('process:pipeProcessing:remove')}]];
+    var datas = [[${@dict.getType('user_yes_no')}]];
+    var prefix = ctx + webPrefix + "/process/pipeProcessing";
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-				exportUrl: prefix + "/export",
-                modalName: "管件加工",
-				search: false,
-		        showExport: true,
-                columns: [{
-		            checkbox: true
-		        },
-				{
-					field : 'id', 
-					title : 'id',
-					visible: false
-				},
-				{
-					field : 'pipeId', 
-					title : '对应pipe_pipe的管id',
-					sortable: true
-				},
-				{
-					field : 'processStage', 
-					title : '当前工序',
-					sortable: true
-				},
-				{
-					field : 'processIndex', 
-					title : '当前工序排几',
-					sortable: true
-				},
-				{
-					field : 'arrangeId', 
-					title : '派工单id',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '更新时间',
-					sortable: true
-				},
-				{
-					field : 'batchId', 
-					title : '所属批次',
-					sortable: true
-				},
-				{
-					field : 'unitId', 
-					title : '所属单元',
-					sortable: true
-				},
-		        {
-		            title: '操作',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "管件加工",
+            search: false,
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: 'id',
+                    visible: false
+                },
+                {
+                    field: 'pipeId',
+                    title: '对应管id',
+                    sortable: true
+                },
+                {
+                    field: 'processStage',
+                    title: '当前工序',
+                    sortable: true
+                },
+                {
+                    field: 'processIndex',
+                    title: '当前工序排几',
+                    sortable: true
+                },
+                {
+                    field: 'arrangeId',
+                    title: '派工单id',
+                    sortable: true
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    sortable: true
+                },
+                {
+                    field: 'batchId',
+                    title: '所属批次',
+                    sortable: true
+                },
+                {
+                    field: 'unitId',
+                    title: '所属单元',
+                    sortable: true
+                },
+                {
+                    field: 'isFinished',
+                    title: '是否完工',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(datas, value);
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-						return actions.join('');
-		            }
-		        }]
-            };
-            $.table.init(options);
-        });
-    </script>
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
 </body>
 </html>

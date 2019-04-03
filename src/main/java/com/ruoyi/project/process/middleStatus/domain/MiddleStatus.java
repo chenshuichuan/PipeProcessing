@@ -59,8 +59,7 @@ public class MiddleStatus extends BaseEntity {
     private Integer isRead;
 
     public MiddleStatus() {
-        createTime = new Date();
-        isRead = 0;
+
     }
 
     public MiddleStatus(String infor, String relateTable, String relateData, String operateType) {

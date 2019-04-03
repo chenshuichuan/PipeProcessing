@@ -24,7 +24,7 @@ public class Order extends BaseEntity {
      * 加工顺序id
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     /**
