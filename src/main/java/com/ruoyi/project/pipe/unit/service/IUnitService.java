@@ -3,6 +3,7 @@ package com.ruoyi.project.pipe.unit.service;
 import com.ruoyi.project.pipe.pipe.domain.Pipe;
 import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
 import com.ruoyi.project.pipe.unit.domain.Unit;
+import com.ruoyi.project.pipe.unit.domain.UnitSimple;
 import com.ruoyi.project.process.order.domain.Order;
 
 import java.util.List;
@@ -67,4 +68,14 @@ public interface IUnitService {
      * 对加工计划涉及的所有单元进行解析
      */
     int analysisOrderByProcessPlan(ProcessPlan processPlan);
+
+    /**
+     * 根据shipName和batchName查找unitList
+     * @param shipName
+     * @param batchName
+     * @return unitList
+     */
+    List<Unit> selectByShipNameAndBatchName(String shipName, String batchName);
+
+    public List<UnitSimple> selectUnitSimpleByShipNameAndBatchName(String shipName, String batchName);
 }

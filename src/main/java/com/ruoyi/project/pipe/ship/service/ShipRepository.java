@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ShipRepository extends JpaRepository<Ship,Integer> {
     Ship findByShipCode(String shipCode);
+    Ship findByShipName(String shipName);
 }

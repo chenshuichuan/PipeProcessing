@@ -13,6 +13,7 @@ import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
 import com.ruoyi.project.pipe.ship.domain.Ship;
 import com.ruoyi.project.pipe.ship.service.IShipService;
 import com.ruoyi.project.pipe.ship.service.ShipRepository;
+import com.ruoyi.project.pipe.unit.domain.UnitSimple;
 import com.ruoyi.project.pipe.workPipe.domain.WorkPipe;
 import com.ruoyi.project.pipe.workPipe.service.WorkPipeRepository;
 import com.ruoyi.project.process.middleStatus.domain.MiddleStatus;
@@ -215,5 +216,31 @@ public class UnitServiceImpl implements IUnitService {
             }
         }
         return 0;
+    }
+
+    @Override
+    public List<Unit> selectByShipNameAndBatchName(String shipName, String batchName) {
+        Ship ship = shipRepository.findByShipName(shipName);
+        if(ship ==null){
+            MiddleStatus middleStatus = new MiddleStatus("selectByShipNameAndBatchName error! ",
+                    "pipe_unit",shipName,"findByShipName(shipName)");
+            middleStatusRepository.save(middleStatus);
+            return null;
+        }
+        return unitRepository.findByShipCodeAndBatchName(ship.getShipCode(),batchName);
+    }
+    @Override
+    public List<UnitSimple> selectUnitSimpleByShipNameAndBatchName(String shipName, String batchName) {
+        Ship ship = shipRepository.findByShipName(shipName);
+        if(ship ==null){
+            MiddleStatus middleStatus = new MiddleStatus("selectUnitSimpleByShipNameAndBatchName error! ",
+                    "pipe_unit",shipName,"findByShipName(shipName)");
+            middleStatusRepository.save(middleStatus);
+            return null;
+        }
+        UnitSimple unitSimple = new UnitSimple();
+        unitSimple.setShipCode(ship.getShipCode());
+        unitSimple.setBatchName(batchName);
+        return unitMapper.selectUnitSimpleList(unitSimple);
     }
 }

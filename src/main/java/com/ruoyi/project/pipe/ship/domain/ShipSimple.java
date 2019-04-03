@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="pipe_ship")
-public class ShipSimple extends BaseEntity
+public class ShipSimple
 {
 	private static final long serialVersionUID = 1L;
 
@@ -84,8 +84,6 @@ public class ShipSimple extends BaseEntity
             .append("id", getId())
             .append("shipCode", getShipCode())
             .append("shipName", getShipName())
-
-            .append("updateTime", getUpdateTime())
             .append("isFinished", getIsFinished())
             .toString();
     }

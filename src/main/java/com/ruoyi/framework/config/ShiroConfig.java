@@ -252,6 +252,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/admin/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/admin/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/admin/prepage/test", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/admin/prepage/scan", "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

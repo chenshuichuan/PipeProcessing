@@ -7,11 +7,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.project.pipe.ship.domain.Ship;
@@ -120,9 +116,9 @@ public class ShipController extends BaseController {
     /**
      * 获取船列表
      */
-    @PostMapping("/selectShipSimpleList")
+    @GetMapping("/selectShipSimpleList")
     @ResponseBody
-    public List<ShipSimple> selectShipSimpleList(@PathVariable("isFinished") Integer isFinished) {
+    public List<ShipSimple> selectShipSimpleList(@RequestParam("isFinished") Integer isFinished) {
         if(isFinished!=null && isFinished<0){
             isFinished =null;
         }

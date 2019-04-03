@@ -24,4 +24,5 @@ public interface UnitRepository extends JpaRepository<Unit,Integer> {
     List<Unit> findByPlanId(int planId);
     List<Unit> findByPlanIdAndNextStageId(int planId,int nextStageId);
     List<Unit> findByShipCode(String shipCode);
+    List<Unit> findByShipCodeAndBatchName(String shipCode,String batchName);
 }

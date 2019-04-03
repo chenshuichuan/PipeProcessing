@@ -106,5 +106,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-    
+
+    <!--//简单batch-->
+    <resultMap type="BatchSimple" id="BatchSimpleResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="shipCode"    column="ship_code"    />
+        <result property="unitNumber"    column="unit_number"    />
+        <result property="isFinished"    column="is_finished"    />
+    </resultMap>
+
+    <sql id="selectBatchSimpleVo">
+        select id, name, ship_code, unit_number, is_finished from pipe_batch
+    </sql>
+
+    <select id="selectBatchSimpleList" parameterType="BatchSimple" resultMap="BatchSimpleResult">
+        <include refid="selectBatchSimpleVo"/>
+        <where>
+            <if test="name != null  and name != '' "> and name = #{name}</if>
+            <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
+            <if test="unitNumber != null "> and unit_number = #{unitNumber}</if>
+            <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+        </where>
+    </select>
+
 </mapper>
