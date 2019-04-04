@@ -4,8 +4,71 @@
 <head th:include="include :: header"></head>
 <body class="gray-bg">
 
+
 <div class="container-div">
     <div class="row">
+
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>加工计划</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 search-collapse">
+                            <form id="formPlan">
+                                <div class="select-list">
+                                    <ul>
+                                        <li>
+                                            计划名称：
+                                            <select name="planName" id="plan-planName">
+                                            </select>
+                                        </li>
+                                        <li>
+                                            船名：
+                                            <select name="shipName" id="plan-shipName">
+                                            </select>
+                                        </li>
+                                        <li>
+                                            加工批次：
+                                            <select name="batchName" id="plan-batchName">
+                                            </select>
+                                        </li>
+                                        <li>
+                                            是否完工：
+                                            <select name="isFinished" th:with="type=${@dict.getType('user_yes_no')}">
+                                                <option value="">所有</option>
+                                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table2.search('formPlan')"><i
+                                                    class="fa fa-search"></i>&nbsp;搜索加工计划</a>
+                                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset('formPlan')"><i
+                                                    class="fa fa-refresh"></i>&nbsp;重置搜索参数</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-sm-12 select-table table-striped">
+                            <table id="plan-table" data-mobile-responsive="true"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-12 search-collapse">
             <form id="formId">
                 <div class="select-list">
@@ -24,15 +87,15 @@
                             单元名称：<input type="text" name="name"/>
                         </li>
                         <li>
-                            计划：<input type="text" name="planId"/>
+                            计划：<input type="text" id="planId" name="planId"/>
                         </li>
 
-                        <li>
-                            下料工段：<input type="text" name="cutSection"/>
-                        </li>
+                        <!--<li>-->
+                            <!--下料工段：<input type="text" name="cutSection"/>-->
+                        <!--</li>-->
 
                         <li>
-                            加工工段：<input type="text" name="processSection"/>
+                            加工工段：<input type="text" id="processSection" name="processSection"/>
                         </li>
 
                         <li>
@@ -58,6 +121,14 @@
                             <!--<input type="text" name="nextStageId"/>-->
                         </li>
                         <li>
+                            已派工：
+                            <select name="isArrange" th:with="type=${@dict.getType('user_yes_no')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
                             是否完工：
                             <select id="isFinished" name="isFinished" th:with="type=${@dict.getType('user_yes_no')}">
                                 <option value="">所有</option>
@@ -67,9 +138,9 @@
                         </li>
 
                         <li>
-                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search('formId')"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset('formId')"><i
                                     class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
                     </ul>
@@ -78,18 +149,11 @@
         </div>
 
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pipe:unit:add">
-                <i class="fa fa-plus"></i> 添加
+            <a class="btn btn-success" onclick="$.operate.removeAll()"
+               shiro:hasPermission="process:unitArrange:remove">
+                <i class="fa fa-plus"></i> 批量派工
             </a>
-            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
-               shiro:hasPermission="pipe:unit:edit">
-                <i class="fa fa-edit"></i> 修改
-            </a>
-            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
-               shiro:hasPermission="pipe:unit:remove">
-                <i class="fa fa-remove"></i> 删除
-            </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pipe:unit:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel('formId')" shiro:hasPermission="process:unitArrange:export">
                 <i class="fa fa-download"></i> 导出
             </a>
         </div>
@@ -99,9 +163,11 @@
     </div>
 </div>
 <div th:include="include :: footer"></div>
+
+<!--单元派工-->
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('pipe:unit:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('pipe:unit:remove')}]];
+    var editFlag = [[${@permission.hasPermi('process:unitArrange:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('process:unitArrange:remove')}]];
     var datas = [[${@dict.getType('user_yes_no')}]];
     var pipe_process_type = [[${@dict.getType('pipe_process_type')}]];
 
@@ -124,6 +190,23 @@
                     field: 'id',
                     title: 'id',
                     visible: false
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>派工</a> ');
+                        return actions.join('');
+                    }
+                },
+                {
+                    field: 'isArrange',
+                    title: '已派工',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(datas, value);
+                    }
                 },
                 {
                     field: 'name',
@@ -158,7 +241,8 @@
                 {
                     field: 'cutSection',
                     title: '下料工段',
-                    sortable: true
+                    sortable: true,
+                    visible: false
                 },
                 {
                     field: 'processSection',
@@ -213,16 +297,6 @@
                     formatter: function (value, row, index) {
                         return $.table.selectDictLabel(datas, value);
                     }
-                },
-                {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function (value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        return actions.join('');
-                    }
                 }]
         };
         $.table.init(options);
@@ -230,18 +304,186 @@
 </script>
 
 
+<!--加工计划-->
+<script th:inline="javascript">
+
+    var user_analysis_status = [[${@dict.getType('user_analysis_status')}]];
+
+    var prefix2 = ctx + webPrefix + "/pipe/processPlan";
+
+    $(function () {
+        var options = {
+            url: prefix2 + "/list",
+            createUrl: prefix2 + "/add",
+            updateUrl: prefix2 + "/edit/{id}",
+            removeUrl: prefix2 + "/remove",
+            exportUrl: prefix2 + "/export",
+            modalName: "加工计划",
+            search: false,
+            showExport: true,
+            columns: [{
+                checkbox: false
+            },
+                {
+                    field: 'id',
+                    title: '系统id',
+                    visible: false
+                },
+                {
+                    field: 'serialNumber',
+                    title: '序号',
+                    sortable: true
+                },
+                {
+                    field: 'planName',
+                    title: '计划名称',
+                    sortable: true
+                },
+                {
+                    field: 'shipName',
+                    title: '船名',
+                    sortable: true
+                },
+                {
+                    field: 'batchName',
+                    title: '加工批次',
+                    sortable: true
+                },
+                {
+                    field: 'batchDescription',
+                    title: '加工批次描述',
+                    sortable: true
+                },
+                {
+                    field: 'createTime',
+                    title: '上传时间',
+                    sortable: true
+                },
+                {
+                    field: 'stocks',
+                    title: '包含托盘',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'sections',
+                    title: '包含分段',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'processPlace',
+                    title: '加工工段',
+                    sortable: true
+                },
+                {
+                    field: 'number',
+                    title: '加工数量',
+                    sortable: true
+                },
+                {
+                    field: 'lightBodyPipe',
+                    title: '含光身管',
+                    sortable: true
+                },
+                {
+                    field: 'planEnd',
+                    title: '计划开始时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'planStart',
+                    title: '计划结束时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'actualStart',
+                    title: '实际开始时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'actualEnd',
+                    title: '实际结束时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'middleDate',
+                    title: '10-12计划',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'sendPicTime',
+                    title: '发图时间',
+                    sortable: true
+                },
+                {
+                    field: 'remark',
+                    title: '备注',
+                    sortable: true
+                },
+                {
+                    field: 'isFinished',
+                    title: '是否完工',
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(datas, item.isFinished);
+                    }
+                },
+                {
+                    field: 'analysisStatus',
+                    title: '解析状态',
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(user_analysis_status, item.analysisStatus);
+                    }
+                }]
+        };
+        $.table2.init(options,"#plan-table");
+
+        $("#plan-table").on("all.bs.table", function (e, t, o) {
+            //这里o是数据
+            console.log("Event:", t, ", data:", o);
+        }).on("click-row.bs.table", function (e, t, o) {
+            //这里t是数据。。。
+            var processPlan = t;
+            $("#planId").val(processPlan.id);
+            $("#processSection").val(processPlan.processPlace);
+            $("#select-batchName").val(processPlan.batchName);
+            $.table.search("formId");//指定参数的form
+            //alert("Event: click-row.bs.table")
+        });
+    });
+
+
+</script>
+<!--渲染selector-->
 <script>
     var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
     var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipCode";
 
+    var urlPostPlanNameList = "/admin/pipe/processPlan/selectPlanNameList";
+    var urlPostBatchSimpleListPlan = "/admin/pipe/batch/selectByShipName";
+
+    var selectorPlanName = $("#plan-planName");
+    var selectorShipName = $("#plan-shipName");
+    var selectorBatchName = $("#plan-batchName");
+
     var selectorShip = $("#select-shipCode");
     var selectorBatch = $("#select-batchName");
-
     $(document).ready(function(){
+
+        //计划selector
+        var getPlanParam = {"isFinished":""};
+        var planNameList = ajaxGet(urlPostPlanNameList,getPlanParam,"post");
+        fullPlanSelector(planNameList);
 
         var getShipParam = {"isFinished":""};
         var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
         fullShipSelecter(resultData);
+        fullShipNameSelecter(resultData);
 
         selectorShip.change(function(){
             var shipCode = selectorShip.val();
@@ -250,8 +492,31 @@
             resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
             fullSelecter(selectorBatch,resultData);
         });
+        selectorShipName.change(function(){
+            var shipName = selectorShipName.val();
 
+            var getBatchParam = {"shipName":shipName};
+            resultData = ajaxGet(urlPostBatchSimpleListPlan,getBatchParam,"post");
+            fullSelecter(selectorBatchName,resultData);
+        });
     });
+
+    function fullPlanSelector(data) {
+        selectorPlanName.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i]+"\">"+data[i]+"</option>";
+        }
+        selectorPlanName.append(str);
+    }
+    function fullShipNameSelecter(data) {
+        selectorShipName.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].shipName+"\">"+data[i].shipName+"</option>";
+        }
+        selectorShipName.append(str);
+    }
     function fullShipSelecter(data) {
         selectorShip.empty();
         var str = "<option value=\"\">所有</option>";
@@ -268,6 +533,26 @@
         }
         selector.append(str);
     }
+
 </script>
+
+<!--折叠加工计划-->
+<script>
+    $(".modal").appendTo("body"), $("[data-toggle=popover]").popover(), $(".collapse-link").click(function() {
+        var div_ibox = $(this).closest("div.ibox"),
+            e = $(this).find("i"),
+            i = div_ibox.find("div.ibox-content");
+        i.slideToggle(200),
+            e.toggleClass("fa-chevron-up").toggleClass("fa-chevron-down"),
+            div_ibox.toggleClass("").toggleClass("border-bottom"),
+            setTimeout(function() {
+                div_ibox.resize();
+            }, 50);
+    }), $(".close-link").click(function () {
+        var div_ibox = $(this).closest("div.ibox");
+        div_ibox.remove()
+    });
+</script>
+
 </body>
 </html>

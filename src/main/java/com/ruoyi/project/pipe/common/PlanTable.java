@@ -53,7 +53,12 @@ public class PlanTable {
         cutDelDateNumber = 0;
         planEndDateNumber =0;
         cutPlan = new CutPlan();
+        cutPlan.setIsArrange(0);
+        cutPlan.setIsFinished(0);
         processPlan = new ProcessPlan();
+        processPlan.setIsArrange(0);
+        processPlan.setIsFinished(0);
+        processPlan.setAnalysisStatus(0);
     }
     public PlanTable(CutPlan cutPlan, ProcessPlan processPlan) {
         this.cutPlan = cutPlan;

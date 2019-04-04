@@ -115,10 +115,20 @@ public class Unit extends BaseEntity {
      */
     @Column(name = "is_finished")
     private Integer isFinished;
+    /**
+     * 是否已派工
+     */
+    @Column(name = "is_arrange")
+    private Integer isArrange;
 
     public Unit() {
     }
-
+    public Integer getIsArrange() {
+        return isArrange;
+    }
+    public void setIsArrange(Integer isArrange) {
+        this.isArrange = isArrange;
+    }
     public void setId(Integer id) {
         this.id = id;
     }
@@ -297,6 +307,7 @@ public class Unit extends BaseEntity {
                 .append("processedNumber", getProcessedNumber())
                 .append("updateTime", getUpdateTime())
                 .append("isFinished", getIsFinished())
+                .append("isArrange", getIsArrange())
                 .toString();
     }
 }

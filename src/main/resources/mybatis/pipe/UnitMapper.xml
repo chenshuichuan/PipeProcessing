@@ -24,10 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="processedNumber"    column="processed_number"    />
         <result property="updateTime"    column="update_time"    />
         <result property="isFinished"    column="is_finished"    />
+        <result property="isArrange"    column="is_arrange"    />
     </resultMap>
 	
 	<sql id="selectUnitVo">
-        select id, name, ship_code, batch_id, batch_name, plan_id, remark, pipe_shape, pipe_number, cut_section, process_section, process_order_id, process_stage_id, next_stage_id, unprocess_number, processing_number, processed_number, update_time, is_finished from pipe_unit
+        select id, name, ship_code, batch_id, batch_name, plan_id, remark, pipe_shape, pipe_number, cut_section, process_section, process_order_id, process_stage_id, next_stage_id, unprocess_number, processing_number, processed_number, update_time, is_finished, is_arrange from pipe_unit
     </sql>
 	
     <select id="selectUnitList" parameterType="Unit" resultMap="UnitResult">
@@ -41,17 +42,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="planId != null "> and plan_id = #{planId}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
              <if test="pipeShape != null  and pipeShape != '' "> and pipe_shape = #{pipeShape}</if>
-             <if test="pipeNumber != null "> and pipe_number = #{pipeNumber}</if>
+
              <if test="cutSection != null  and cutSection != '' "> and cut_section = #{cutSection}</if>
              <if test="processSection != null  and processSection != '' "> and process_section = #{processSection}</if>
              <if test="processOrderId != null "> and process_order_id = #{processOrderId}</if>
              <if test="processStageId != null "> and process_stage_id = #{processStageId}</if>
              <if test="nextStageId != null "> and next_stage_id = #{nextStageId}</if>
-             <if test="unprocessNumber != null "> and unprocess_number = #{unprocessNumber}</if>
-             <if test="processingNumber != null "> and processing_number = #{processingNumber}</if>
-             <if test="processedNumber != null "> and processed_number = #{processedNumber}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+
              <if test="isFinished != null "> and is_finished = #{isFinished}</if>
+            <if test="isArrange != null "> and is_arrange = #{isArrange}</if>
          </where>
     </select>
     
@@ -82,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="processedNumber != null  ">processed_number,</if>
 			<if test="updateTime != null  ">update_time,</if>
 			<if test="isFinished != null  ">is_finished,</if>
+            <if test="isArrange != null  ">is_arrange,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -103,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="processedNumber != null  ">#{processedNumber},</if>
 			<if test="updateTime != null  ">#{updateTime},</if>
 			<if test="isFinished != null  ">#{isFinished},</if>
+            <if test="isArrange != null  ">#{isArrange},</if>
          </trim>
     </insert>
 	 
@@ -127,6 +128,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="processedNumber != null  ">processed_number = #{processedNumber},</if>
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+            <if test="isArrange != null  ">is_arrange = #{isArrange},</if>
         </trim>
         where id = #{id}
     </update>

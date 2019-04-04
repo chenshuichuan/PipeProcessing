@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="batchDescription"    column="batch_description"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="isArrange"    column="is_arrange"    />
         <result property="isFinished"    column="is_finished"    />
         <result property="finishedDate"    column="finished_date"    />
         <result property="totalCutNumber"    column="total_cut_number"    />
@@ -30,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectCutPlanVo">
-        select id, serial_number, plan_name, ship_name, batch_name, batch_description, update_time, remark, is_finished, finished_date, total_cut_number, onebig_cut_number, onebig_cut_finished, one_bend_cut_number, one_ver_cut_number, one_big_cut_number, one_total_number, one_total_finished, two_bend_number, two_ver_number, two_total_number, two_total_finished from pipe_cut_plan
+        select id, serial_number, plan_name, ship_name, batch_name, batch_description, update_time, remark, is_arrange, is_finished, finished_date, total_cut_number, onebig_cut_number, onebig_cut_finished, one_bend_cut_number, one_ver_cut_number, one_big_cut_number, one_total_number, one_total_finished, two_bend_number, two_ver_number, two_total_number, two_total_finished from pipe_cut_plan
     </sql>
 	
     <select id="selectCutPlanList" parameterType="CutPlan" resultMap="CutPlanResult">
@@ -44,7 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="batchDescription != null  and batchDescription != '' "> and batch_description = #{batchDescription}</if>
 
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="isFinished != null and isFinished != 0"> and is_finished = #{isFinished}</if>
+             <if test="isFinished != null"> and is_finished = #{isFinished}</if>
+             <if test="isArrange != null"> and is_arrange = #{isArrange}</if>
 
              <if test="totalCutNumber != null and totalCutNumber != 0 "> and total_cut_number = #{totalCutNumber}</if>
          </where>
@@ -67,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateTime != null  ">update_time,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="isFinished != null  ">is_finished,</if>
+            <if test="isArrange != null  ">is_arrange,</if>
 			<if test="finishedDate != null  ">finished_date,</if>
 			<if test="totalCutNumber != null  ">total_cut_number,</if>
 			<if test="onebigCutNumber != null  ">onebig_cut_number,</if>
@@ -91,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateTime != null  ">#{updateTime},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="isFinished != null  ">#{isFinished},</if>
+            <if test="isArrange != null  ">#{isArrange},</if>
 			<if test="finishedDate != null  ">#{finishedDate},</if>
 			<if test="totalCutNumber != null  ">#{totalCutNumber},</if>
 			<if test="onebigCutNumber != null  ">#{onebigCutNumber},</if>
@@ -118,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="isFinished != null  ">is_finished = #{isFinished},</if>
+            <if test="isArrange != null  ">is_arrange = #{isArrange},</if>
             <if test="finishedDate != null  ">finished_date = #{finishedDate},</if>
             <if test="totalCutNumber != null  ">total_cut_number = #{totalCutNumber},</if>
             <if test="onebigCutNumber != null  ">onebig_cut_number = #{onebigCutNumber},</if>
