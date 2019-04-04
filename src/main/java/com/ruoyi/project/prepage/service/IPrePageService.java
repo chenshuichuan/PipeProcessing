@@ -1,4 +1,4 @@
-package com.ruoyi.project.prepage.batch.service;
+package com.ruoyi.project.prepage.service;
 
 
 import java.util.List;

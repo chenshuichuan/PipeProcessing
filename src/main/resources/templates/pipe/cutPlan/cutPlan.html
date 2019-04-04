@@ -10,20 +10,24 @@
             <form id="formId">
                 <div class="select-list">
                     <ul>
+
                         <li>
-                            序号：<input type="text" name="serialNumber"/>
+                            计划名称：
+                            <select name="planName" id="select-planName">
+                            </select>
                         </li>
                         <li>
-                            上传的计划名称：<input type="text" name="planName"/>
+                            船名：
+                            <select name="shipName" id="select-shipName">
+                            </select>
                         </li>
                         <li>
-                            船名：<input type="text" name="shipName"/>
+                            批次：
+                            <select name="batchName" id="select-batchName">
+                            </select>
                         </li>
                         <li>
-                            加工批次：<input type="text" name="batchName"/>
-                        </li>
-                        <li>
-                            加工批次描述：<input type="text" name="batchDescription"/>
+                            批次描述：<input type="text" name="batchDescription"/>
                         </li>
                         <li>
                             备注：<input type="text" name="remark"/>
@@ -35,9 +39,6 @@
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                         th:value="${dict.dictValue}"></option>
                             </select>
-                        </li>
-                        <li>
-                            该次计划下料总数：<input type="text" name="totalCutNumber"/>
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
@@ -226,6 +227,64 @@
         };
         $.table.init(options);
     });
+</script>
+
+<script>
+    var urlPostPlanNameList = "/admin/pipe/processPlan/selectPlanNameList";
+    var selectorPlan = $("#select-planName");
+
+    var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
+    var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipName";
+
+    var selectorShip = $("#select-shipName");
+    var selectorBatch = $("#select-batchName");
+
+    $(document).ready(function(){
+
+        //计划selector
+        var getPlanParam = {"isFinished":""};
+        var planNameList = ajaxGet(urlPostPlanNameList,getPlanParam,"post");
+        fullPlanSelector(planNameList);
+
+        var getShipParam = {"isFinished":""};
+        var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
+        fullShipSelecter(resultData);
+
+        selectorShip.change(function(){
+            var shipName = selectorShip.val();
+
+            var getBatchParam = {"shipName":shipName};
+            resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
+            fullSelecter(selectorBatch,resultData);
+        });
+
+    });
+
+    function fullPlanSelector(data) {
+        selectorPlan.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i]+"\">"+data[i]+"</option>";
+        }
+        selectorPlan.append(str);
+    }
+
+    function fullShipSelecter(data) {
+        selectorShip.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].shipName+"\">"+data[i].shipName+"</option>";
+        }
+        selectorShip.append(str);
+    }
+    function fullSelecter(selector,data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].name+"\">"+data[i].name+"</option>";
+        }
+        selector.append(str);
+    }
 </script>
 </body>
 </html>

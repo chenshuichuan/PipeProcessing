@@ -11,7 +11,26 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            号船ID：<input type="text" name="callShipId"/>
+                            号船：
+                            <select name="callShipId" id="select-shipCode">
+                            </select>
+                        </li>
+                        <!--<li>-->
+                            <!--套料批次：<input type="text" name="machiningBatch"/>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--加工单元ID：<input type="text" name="processUnitId"/>-->
+                        <!--</li>-->
+                        <li>
+                            批次：
+                            <select name="machiningBatch" id="select-batchName">
+                            </select>
+                        </li>
+
+                        <li>
+                            单元：
+                            <select name="processUnitId" id="select-unitId">
+                            </select>
                         </li>
 
                         <li>
@@ -19,37 +38,24 @@
                         </li>
 
                         <li>
-                            加工单元ID：<input type="text" name="processUnitId"/>
-                        </li>
-
-                        <li>
-                            套料批次：<input type="text" name="machiningBatch"/>
-                        </li>
-
-                        <li>
                             下料长：<input type="text" name="cutLength"/>
                         </li>
-
                         <li>
                             入级船级社：<input type="text" name="inClassShipLevel"/>
                         </li>
-
                         <li>
                             管材规格：<input type="text" name="pipeSpecification"/>
                         </li>
-
                         <li>
                             管子形态：<input type="text" name="pipeShape"/>
                         </li>
-
                         <li>
                             不校装：
                             <select name="noInstalled">
                                 <option value="">所有</option>
-                                <option value="▲">校桩</option>
+                                <option value="▲">不校桩</option>
                             </select>
                         </li>
-
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
@@ -110,17 +116,7 @@
                 {
                     field: 'midOid',
                     title: 'MidOID',
-                    sortable: true
-                },
-                {
-                    field: 'isDelete',
-                    title: '是否删除',
-                    sortable: true
-                },
-                {
-                    field: 'isUpdate',
-                    title: '是否更新',
-                    sortable: true
+                    visible: false
                 },
                 {
                     field: 'callShipId',
@@ -180,6 +176,70 @@
         };
         $.table.init(options);
     });
+</script>
+<script>
+    var urlGetShipSimpleList = "/admin/pipe/ship/selectShipSimpleList";
+    var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipName";
+    var urlPostUnitSimpleList = "/admin/pipe/unit/selectByShipNameAndBatchName";
+
+    var selectorShip = $("#select-shipCode");
+    var selectorBatch = $("#select-batchName");
+    var selectorUnit = $("#select-unitId");
+
+    $(document).ready(function () {
+
+        var getShipParam = {"isFinished": ""};
+        var resultData = ajaxGet(urlGetShipSimpleList, getShipParam, "get");
+        fullShipSelecter(resultData);
+
+        selectorShip.change(function () {
+            var shipName = selectorShip.find("option:selected").text();
+
+            //var shipCode = selectorShip.val();
+            var getBatchParam = {"shipName": shipName};
+            resultData = ajaxGet(urlPostBatchSimpleList, getBatchParam, "post");
+            fullSelecter(selectorBatch, resultData);
+        });
+
+        selectorBatch.change(function () {
+            //var shipCode = selectorShip.val();
+            var shipName = selectorShip.find("option:selected").text();
+
+            var batchName = selectorBatch.val();
+
+            var getUnitParam = {"shipName": shipName, "batchName": batchName};
+            resultData = ajaxGet(urlPostUnitSimpleList, getUnitParam, "post");
+            fullUnitIdSelecter(selectorUnit, resultData)
+        });
+
+    });
+
+    function fullShipSelecter(data) {
+        selectorShip.empty();
+        var str = "<option value=\"\">所有</option>";
+        for (var i = 0; i < data.length; i++) {
+            str += "<option value=\"" + data[i].id + "\">" + data[i].shipName + "</option>";
+        }
+        selectorShip.append(str);
+    }
+
+    function fullSelecter(selector, data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for (var i = 0; i < data.length; i++) {
+            str += "<option value=\"" + data[i].name + "\">" + data[i].name + "</option>";
+        }
+        selector.append(str);
+    }
+
+    function fullUnitIdSelecter(selector, data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for (var i = 0; i < data.length; i++) {
+            str += "<option value=\"" + data[i].id + "\">" + data[i].name + "</option>";
+        }
+        selector.append(str);
+    }
 </script>
 </body>
 </html>

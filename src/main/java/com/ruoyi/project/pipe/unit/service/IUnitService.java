@@ -78,4 +78,5 @@ public interface IUnitService {
     List<Unit> selectByShipNameAndBatchName(String shipName, String batchName);
 
     public List<UnitSimple> selectUnitSimpleByShipNameAndBatchName(String shipName, String batchName);
+    public List<UnitSimple> selectUnitSimpleByShipCodeAndBatchId(String shipCode, Integer batchId);
 }

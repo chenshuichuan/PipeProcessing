@@ -85,7 +85,7 @@ public class BatchServiceImpl implements IBatchService {
     }
 
     @Override
-    public List<BatchSimple> selectBatchSimpleList(String shipName) {
+    public List<BatchSimple> selectByShipName(String shipName) {
         Ship ship = shipRepository.findByShipName(shipName);
         if (ship == null) {
             MiddleStatus middleStatus = new MiddleStatus("selectUnitSimpleByShipNameAndBatchName error! ",
@@ -95,6 +95,12 @@ public class BatchServiceImpl implements IBatchService {
         }
         BatchSimple batchSimple = new BatchSimple();
         batchSimple.setShipCode(ship.getShipCode());
+        return batchMapper.selectBatchSimpleList(batchSimple);
+    }
+    @Override
+    public List<BatchSimple> selectByShipCode(String shipCode) {
+        BatchSimple batchSimple = new BatchSimple();
+        batchSimple.setShipCode(shipCode);
         return batchMapper.selectBatchSimpleList(batchSimple);
     }
 

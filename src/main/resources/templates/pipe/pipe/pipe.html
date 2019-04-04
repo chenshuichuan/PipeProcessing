@@ -11,15 +11,21 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            号船代号：<input type="text" name="shipCode"/>
+                            号船：
+                            <select name="shipCode" id="select-shipCode">
+                            </select>
                         </li>
 
                         <li>
-                            批次id：<input type="text" name="batchId"/>
+                            批次：
+                            <select name="batchId" id="select-batchId">
+                            </select>
                         </li>
 
                         <li>
-                            单元序号：<input type="text" name="unitId"/>
+                            单元：
+                            <select name="unitId" id="select-unitId">
+                            </select>
                         </li>
 
                         <li>
@@ -35,11 +41,23 @@
                         </li>
 
                         <li>
-                            当前工序：<input type="text" name="processStage"/>
+                            当前工序：
+                            <select id="processStage" name="processStage" th:with="type=${@dict.getType('pipe_process_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                            <!--<input type="text" name="processStage"/>-->
                         </li>
 
                         <li>
-                            下一工序：<input type="text" name="nextStage"/>
+                            下一工序：
+                            <select id="nextStage" name="nextStage" th:with="type=${@dict.getType('pipe_process_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                            <!--<input type="text" name="nextStage"/>-->
                         </li>
 
                         <!--<li>-->
@@ -48,7 +66,7 @@
                         <li>
                             是否完工：
                             <select id="isFinished" name="isFinished" th:with="type=${@dict.getType('user_yes_no')}">
-                                <option>所有</option>
+                                <option value="">所有</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                         th:value="${dict.dictValue}"></option>
                             </select>
@@ -90,6 +108,7 @@
     var editFlag = [[${@permission.hasPermi('pipe:pipe:edit')}]];
     var removeFlag = [[${@permission.hasPermi('pipe:pipe:remove')}]];
     var datas = [[${@dict.getType('user_yes_no')}]];
+    var pipe_process_type = [[${@dict.getType('pipe_process_type')}]];
 
     var prefix = ctx + webPrefix + "/pipe/pipe";
 
@@ -154,12 +173,17 @@
                 {
                     field: 'processStage',
                     title: '当前工序',
-                    sortable: true
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(pipe_process_type, value);
+                    }
                 },
                 {
                     field: 'nextStage',
                     title: '下一工序',
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(pipe_process_type, value);
+                    }
                 },
                 {
                     field: 'processIndex',
@@ -169,7 +193,10 @@
                 {
                     field: 'isOutOfUnit',
                     title: '是否脱离单元工序',
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(datas, value);
+                    }
                 },
                 {
                     field: 'isFinished',
@@ -193,5 +220,56 @@
         $.table.init(options);
     });
 </script>
+
+<script>
+    var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
+    var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipCode";
+    var urlPostUnitSimpleList = "/admin/pipe/unit/selectByShipCodeAndBatchId";
+    var selectorShip = $("#select-shipCode");
+    var selectorBatch = $("#select-batchId");
+    var selectorUnit = $("#select-unitId");
+
+    $(document).ready(function(){
+
+        var getShipParam = {"isFinished":""};
+        var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
+        fullShipSelecter(resultData);
+
+        selectorShip.change(function(){
+            var shipCode = selectorShip.val();
+
+            var getBatchParam = {"shipCode":shipCode};
+            resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
+            fullSelecter(selectorBatch,resultData);
+        });
+
+        selectorBatch.change(function(){
+            var shipCode = selectorShip.val();
+            var batchId = selectorBatch.val();
+
+            var getUnitParam = {"shipCode":shipCode,"batchId": batchId};
+            resultData = ajaxGet(urlPostUnitSimpleList,getUnitParam,"post");
+            fullSelecter(selectorUnit,resultData)
+        });
+
+    });
+    function fullShipSelecter(data) {
+        selectorShip.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].shipCode+"\">"+data[i].shipName+"</option>";
+        }
+        selectorShip.append(str);
+    }
+    function fullSelecter(selector,data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].id+"\">"+data[i].name+"</option>";
+        }
+        selector.append(str);
+    }
+</script>
+
 </body>
 </html>

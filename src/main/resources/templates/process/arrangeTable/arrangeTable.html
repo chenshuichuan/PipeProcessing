@@ -11,7 +11,13 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            派工类型：<input type="text" name="type"/>
+                            派工类型：
+                            <select id="type" name="type" th:with="type=${@dict.getType('user_arrange_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                            <!--<input type="text" name="type"/>-->
                         </li>
 
                         <li>
@@ -27,7 +33,13 @@
                         </li>
 
                         <li>
-                            工序：<input type="text" name="stage"/>
+                            工序：
+                            <select id="stage" name="stage" th:with="type=${@dict.getType('pipe_process_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                            <!--<input type="text" name="stage"/>-->
                         </li>
 
                         <li>
@@ -101,9 +113,9 @@
     var editFlag = [[${@permission.hasPermi('process:arrangeTable:edit')}]];
     var removeFlag = [[${@permission.hasPermi('process:arrangeTable:remove')}]];
     var datas = [[${@dict.getType('user_yes_no')}]];
+    var pipe_process_type = [[${@dict.getType('pipe_process_type')}]];
 
     var prefix = ctx + webPrefix + "/process/arrangeTable";
-
     $(function () {
         var options = {
             url: prefix + "/list",
@@ -145,7 +157,10 @@
                 {
                     field: 'stage',
                     title: '工序',
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(pipe_process_type, value);
+                    }
                 },
                 {
                     field: 'arrangerId',

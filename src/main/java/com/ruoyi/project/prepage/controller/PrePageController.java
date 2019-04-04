@@ -1,7 +1,7 @@
-package com.ruoyi.project.prepage.batch.controller;
+package com.ruoyi.project.prepage.controller;
 
 import com.ruoyi.framework.web.controller.BaseController;
-import com.ruoyi.project.prepage.batch.service.IPrePageService;
+import com.ruoyi.project.prepage.service.IPrePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ public class PrePageController extends BaseController {
 
     @GetMapping({"/test2","/test2.html"})
     public String test2() {
-        return prefix + "/test";
+        return prefix + "/test2";
     }
 
 }

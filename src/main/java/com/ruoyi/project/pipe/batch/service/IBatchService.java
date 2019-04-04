@@ -59,5 +59,12 @@ public interface IBatchService {
      * @param shipName 加工批次信息
      * @return 加工批次集合
      */
-    public List<BatchSimple> selectBatchSimpleList(String shipName);
+    public List<BatchSimple> selectByShipName(String shipName);
+
+    /**
+     * 根据船名查询加工批次列表
+     * @param shipCode 加工批次信息
+     * @return 加工批次集合
+     */
+    public List<BatchSimple> selectByShipCode(String shipCode);
 }

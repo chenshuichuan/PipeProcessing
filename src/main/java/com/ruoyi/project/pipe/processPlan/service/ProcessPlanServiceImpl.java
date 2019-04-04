@@ -96,6 +96,16 @@ public class ProcessPlanServiceImpl implements IProcessPlanService {
     }
 
     /**
+     * 查询计划列表
+     *
+     * @return 下计划列表
+     */
+    @Override
+    public List<String> selectPlanNameList(Integer isFinshed) {
+        return processPlanMapper.selectPlanNameList(isFinshed);
+    }
+
+    /**
      * 判断某加工计划下包含的单元、管件
      * @param processPlan 要分析判断的计划
      * @return int 分析成功返回1，否则返回0

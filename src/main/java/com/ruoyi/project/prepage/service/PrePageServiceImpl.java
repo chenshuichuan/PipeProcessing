@@ -1,4 +1,4 @@
-package com.ruoyi.project.prepage.batch.service;
+package com.ruoyi.project.prepage.service;
 
 import org.springframework.stereotype.Service;
 

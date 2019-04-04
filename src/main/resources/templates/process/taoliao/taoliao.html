@@ -3,142 +3,194 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-    
-     <div class="container-div">
-		<div class="row">
-			<div class="col-sm-12 search-collapse">
-				<form id="formId">
-					<div class="select-list">
-						<ul>
-							<li>
-								对应的计划id：<input type="text" name="planId"/>
-							</li>
 
-							<li>
-								批次id：<input type="text" name="batchId"/>
-							</li>
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            计划id：<input type="text" name="planId"/>
+                        </li>
 
-							<li>
-								管材：<input type="text" name="pipeMaterial"/>
-							</li>
+                        <li>
+                            号船(不作参数)：
+                            <select id="select-shipCode">
+                            </select>
+                        </li>
+                        <li>
+                            批次：
+                            <select name="batchId" id="select-batchId">
+                            </select>
+                        </li>
 
-							<li>
-								所有管总长度：<input type="text" name="totalLength"/>
-							</li>
+                        <li>
+                            管材：<input type="text" name="pipeMaterial"/>
+                        </li>
 
-							<li>
-								包含管数量：<input type="text" name="pipeNumber"/>
-							</li>
+                        <li>
+                            管总长度：<input type="text" name="totalLength"/>
+                        </li>
 
-							<li>
-								是否已经套过料了：<input type="text" name="isTaoliao"/>
-							</li>
+                        <li>
+                            管数量：<input type="text" name="pipeNumber"/>
+                        </li>
 
-							<li>
-								更新时间：<input type="text" name="updateTime"/>
-							</li>
+                        <li>
+                            是否已套料：
+                            <select name="isTaoliao" th:with="type=${@dict.getType('user_yes_no')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                            <!--<input type="text" name="isTaoliao"/>-->
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
 
-							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
-	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="process:taoliao:add">
-					<i class="fa fa-plus"></i> 添加
-				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="process:taoliao:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="process:taoliao:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="process:taoliao:export">
-						<i class="fa fa-download"></i> 导出
-				 </a>
-			</div>
-			<div class="col-sm-12 select-table table-striped">
-				<table id="bootstrap-table" data-mobile-responsive="true"></table>
-			</div>
-		</div>
-	</div>
-    <div th:include="include :: footer"></div>
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('process:taoliao:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('process:taoliao:remove')}]];
+        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="process:taoliao:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="process:taoliao:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="process:taoliao:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="process:taoliao:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('process:taoliao:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('process:taoliao:remove')}]];
 
-        var prefix = ctx +webPrefix+ "/process/taoliao";
+    var prefix = ctx + webPrefix + "/process/taoliao";
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-				exportUrl: prefix + "/export",
-                modalName: "套料管材",
-				search: false,
-		        showExport: true,
-                columns: [{
-		            checkbox: true
-		        },
-				{
-					field : 'id', 
-					title : '',
-					visible: false
-				},
-				{
-					field : 'planId', 
-					title : '对应的计划id',
-					sortable: true
-				},
-				{
-					field : 'batchId', 
-					title : '批次id',
-					sortable: true
-				},
-				{
-					field : 'pipeMaterial', 
-					title : '管材',
-					sortable: true
-				},
-				{
-					field : 'totalLength', 
-					title : '所有管总长度',
-					sortable: true
-				},
-				{
-					field : 'pipeNumber', 
-					title : '包含管数量',
-					sortable: true
-				},
-				{
-					field : 'isTaoliao', 
-					title : '是否已经套过料了',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '更新时间',
-					sortable: true
-				},
-		        {
-		            title: '操作',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "套料管材",
+            search: false,
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                },
+                {
+                    field: 'planId',
+                    title: '对应的计划id',
+                    sortable: true
+                },
+                {
+                    field: 'batchId',
+                    title: '批次id',
+                    sortable: true
+                },
+                {
+                    field: 'pipeMaterial',
+                    title: '管材',
+                    sortable: true
+                },
+                {
+                    field: 'totalLength',
+                    title: '所有管总长度',
+                    sortable: true
+                },
+                {
+                    field: 'pipeNumber',
+                    title: '包含管数量',
+                    sortable: true
+                },
+                {
+                    field: 'isTaoliao',
+                    title: '是否已经套过料了',
+                    sortable: true
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-						return actions.join('');
-		            }
-		        }]
-            };
-            $.table.init(options);
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+
+<script>
+    var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
+    var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipCode";
+    var selectorShip = $("#select-shipCode");
+    var selectorBatch = $("#select-batchId");
+
+    $(document).ready(function(){
+
+        var getShipParam = {"isFinished":""};
+        var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
+        fullShipSelecter(resultData);
+
+        selectorShip.change(function(){
+            var shipCode = selectorShip.val();
+
+            var getBatchParam = {"shipCode":shipCode};
+            resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
+            fullSelecter(selectorBatch,resultData);
         });
-    </script>
+
+    });
+    function fullShipSelecter(data) {
+        selectorShip.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].shipCode+"\">"+data[i].shipName+"</option>";
+        }
+        selectorShip.append(str);
+    }
+    function fullSelecter(selector,data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].id+"\">"+data[i].name+"</option>";
+        }
+        selector.append(str);
+    }
+</script>
+
 </body>
 </html>

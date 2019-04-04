@@ -117,11 +117,20 @@ public class UnitController extends BaseController {
     /**
      * 查找简单加工单元
      */
-    @PostMapping("/selectUnitSimpleList")
+    @PostMapping("/selectByShipNameAndBatchName")
     @ResponseBody
     public List<UnitSimple>  selectByShipNameAndBatchName(String shipName, String batchName) {
         System.out.println("shiname="+shipName+"batchname="+batchName);
         return unitService.selectUnitSimpleByShipNameAndBatchName(shipName,batchName);
+    }
+
+    /**
+     * 查找简单加工单元
+     */
+    @PostMapping("/selectByShipCodeAndBatchId")
+    @ResponseBody
+    public List<UnitSimple>  selectByShipCodeAndBatchId(String shipCode, Integer batchId) {
+        return unitService.selectUnitSimpleByShipCodeAndBatchId(shipCode,batchId);
     }
 
 }

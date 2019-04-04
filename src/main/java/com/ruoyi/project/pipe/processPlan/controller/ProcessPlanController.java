@@ -53,8 +53,6 @@ public class ProcessPlanController extends BaseController {
         List<Files> list = filesRepository.findBySuffix("xls");
         mmap.put("planFiles", list);
 
-        //根据实际调整页面显示的需求
-        mmap.put("shipSimpleList",shipService.selectShipSimpleList(null));
         return prefix + "/processPlan";
     }
 
@@ -161,4 +159,14 @@ public class ProcessPlanController extends BaseController {
         ProcessPlan processPlan = processPlanService.selectProcessPlanById(id);
         return toAjax(processPlanService.judgeBatchUnitOfPlan(processPlan));
     }
+
+    /**
+     * 查找简单加工单元
+     */
+    @PostMapping("/selectPlanNameList")
+    @ResponseBody
+    public List<String>  selectPlanNameList(Integer isFinished) {
+        return processPlanService.selectPlanNameList(isFinished);
+    }
+
 }

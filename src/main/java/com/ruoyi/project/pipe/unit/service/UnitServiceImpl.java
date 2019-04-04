@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.ruoyi.project.pipe.batch.domain.Batch;
+import com.ruoyi.project.pipe.batch.service.BatchRepository;
 import com.ruoyi.project.pipe.pipCutting.domain.PipCutting;
 import com.ruoyi.project.pipe.pipCutting.service.IPipCuttingService;
 import com.ruoyi.project.pipe.pipe.domain.Pipe;
@@ -47,6 +49,8 @@ public class UnitServiceImpl implements IUnitService {
     private WorkPipeRepository workPipeRepository;
     @Autowired
     private ShipRepository shipRepository;
+    @Autowired
+    private BatchRepository batchRepository;
     @Autowired
     private IShipService shipService;
     @Autowired
@@ -241,6 +245,15 @@ public class UnitServiceImpl implements IUnitService {
         UnitSimple unitSimple = new UnitSimple();
         unitSimple.setShipCode(ship.getShipCode());
         unitSimple.setBatchName(batchName);
+        return unitMapper.selectUnitSimpleList(unitSimple);
+    }
+
+    @Override
+    public List<UnitSimple> selectUnitSimpleByShipCodeAndBatchId(String shipCode, Integer batchId) {
+        Batch batch = batchRepository.findById(batchId).orElse(null);
+        UnitSimple unitSimple = new UnitSimple();
+        unitSimple.setShipCode(shipCode);
+        unitSimple.setBatchName(batch==null ? null : batch.getName());
         return unitMapper.selectUnitSimpleList(unitSimple);
     }
 }

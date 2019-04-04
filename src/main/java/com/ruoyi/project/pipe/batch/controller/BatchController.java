@@ -120,10 +120,19 @@ public class BatchController extends BaseController {
     /**
      * 查找简单加工单元
      */
-    @PostMapping("/selectBatchSimpleList")
+    @PostMapping("/selectByShipName")
     @ResponseBody
-    public List<BatchSimple> selectByShipNameAndBatchName(String shipName) {
+    public List<BatchSimple> selectByShipName(String shipName) {
         System.out.println("shiname=" + shipName );
-        return batchService.selectBatchSimpleList(shipName);
+        return batchService.selectByShipName(shipName);
+    }
+    /**
+     * 查找简单加工单元
+     */
+    @PostMapping("/selectByShipCode")
+    @ResponseBody
+    public List<BatchSimple> selectByShipCode(String shipCode) {
+        System.out.println("shiname=" + shipCode );
+        return batchService.selectByShipCode(shipCode);
     }
 }

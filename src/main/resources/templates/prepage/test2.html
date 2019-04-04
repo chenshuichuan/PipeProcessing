@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            hello
+        </div>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+
+<script src="../../static/admin/ruoyi/js/common-data.js" th:src="@{/admin/ruoyi/js/common-data.js}"></script>
+
+<script th:inline="javascript">
+
+</script>
+<script>
+    $(document).ready(function(){
+
+        var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
+        var urlPostBatchSimpleList = "/admin/pipe/batch/selectBatchSimpleList";
+        var urlPostUnitSimpleList = "/admin/pipe/unit/selectUnitSimpleList";
+        var getShipParam = {"isFinished":""};
+        var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
+        alert(resultData);
+
+        var getBatchParam = {"shipName":"极地重载甲板运输船1#"};
+        resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
+        alert(resultData);
+
+        var getUnitParam = {"shipName":"极地重载甲板运输船1#","batchName":"G01"};
+        resultData = ajaxGet(urlPostUnitSimpleList,getUnitParam,"post");
+        alert(resultData);
+
+    });
+</script>
+</body>
+</html>

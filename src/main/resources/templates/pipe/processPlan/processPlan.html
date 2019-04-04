@@ -33,21 +33,19 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            计划名称：<input type="text" name="planName"/>
+                            计划名称：
+                            <select name="planName" id="select-planName">
+                            </select>
                         </li>
-
                         <li>
                             船名：
-                            <select name="shipName">
-                                <option value="">所有船只</option>
-                                <option th:each="ship,iterStat : ${shipSimpleList}" th:text="${ship.shipName}"
-                                        th:value="${ship.shipName}"></option>
+                            <select name="shipName" id="select-shipName">
                             </select>
-                            <!--<input type="text" name="shipName"/>-->
                         </li>
-
                         <li>
-                            加工批次：<input type="text" name="batchName"/>
+                            加工批次：
+                            <select name="batchName" id="select-batchName">
+                            </select>
                         </li>
 
                         <li>
@@ -282,6 +280,60 @@
             var data = {"name": selectFileId};
             $.operate.post("/admin/pipe/processPlan/analysisProcessPlan", data);
         })
+    }
+</script>
+<script>
+    var urlPostPlanNameList = "/admin/pipe/processPlan/selectPlanNameList";
+    var selectorPlan = $("#select-planName");
+
+    var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
+    var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipName";
+    var selectorShip = $("#select-shipName");
+    var selectorBatch = $("#select-batchName");
+
+    $(document).ready(function(){
+        //计划selector
+        var getPlanParam = {"isFinished":""};
+        var planNameList = ajaxGet(urlPostPlanNameList,getPlanParam,"post");
+        fullPlanSelector(planNameList);
+
+        var getShipParam = {"isFinished":""};
+        var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
+        fullShipSelecter(resultData);
+
+        selectorShip.change(function(){
+            var shipName = selectorShip.val();
+
+            var getBatchParam = {"shipName":shipName};
+            resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
+            fullSelecter(selectorBatch,resultData);
+        });
+
+    });
+    function fullPlanSelector(data) {
+        selectorPlan.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i]+"\">"+data[i]+"</option>";
+        }
+        selectorPlan.append(str);
+    }
+
+    function fullShipSelecter(data) {
+        selectorShip.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].shipName+"\">"+data[i].shipName+"</option>";
+        }
+        selectorShip.append(str);
+    }
+    function fullSelecter(selector,data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].name+"\">"+data[i].name+"</option>";
+        }
+        selector.append(str);
     }
 </script>
 </body>

@@ -11,7 +11,14 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            批次：<input type="text" name="batchId"/>
+                            号船(不作参数)：
+                            <select id="select-shipCode">
+                            </select>
+                        </li>
+                        <li>
+                            批次：
+                            <select name="batchId" id="select-batchId">
+                            </select>
                         </li>
                         <li>
                             更新时间：<input type="text" name="updateTime"/>
@@ -144,5 +151,45 @@
         $.table.init(options);
     });
 </script>
+
+<script>
+    var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
+    var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipCode";
+    var selectorShip = $("#select-shipCode");
+    var selectorBatch = $("#select-batchId");
+
+    $(document).ready(function(){
+
+        var getShipParam = {"isFinished":""};
+        var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
+        fullShipSelecter(resultData);
+
+        selectorShip.change(function(){
+            var shipCode = selectorShip.val();
+
+            var getBatchParam = {"shipCode":shipCode};
+            resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
+            fullSelecter(selectorBatch,resultData);
+        });
+
+    });
+    function fullShipSelecter(data) {
+        selectorShip.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].shipCode+"\">"+data[i].shipName+"</option>";
+        }
+        selectorShip.append(str);
+    }
+    function fullSelecter(selector,data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].id+"\">"+data[i].name+"</option>";
+        }
+        selector.append(str);
+    }
+</script>
+
 </body>
 </html>

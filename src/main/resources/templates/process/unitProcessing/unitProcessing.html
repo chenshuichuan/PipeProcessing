@@ -11,11 +11,24 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            所属批次：<input type="text" name="batchId"/>
+                            号船(不作参数)：
+                            <select id="select-shipCode">
+                            </select>
+                        </li>
+                        <li>
+                            批次：
+                            <select name="batchId" id="select-batchId">
+                            </select>
                         </li>
 
                         <li>
-                            当前工序：<input type="text" name="processStage"/>
+                            当前工序：
+                            <select id="processStage" name="processStage" th:with="type=${@dict.getType('pipe_process_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                        th:value="${dict.dictValue}"></option>
+                            </select>
+                            <!--<input type="text" name="processStage"/>-->
                         </li>
                         <li>
                             是否完工：
@@ -63,6 +76,7 @@
     var editFlag = [[${@permission.hasPermi('process:unitProcessing:edit')}]];
     var removeFlag = [[${@permission.hasPermi('process:unitProcessing:remove')}]];
     var datas = [[${@dict.getType('user_yes_no')}]];
+    var pipe_process_type = [[${@dict.getType('pipe_process_type')}]];
     var prefix = ctx + webPrefix + "/process/unitProcessing";
 
     $(function () {
@@ -96,7 +110,10 @@
                 {
                     field: 'processStage',
                     title: '当前工序',
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return $.table.selectDictLabel(pipe_process_type, value);
+                    }
                 },
                 {
                     field: 'pipeProcessingNumber',
@@ -129,5 +146,44 @@
         $.table.init(options);
     });
 </script>
+<script>
+    var urlGetShipSimpleList =  "/admin/pipe/ship/selectShipSimpleList";
+    var urlPostBatchSimpleList = "/admin/pipe/batch/selectByShipCode";
+    var selectorShip = $("#select-shipCode");
+    var selectorBatch = $("#select-batchId");
+
+    $(document).ready(function(){
+
+        var getShipParam = {"isFinished":""};
+        var resultData = ajaxGet(urlGetShipSimpleList,getShipParam,"get");
+        fullShipSelecter(resultData);
+
+        selectorShip.change(function(){
+            var shipCode = selectorShip.val();
+
+            var getBatchParam = {"shipCode":shipCode};
+            resultData = ajaxGet(urlPostBatchSimpleList,getBatchParam,"post");
+            fullSelecter(selectorBatch,resultData);
+        });
+
+    });
+    function fullShipSelecter(data) {
+        selectorShip.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].shipCode+"\">"+data[i].shipName+"</option>";
+        }
+        selectorShip.append(str);
+    }
+    function fullSelecter(selector,data) {
+        selector.empty();
+        var str = "<option value=\"\">所有</option>";
+        for(var i=0;i<data.length;i++){
+            str += "<option value=\""+data[i].id+"\">"+data[i].name+"</option>";
+        }
+        selector.append(str);
+    }
+</script>
+
 </body>
 </html>
