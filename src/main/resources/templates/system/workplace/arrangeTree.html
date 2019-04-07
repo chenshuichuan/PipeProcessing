@@ -35,11 +35,13 @@
     <div id="tree" class="ztree treeselect"></div>
 </div>
 
+
 <div th:include="include::footer"></div>
 <script th:src="@{/admin/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
 <script th:inline="javascript">
     $(function () {
-        var url = ctx + webPrefix + "/system/workplace/treeData";
+        var parentId = $("#treeId").val();
+        var url = ctx + webPrefix + "/system/workplace/arrangeTreeData?parentId="+parentId;
         var options = {
             url: url,
             expandLevel: 2,

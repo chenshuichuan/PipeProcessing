@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Workplace" id="WorkplaceResult">
         <result property="deptId"    column="dept_id"    />
         <result property="parentId"    column="parent_id"    />
+        <!--<result property="parentName" column="parent_name" />-->
         <result property="ancestors"    column="ancestors"    />
         <result property="workplaceType"    column="workplace_type"    />
         <result property="workplaceName"    column="workplace_name"    />
@@ -20,7 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectWorkplaceVo">
-        select dept_id, parent_id, ancestors, workplace_type, workplace_name, workplace_code, order_num, status, create_by, create_time, update_by, update_time from sys_workplace
+        select w.dept_id, w.parent_id, w.ancestors, w.workplace_type, w.workplace_name, w.workplace_code, w.order_num, w.status, w.create_by, w.create_time, w.update_by, w.update_time
+        from sys_workplace w
     </sql>
 	
     <select id="selectWorkplaceList" parameterType="Workplace" resultMap="WorkplaceResult">
@@ -34,24 +36,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="workplaceCode != null  and workplaceCode != '' "> and workplace_code = #{workplaceCode}</if>
              <if test="orderNum != null "> and order_num = #{orderNum}</if>
              <if test="status != null  and status != '' "> and status = #{status}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+
          </where>
         <!--where 1=1-->
         <!--<if test="parentId != null and parentId != 0">-->
             <!--AND parent_id = #{parentId}-->
         <!--</if>-->
         <!--<if test="workplaceName != null and workplaceName != ''">-->
-            <!--AND dept_name like concat('%', #{workplaceName}, '%')-->
+            <!--AND workplace_name like concat('%', #{workplaceName}, '%')-->
         <!--</if>-->
         <!--<if test="status != null and status != ''">-->
             <!--AND status = #{status}-->
         <!--</if>-->
         <!--&lt;!&ndash; 数据范围过滤 &ndash;&gt;-->
         <!--${params.dataScope}-->
-        <!--order by d.order_num-->
+        <!--order by w.order_num-->
     </select>
     
     <select id="selectWorkplaceById" parameterType="Integer" resultMap="WorkplaceResult">

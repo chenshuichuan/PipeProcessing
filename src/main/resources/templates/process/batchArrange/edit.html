@@ -1,156 +1,163 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-batchArrange-edit" th:object="${batchArrange}">
-            <input id="id" name="id" th:field="*{id}"  type="hidden">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">序号：</label>
-				<div class="col-sm-8">
-					<input id="serialNumber" name="serialNumber" th:field="*{serialNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">上传的计划名称：</label>
-				<div class="col-sm-8">
-					<input id="planName" name="planName" th:field="*{planName}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">船名：</label>
-				<div class="col-sm-8">
-					<input id="shipName" name="shipName" th:field="*{shipName}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">加工批次：</label>
-				<div class="col-sm-8">
-					<input id="batchName" name="batchName" th:field="*{batchName}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">加工批次描述：</label>
-				<div class="col-sm-8">
-					<input id="batchDescription" name="batchDescription" th:field="*{batchDescription}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新时间：</label>
-				<div class="col-sm-8">
-					<input id="updateTime" name="updateTime" th:field="*{updateTime}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注：</label>
-				<div class="col-sm-8">
-					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">是否完工：</label>
-				<div class="col-sm-8">
-					<input id="isFinished" name="isFinished" th:field="*{isFinished}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">完工时间：</label>
-				<div class="col-sm-8">
-					<input id="finishedDate" name="finishedDate" th:field="*{finishedDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">该次计划下料总数：</label>
-				<div class="col-sm-8">
-					<input id="totalCutNumber" name="totalCutNumber" th:field="*{totalCutNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">一部大管工段下料-加工管数：</label>
-				<div class="col-sm-8">
-					<input id="onebigCutNumber" name="onebigCutNumber" th:field="*{onebigCutNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">一部大管工段下料-下料完成数：</label>
-				<div class="col-sm-8">
-					<input id="onebigCutFinished" name="onebigCutFinished" th:field="*{onebigCutFinished}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">一部下料工段-弯管下料数：</label>
-				<div class="col-sm-8">
-					<input id="oneBendCutNumber" name="oneBendCutNumber" th:field="*{oneBendCutNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">一部下料工段-直管下料数：</label>
-				<div class="col-sm-8">
-					<input id="oneVerCutNumber" name="oneVerCutNumber" th:field="*{oneVerCutNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">一部下料工段-大管下料数：</label>
-				<div class="col-sm-8">
-					<input id="oneBigCutNumber" name="oneBigCutNumber" th:field="*{oneBigCutNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">一部下料工段-下料总数：</label>
-				<div class="col-sm-8">
-					<input id="oneTotalNumber" name="oneTotalNumber" th:field="*{oneTotalNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">一部下料工段-完成总数：</label>
-				<div class="col-sm-8">
-					<input id="oneTotalFinished" name="oneTotalFinished" th:field="*{oneTotalFinished}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">二部下料工段-弯管下料数：</label>
-				<div class="col-sm-8">
-					<input id="twoBendNumber" name="twoBendNumber" th:field="*{twoBendNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">二部下料工段-直管下料数：</label>
-				<div class="col-sm-8">
-					<input id="twoVerNumber" name="twoVerNumber" th:field="*{twoVerNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">二部下料工段-下料总数：</label>
-				<div class="col-sm-8">
-					<input id="twoTotalNumber" name="twoTotalNumber" th:field="*{twoTotalNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">二部下料工段-完成总数：</label>
-				<div class="col-sm-8">
-					<input id="twoTotalFinished" name="twoTotalFinished" th:field="*{twoTotalFinished}" class="form-control" type="text">
-				</div>
-			</div>
-		</form>
-    </div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-        ctx = ctx + webPrefix+"/";
-		var prefix = ctx + "process/batchArrange";
-		$("#form-batchArrange-edit").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			}
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-batchArrange-edit').serialize());
-	        }
-	    }
-	</script>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-batchArrange-edit" th:object="${batchArrange}">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">加工批次：</label>
+            <div class="col-sm-8">
+                <input th:field="*{batchName}" class="form-control" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">是否完工：</label>
+            <div class="col-sm-8">
+                <input th:field="*{isFinished}" class="form-control" readonly>
+            </div>
+        </div>
+        <div th:if="${batchArrange.isFinished == 1}" class="form-group">
+            <label class="col-sm-3 control-label">完工时间：</label>
+            <div class="col-sm-8">
+                <input th:field="*{finishedDate}" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">该次计划下料总数：</label>
+            <div class="col-sm-8">
+                <input th:field="*{totalCutNumber}" class="form-control" readonly>
+            </div>
+        </div>
+        <div th:if="${batchArrange.onebigCutNumber > 0}" class="form-group">
+            <label class="col-sm-3 control-label">一部大管下料工段-下料数：</label>
+            <div class="col-sm-8">
+                <input th:field="*{onebigCutNumber}" class="form-control" readonly>
+            </div>
+        </div>
+
+        <div th:if="${batchArrange.oneTotalNumber > 0}" class="form-group">
+            <label class="col-sm-3 control-label">一部下料工段-下料数：</label>
+            <div class="col-sm-8">
+                <input th:field="*{oneTotalNumber}" class="form-control" readonly>
+            </div>
+        </div>
+
+        <div th:if="${batchArrange.twoTotalNumber > 0}" class="form-group">
+            <label class="col-sm-3 control-label">二部下料工段-下料数：</label>
+            <div class="col-sm-8">
+                <input th:field="*{twoTotalNumber}" class="form-control" readonly>
+            </div>
+        </div>
+        <div th:if="${batchArrange.onebigCutNumber > 0}"  class="form-group">
+            <label class="col-sm-3 control-label">一部大管下料工段-派工：</label>
+            <div class="col-sm-8">
+                <input  th:value="${OnebigCut.deptId}" id="onebigCutId" type="hidden">
+                <input  class="form-control" th:value="${OnebigCut.workplaceName}" onclick="selectOnebigTree()" readonly id="onebigCut">
+            </div>
+        </div>
+
+        <div th:if="${batchArrange.oneTotalNumber > 0}" class="form-group">
+            <label class="col-sm-3 control-label">一部下料工段-派工：</label>
+            <div class="col-sm-8">
+                <input  th:value="${OneCut.deptId}" id="oneCutId" type="hidden">
+                <input  class="form-control"  th:value="${OneCut.workplaceName}" onclick="selectOneTree()" readonly id="oneCut">
+            </div>
+        </div>
+
+        <div th:if="${batchArrange.twoTotalNumber > 0}" class="form-group">
+            <label class="col-sm-3 control-label">二部下料工段-派工：</label>
+            <div class="col-sm-8">
+                <input  th:value="${TwoCut.deptId}" id="twoCutId" type="hidden">
+                <input  class="form-control" th:value="${TwoCut.workplaceName}" onclick="selectTwoTree()" readonly id="twoCut">
+            </div>
+        </div>
+
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    ctx = ctx + webPrefix + "/";
+    var prefix = ctx + "process/batchArrange";
+    $("#form-batchArrange-edit").validate({
+        rules: {
+            xxxx: {
+                required: true,
+            },
+        }
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-batchArrange-edit').serialize());
+        }
+    }
+    /*Onebig-选择部门树*/
+    function selectOnebigTree() {
+        var deptId = $("#onebigCutId").val();
+        var url = ctx + "system/workplace/selectArrangeTree/" + deptId;
+        var options = {
+            title: '选择工位',
+            width: "380",
+            url: url,
+            callBack: doSubmit1
+        };
+        $.modal.openOptions(options);
+    }
+    function doSubmit1(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        if ($.tree.notAllowParents(tree)) {
+            var body = layer.getChildFrame('body', index);
+            $("#onebigCutId").val(body.find('#treeId').val());
+            $("#onebigCut").val(body.find('#treeName').val());
+            layer.close(index);
+        }
+    }
+    /*oneCut-选择部门树*/
+    function selectOneTree() {
+        var deptId = $("#oneCutId").val();
+        var url = ctx + "system/workplace/selectArrangeTree/" + deptId;
+        var options = {
+            title: '选择工位',
+            width: "380",
+            url: url,
+            callBack: doSubmit2
+        };
+        $.modal.openOptions(options);
+    }
+    function doSubmit2(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        if ($.tree.notAllowParents(tree)) {
+            var body = layer.getChildFrame('body', index);
+            $("#oneCutId").val(body.find('#treeId').val());
+            $("#oneCut").val(body.find('#treeName').val());
+            layer.close(index);
+        }
+    }
+    /*twoCut-选择部门树*/
+    function selectTwoTree() {
+        var deptId = $("#twoCutId").val();
+        var url = ctx + "system/workplace/selectArrangeTree/" + deptId;
+        var options = {
+            title: '选择工位',
+            width: "380",
+            url: url,
+            callBack: doSubmit3
+        };
+        $.modal.openOptions(options);
+    }
+    function doSubmit3(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        if ($.tree.notAllowParents(tree)) {
+            var body = layer.getChildFrame('body', index);
+            $("#twoCutId").val(body.find('#treeId').val());
+            $("#twoCut").val(body.find('#treeName').val());
+            layer.close(index);
+        }
+    }
+</script>
 </body>
 </html>
