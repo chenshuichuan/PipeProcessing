@@ -6,6 +6,7 @@ import com.ruoyi.common.constant.CutSections;
 import com.ruoyi.project.pipe.cutPlan.domain.CutPlan;
 import com.ruoyi.project.pipe.cutPlan.mapper.CutPlanMapper;
 import com.ruoyi.project.pipe.unit.domain.Unit;
+import com.ruoyi.project.pipe.unit.service.IUnitService;
 import com.ruoyi.project.pipe.unit.service.UnitRepository;
 import com.ruoyi.project.process.middleStatus.domain.MiddleStatus;
 import com.ruoyi.project.process.middleStatus.mapper.MiddleStatusMapper;
@@ -39,6 +40,8 @@ public class ProcessPlanServiceImpl implements IProcessPlanService {
     private CutPlanMapper cutPlanMapper;
     @Autowired
     private ProcessPlanRepository processPlanRepository;
+    @Autowired
+    private IUnitService unitService;
 
     /**
      * 查询下料计划，不包含后续加工，后续加工计划请查看pipe_process_plan信息
@@ -251,4 +254,15 @@ public class ProcessPlanServiceImpl implements IProcessPlanService {
         }
         return  1;
     }
+
+    /**
+     * 计算某process下包含的单元的加工顺序，并保存
+     * 这个函数需要在已经解析完单元所属计划的步骤之后调用才能成功
+     * */
+    @Override
+    public int analysisOrderOf(ProcessPlan processPlan) {
+        return unitService.analysisOrderByProcessPlan(processPlan);
+    }
+
+
 }

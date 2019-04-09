@@ -12,5 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PipeProcessingRepository extends JpaRepository<PipeProcessing,Integer> {
 
-
+    int countByBatchIdAndArrangeId(Integer batchId, Integer arrangeId);
 }

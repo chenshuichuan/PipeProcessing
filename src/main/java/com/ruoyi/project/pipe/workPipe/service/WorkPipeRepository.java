@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface WorkPipeRepository extends JpaRepository<WorkPipe,Integer> {
     List<WorkPipe> findByAssemblyPipeIdAndShapeShipId(Integer assemblyPipeId, Integer shapeShipId);
+    List<WorkPipe> findByAssemblyPipeIdAndShapeShipIdAndCutLength(Integer assemblyPipeId, Integer shapeShipId,Integer cutLength);
 }

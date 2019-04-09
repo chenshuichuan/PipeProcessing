@@ -79,7 +79,7 @@ public class WorkplaceServiceImpl implements IWorkplaceService {
             workplace.setAncestors(ancestors);
             updateDeptChildren(workplace.getDeptId(), ancestors);
         }
-        workplace.setUpdateBy(ShiroUtils.getLoginName());
+        //workplace.setUpdateBy(ShiroUtils.getLoginName());
         return workplaceMapper.updateWorkplace(workplace);
     }
 

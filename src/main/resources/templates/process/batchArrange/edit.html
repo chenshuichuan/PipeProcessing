@@ -8,7 +8,7 @@
         <input id="id" name="id" th:field="*{id}" type="hidden">
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">加工批次：</label>
+            <label class="col-sm-3 control-label">下料批次：</label>
             <div class="col-sm-8">
                 <input th:field="*{batchName}" class="form-control" readonly>
             </div>
@@ -29,33 +29,33 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">该次计划下料总数：</label>
             <div class="col-sm-8">
-                <input th:field="*{totalCutNumber}" class="form-control" readonly>
+                <input name="totalCutNumber" th:field="*{totalCutNumber}" class="form-control" readonly>
             </div>
         </div>
         <div th:if="${batchArrange.onebigCutNumber > 0}" class="form-group">
             <label class="col-sm-3 control-label">一部大管下料工段-下料数：</label>
             <div class="col-sm-8">
-                <input th:field="*{onebigCutNumber}" class="form-control" readonly>
+                <input name="onebigCutNumber" th:field="*{onebigCutNumber}" class="form-control" readonly>
             </div>
         </div>
 
         <div th:if="${batchArrange.oneTotalNumber > 0}" class="form-group">
             <label class="col-sm-3 control-label">一部下料工段-下料数：</label>
             <div class="col-sm-8">
-                <input th:field="*{oneTotalNumber}" class="form-control" readonly>
+                <input name="oneTotalNumber" th:field="*{oneTotalNumber}" class="form-control" readonly>
             </div>
         </div>
 
         <div th:if="${batchArrange.twoTotalNumber > 0}" class="form-group">
             <label class="col-sm-3 control-label">二部下料工段-下料数：</label>
             <div class="col-sm-8">
-                <input th:field="*{twoTotalNumber}" class="form-control" readonly>
+                <input name="twoTotalNumber" th:field="*{twoTotalNumber}" class="form-control" readonly>
             </div>
         </div>
         <div th:if="${batchArrange.onebigCutNumber > 0}"  class="form-group">
             <label class="col-sm-3 control-label">一部大管下料工段-派工：</label>
             <div class="col-sm-8">
-                <input  th:value="${OnebigCut.deptId}" id="onebigCutId" type="hidden">
+                <input name="onebigCutId" th:value="${OnebigCut.deptId}" id="onebigCutId" type="hidden">
                 <input  class="form-control" th:value="${OnebigCut.workplaceName}" onclick="selectOnebigTree()" readonly id="onebigCut">
             </div>
         </div>
@@ -63,7 +63,7 @@
         <div th:if="${batchArrange.oneTotalNumber > 0}" class="form-group">
             <label class="col-sm-3 control-label">一部下料工段-派工：</label>
             <div class="col-sm-8">
-                <input  th:value="${OneCut.deptId}" id="oneCutId" type="hidden">
+                <input name="oneCutId"  th:value="${OneCut.deptId}" id="oneCutId" type="hidden">
                 <input  class="form-control"  th:value="${OneCut.workplaceName}" onclick="selectOneTree()" readonly id="oneCut">
             </div>
         </div>
@@ -71,7 +71,7 @@
         <div th:if="${batchArrange.twoTotalNumber > 0}" class="form-group">
             <label class="col-sm-3 control-label">二部下料工段-派工：</label>
             <div class="col-sm-8">
-                <input  th:value="${TwoCut.deptId}" id="twoCutId" type="hidden">
+                <input name="twoCutId" th:value="${TwoCut.deptId}" id="twoCutId" type="hidden">
                 <input  class="form-control" th:value="${TwoCut.workplaceName}" onclick="selectTwoTree()" readonly id="twoCut">
             </div>
         </div>

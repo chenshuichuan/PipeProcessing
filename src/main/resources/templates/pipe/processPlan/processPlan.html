@@ -270,15 +270,16 @@
     function AnalysisPlan(planId) {
         $.modal.confirm("确定要解析该批次的生产计划吗？", function () {
             var data = {"id": planId};
-            $.operate.post("/admin/pipe/processPlan/analysisPlanByPlanName", data);
+            $.operate.post("/admin/pipe/processPlan/analysisProcessPlan", data);
         })
     }
     // 解析计划确认
     function AnalysisPlans() {
-        var selectFileId = $("#selectPlan").val();
+
+        var selectPlanName = $("#selectPlan").find("option:selected").text();
         $.modal.confirm("确定要解析该生产计划吗？", function () {
-            var data = {"name": selectFileId};
-            $.operate.post("/admin/pipe/processPlan/analysisProcessPlan", data);
+            var data = {"name": selectPlanName};
+            $.operate.post("/admin/pipe/processPlan/analysisPlanByPlanName", data);
         })
     }
 </script>

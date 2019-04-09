@@ -88,6 +88,20 @@ public class BatchProcessing extends BaseEntity {
     public BatchProcessing() {
     }
 
+    public BatchProcessing(Integer batchId, Integer pipeNumber, Integer unitNumber, Integer unitProcessingNumber, Integer unitFinishedNumber,
+                           Integer pipeProcessingNumber, Integer pipeFinishedNumber, Integer arrangeId, Date updateTime, Integer isFinished) {
+        this.batchId = batchId;
+        this.pipeNumber = pipeNumber;
+        this.unitNumber = unitNumber;
+        this.unitProcessingNumber = unitProcessingNumber;
+        this.unitFinishedNumber = unitFinishedNumber;
+        this.pipeProcessingNumber = pipeProcessingNumber;
+        this.pipeFinishedNumber = pipeFinishedNumber;
+        this.arrangeId = arrangeId;
+        this.updateTime = updateTime;
+        this.isFinished = isFinished;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

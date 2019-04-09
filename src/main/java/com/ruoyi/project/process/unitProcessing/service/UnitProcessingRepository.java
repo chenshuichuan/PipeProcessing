@@ -12,5 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UnitProcessingRepository extends JpaRepository<UnitProcessing,Integer> {
 
-
+    int countByBatchIdAndArrangeId(Integer batchId, Integer arrangeId);
 }

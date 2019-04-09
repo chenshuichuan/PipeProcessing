@@ -84,6 +84,20 @@ public class UnitProcessing extends BaseEntity {
     public UnitProcessing() {
     }
 
+    public UnitProcessing(Integer unitId, Integer batchId, Integer processStage, Integer processIndex,
+                          Integer pipeProcessingNumber, Integer pipeFinishedNumber,
+                          Integer arrangeId, Date updateTime, Integer isFinished) {
+        this.unitId = unitId;
+        this.batchId = batchId;
+        this.processStage = processStage;
+        this.processIndex = processIndex;
+        this.pipeProcessingNumber = pipeProcessingNumber;
+        this.pipeFinishedNumber = pipeFinishedNumber;
+        this.arrangeId = arrangeId;
+        this.updateTime = updateTime;
+        this.isFinished = isFinished;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

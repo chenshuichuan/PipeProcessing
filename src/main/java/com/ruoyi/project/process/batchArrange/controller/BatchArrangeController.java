@@ -2,8 +2,11 @@ package com.ruoyi.project.process.batchArrange.controller;
 
 import java.util.List;
 
+import com.ruoyi.common.constant.CutSections;
+import com.ruoyi.project.common.ProjectThreadService;
 import com.ruoyi.project.pipe.cutPlan.domain.CutPlan;
 import com.ruoyi.project.pipe.cutPlan.service.ICutPlanService;
+import com.ruoyi.project.process.batchArrange.domain.ArrangeInfo;
 import com.ruoyi.project.process.middleStatus.domain.MiddleStatus;
 import com.ruoyi.project.process.middleStatus.service.MiddleStatusRepository;
 import com.ruoyi.project.system.workplace.domain.Workplace;
@@ -51,6 +54,8 @@ public class BatchArrangeController extends BaseController {
     private WorkplaceMapper workplaceMapper;
     @Autowired
     private MiddleStatusRepository middleStatusRepository;
+    @Autowired
+    private ProjectThreadService projectThreadService;
 
     @RequiresPermissions("process:batchArrange:view")
     @GetMapping()
@@ -108,7 +113,7 @@ public class BatchArrangeController extends BaseController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
         CutPlan cutPlan = cutPlanService.selectCutPlanById(id);
-        String[] strings = {"一部大管下料工段","一部下料工段","二部下料工段"};
+        String[] strings = {CutSections.onebigCutSection,CutSections.oneCutSection,CutSections.twoCutSection};
 
         if(cutPlan.getOnebigCutNumber()>0){
             mmap.put("OnebigCut", getCutplace(cutPlan,strings[0]));
@@ -148,14 +153,26 @@ public class BatchArrangeController extends BaseController {
     }
 
     /**
-     * 修改保存批次派工
+     * 批次派工
      */
     @RequiresPermissions("process:batchArrange:edit")
     @Log(title = "批次派工", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(CutPlan cutPlan) {
-        return toAjax(cutPlanService.updateCutPlan(cutPlan));
+    public AjaxResult editSave(ArrangeInfo arrangeInfo) {
+        logger.debug(arrangeInfo.toString());
+        System.out.println(arrangeInfo.toString());
+
+        //单线程派工可能导致耗时过长！！！！
+        //batchArrangeService.arrangeCutPlan(arrangeInfo);
+        //分线程去执行
+        CutPlan cutPlan = cutPlanService.selectCutPlanById(arrangeInfo.getId());
+        //更新该cutPlan 的呗下料状态
+        cutPlan.setIsArrange(1);
+        cutPlanService.updateCutPlan(cutPlan);
+
+        projectThreadService.cutArrange(arrangeInfo);
+        return toAjax(1);
     }
 
     /**

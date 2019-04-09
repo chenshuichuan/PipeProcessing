@@ -90,6 +90,19 @@ public class ArrangeTable extends BaseEntity {
     public ArrangeTable() {
     }
 
+    public ArrangeTable(Integer type, String name, Integer planId, String stage, Integer arrangerId,
+                        Integer isFinished, Date createTime) {
+        this.type = type;
+        this.name = name;
+        this.planId = planId;
+
+        this.stage = stage;
+        this.arrangerId = arrangerId;
+        this.workerId = workerId;
+        this.isFinished = isFinished;
+        this.createTime = createTime;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

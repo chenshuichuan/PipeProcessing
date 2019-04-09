@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface BatchRepository extends JpaRepository<Batch,Integer> {
     List<Batch> findByShipCode(String shipCode);
+    Batch findByShipCodeAndName(String shipCode, String name);
 }

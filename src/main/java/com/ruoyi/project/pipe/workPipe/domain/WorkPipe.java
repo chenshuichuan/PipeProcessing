@@ -78,7 +78,7 @@ public class WorkPipe extends BaseEntity {
      * 下料长
      */
     @Column(name = "cut_length")
-    private double cutLength;
+    private Integer cutLength;
     /**
      * 外场装配标记
      */
@@ -173,11 +173,11 @@ public class WorkPipe extends BaseEntity {
         return surfaceTreat;
     }
 
-    public void setCutLength(double cutLength) {
+    public void setCutLength(Integer cutLength) {
         this.cutLength = cutLength;
     }
 
-    public double getCutLength() {
+    public Integer getCutLength() {
         return cutLength;
     }
 

@@ -219,7 +219,7 @@ public class UnitServiceImpl implements IUnitService {
                 unitRepository.save(unit);
             }
         }
-        return 0;
+        return 1;
     }
 
     @Override

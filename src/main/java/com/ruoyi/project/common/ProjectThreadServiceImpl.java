@@ -5,6 +5,8 @@ package com.ruoyi.project.common;/**
  * Time: 22:08
  */
 
+import com.ruoyi.project.pipe.cutPlan.domain.CutPlan;
+import com.ruoyi.project.pipe.cutPlan.service.ICutPlanService;
 import com.ruoyi.project.pipe.pipCutting.service.IPipCuttingService;
 import com.ruoyi.project.pipe.pipe.service.PipeRepository;
 import com.ruoyi.project.pipe.processPlan.domain.ProcessPlan;
@@ -14,6 +16,8 @@ import com.ruoyi.project.pipe.ship.service.ShipRepository;
 import com.ruoyi.project.pipe.unit.service.IUnitService;
 import com.ruoyi.project.pipe.unit.service.UnitRepository;
 import com.ruoyi.project.pipe.workPipe.service.WorkPipeRepository;
+import com.ruoyi.project.process.batchArrange.domain.ArrangeInfo;
+import com.ruoyi.project.process.batchArrange.service.IBatchArrangeService;
 import com.ruoyi.project.process.middleStatus.domain.MiddleStatus;
 import com.ruoyi.project.process.middleStatus.service.MiddleStatusRepository;
 import com.ruoyi.project.process.order.service.OrderRepository;
@@ -51,7 +55,10 @@ public class ProjectThreadServiceImpl implements ProjectThreadService {
     private ProcessPlanRepository processPlanRepository;
     @Autowired
     private IUnitService unitService;
-
+    @Autowired
+    private IBatchArrangeService batchArrangeService;
+    @Autowired
+    private ICutPlanService cutPlanService;
     /**
      * 异常调用返回Future
      *
@@ -78,8 +85,16 @@ public class ProjectThreadServiceImpl implements ProjectThreadService {
         System.out.println("excelService.finalScoreExcel 执行完成");
     }
 
+    /**
+     * 根据计划名称对计划下关联的单元进行解析-加工顺序
+     *
+     * **/
+    @Async
     @Override
     public void judgeBatchUnitByPlanName(String planName) {
+        if(planName.isEmpty()){
+            return ;
+        }
         logger.info("执行异步解析单元加工顺序任务-开始：judgeBatchUnitByPlanName("+planName+")");
         //计算创新平均分
         MiddleStatus middleStatus = new MiddleStatus("执行异步解析单元加工顺序任务",
@@ -91,5 +106,17 @@ public class ProjectThreadServiceImpl implements ProjectThreadService {
             unitService.analysisOrderByProcessPlan(processPlan);
         }
         logger.info("执行异步解析单元加工顺序任务-完成：judgeBatchUnitByPlanName("+planName+")");
+    }
+    @Async
+    @Override
+    public void cutArrange(ArrangeInfo arrangeInfo){
+        logger.info("异步线程-cutArrange(ArrangeInfo arrangeInfo)");
+
+        CutPlan cutPlan = cutPlanService.selectCutPlanById(arrangeInfo.getId());
+        //更新该cutPlan 的呗下料状态
+        cutPlan.setIsArrange(1);
+        cutPlanService.updateCutPlan(cutPlan);
+
+        batchArrangeService.arrangeCutPlan(arrangeInfo,cutPlan);
     }
 }

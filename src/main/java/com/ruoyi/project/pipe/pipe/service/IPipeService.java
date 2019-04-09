@@ -1,6 +1,8 @@
 package com.ruoyi.project.pipe.pipe.service;
 
 import com.ruoyi.project.pipe.pipe.domain.Pipe;
+import com.ruoyi.project.pipe.ship.domain.Ship;
+import com.ruoyi.project.pipe.workPipe.domain.WorkPipe;
 import com.ruoyi.project.process.order.domain.Order;
 
 import java.util.List;
@@ -52,5 +54,8 @@ public interface IPipeService {
      */
     public int deletePipeByIds(String ids);
 
-
+    /**
+     * 根据管子获取管子对应的的WorkPipe
+     * */
+    WorkPipe getWorkPipeBy(Pipe pipe, Ship ship);
 }

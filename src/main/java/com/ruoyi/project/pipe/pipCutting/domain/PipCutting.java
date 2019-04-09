@@ -63,7 +63,7 @@ public class PipCutting extends BaseEntity {
      * 下料长
      */
     @Column(name = "cut_length")
-    private Double cutLength;
+    private Integer cutLength;
     /**
      * 入级船级社
      */
@@ -152,11 +152,11 @@ public class PipCutting extends BaseEntity {
         return machiningBatch;
     }
 
-    public void setCutLength(Double cutLength) {
+    public void setCutLength(Integer cutLength) {
         this.cutLength = cutLength;
     }
 
-    public Double getCutLength() {
+    public Integer getCutLength() {
         return cutLength;
     }
 

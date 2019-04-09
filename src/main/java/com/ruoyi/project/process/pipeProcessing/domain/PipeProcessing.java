@@ -79,6 +79,18 @@ public class PipeProcessing extends BaseEntity {
     public PipeProcessing() {
     }
 
+    public PipeProcessing(Integer pipeId, Integer processStage, Integer processIndex,
+                          Integer arrangeId, Date updateTime, Integer batchId, Integer unitId, Integer isFinished) {
+        this.pipeId = pipeId;
+        this.processStage = processStage;
+        this.processIndex = processIndex;
+        this.arrangeId = arrangeId;
+        this.updateTime = updateTime;
+        this.batchId = batchId;
+        this.unitId = unitId;
+        this.isFinished = isFinished;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

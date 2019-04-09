@@ -151,13 +151,14 @@ public class ProcessPlanController extends BaseController {
      * 加工计划添加By计划id
      */
     @RequiresPermissions("pipe:processPlan:edit")
-    @Log(title = "加工计划添加By计划id", businessType = BusinessType.UPDATE)
+    @Log(title = "加工计划解析By计划id", businessType = BusinessType.UPDATE)
     @PostMapping("/analysisProcessPlan")
     @ResponseBody
     public AjaxResult analysisPlan(Integer id)
     {
         ProcessPlan processPlan = processPlanService.selectProcessPlanById(id);
-        return toAjax(processPlanService.judgeBatchUnitOfPlan(processPlan));
+        processPlanService.judgeBatchUnitOfPlan(processPlan);
+        return toAjax(processPlanService.analysisOrderOf(processPlan));
     }
 
     /**

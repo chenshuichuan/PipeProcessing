@@ -53,6 +53,7 @@ public interface IProcessPlanService {
 
     public List<String> selectPlanNameList(Integer isFinshed);
 
+
     /**
      * 判断某加工计划下包含的单元、管件
      *
@@ -70,4 +71,7 @@ public interface IProcessPlanService {
      */
 
     public int judgeBatchUnitByPlanName(String planName);
+
+
+    public int analysisOrderOf(ProcessPlan processPlan);
 }
