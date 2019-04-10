@@ -85,4 +85,6 @@ public interface IWorkplaceService {
      */
     public int deleteWorkplaceById(Integer deptId);
 
+    Workplace selectByName(String WorkPlaceName);
+
 }

@@ -121,7 +121,7 @@
                             <!--<input type="text" name="nextStageId"/>-->
                         </li>
                         <li>
-                            已派工：
+                            当前工序完工：
                             <select name="isArrange" th:with="type=${@dict.getType('user_yes_no')}">
                                 <option value="">所有</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
@@ -202,7 +202,7 @@
                 },
                 {
                     field: 'isArrange',
-                    title: '已派工',
+                    title: '当前工序完工',
                     align: 'center',
                     formatter: function (value, row, index) {
                         return $.table.selectDictLabel(datas, value);

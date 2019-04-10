@@ -9,6 +9,8 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.security.ShiroUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.DataScope;
+import com.ruoyi.project.process.middleStatus.domain.MiddleStatus;
+import com.ruoyi.project.process.middleStatus.service.MiddleStatusRepository;
 import com.ruoyi.project.system.dept.domain.Dept;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ import com.ruoyi.common.support.Convert;
 public class WorkplaceServiceImpl implements IWorkplaceService {
     @Autowired
     private WorkplaceMapper workplaceMapper;
+    @Autowired
+    private MiddleStatusRepository middleStatusRepository;
 
     /**
      * 查询部门信息
@@ -165,6 +169,24 @@ public class WorkplaceServiceImpl implements IWorkplaceService {
     @Override
     public int deleteWorkplaceById(Integer deptId) {
         return workplaceMapper.deleteWorkplaceById(deptId);
+    }
+
+    @Override
+    public Workplace selectByName(String workPlaceName) {
+        Workplace workplace = new Workplace();
+        workplace.setWorkplaceName(workPlaceName);
+        List<Workplace> workplaceList = selectWorkplaceList(workplace);
+        if(workplaceList.size() !=1){
+            MiddleStatus middleStatus = new MiddleStatus("工位名称请保持唯一！","sys_workplace", workPlaceName,"selectByName");
+            middleStatusRepository.save(middleStatus);
+            if(workplaceList.size()>1){
+                return workplaceList.get(0);
+            }
+        }
+        else {
+            return workplaceList.get(0);
+        }
+        return  null;
     }
 
     /**

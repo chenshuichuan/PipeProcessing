@@ -1,128 +1,71 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-	<form class="form-horizontal m" id="form-unit-edit" th:object="${unitArrange}">
-		<input id="id" name="id" th:field="*{id}"  type="hidden">
-		<div class="form-group">
-			<label class="col-sm-3 control-label">单元名称：</label>
-			<div class="col-sm-8">
-				<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">号船代号：</label>
-			<div class="col-sm-8">
-				<input id="shipCode" name="shipCode" th:field="*{shipCode}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">p批次id：</label>
-			<div class="col-sm-8">
-				<input id="batchId" name="batchId" th:field="*{batchId}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">批次名称：</label>
-			<div class="col-sm-8">
-				<input id="batchName" name="batchName" th:field="*{batchName}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">计划id-process_id：</label>
-			<div class="col-sm-8">
-				<input id="planId" name="planId" th:field="*{planId}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">备注：</label>
-			<div class="col-sm-8">
-				<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">管形态：</label>
-			<div class="col-sm-8">
-				<input id="pipeShape" name="pipeShape" th:field="*{pipeShape}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">包含管件数：</label>
-			<div class="col-sm-8">
-				<input id="pipeNumber" name="pipeNumber" th:field="*{pipeNumber}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">下料工段：</label>
-			<div class="col-sm-8">
-				<input id="cutSection" name="cutSection" th:field="*{cutSection}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">j加工工段：</label>
-			<div class="col-sm-8">
-				<input id="processSection" name="processSection" th:field="*{processSection}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">加工顺序id：</label>
-			<div class="col-sm-8">
-				<input id="processOrderId" name="processOrderId" th:field="*{processOrderId}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">当前所在工序id：</label>
-			<div class="col-sm-8">
-				<input id="processStageId" name="processStageId" th:field="*{processStageId}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">下一工序id：</label>
-			<div class="col-sm-8">
-				<input id="nextStageId" name="nextStageId" th:field="*{nextStageId}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">未加工管数量：</label>
-			<div class="col-sm-8">
-				<input id="unprocessNumber" name="unprocessNumber" th:field="*{unprocessNumber}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">j加工中管数：</label>
-			<div class="col-sm-8">
-				<input id="processingNumber" name="processingNumber" th:field="*{processingNumber}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">加工完成管数量：</label>
-			<div class="col-sm-8">
-				<input id="processedNumber" name="processedNumber" th:field="*{processedNumber}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">更新时间：</label>
-			<div class="col-sm-8">
-				<input id="updateTime" name="updateTime" th:field="*{updateTime}" class="form-control" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">是否完工：</label>
-			<div class="col-sm-8">
-				<input id="isFinished" name="isFinished" th:field="*{isFinished}" class="form-control" type="text">
-			</div>
-		</div>
-	</form>
+    <form class="form-horizontal m" id="form-unit-edit" th:object="${unitArrange}">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">号船代号：</label>
+            <div class="col-sm-8">
+                <input id="shipCode"  name="shipCode" th:field="*{shipCode}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">批次名称：</label>
+            <div class="col-sm-8">
+                <input id="batchName"  name="batchName" th:field="*{batchName}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">单元名称：</label>
+            <div class="col-sm-8">
+                <input id="name" name="name" th:field="*{name}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">加工工段：</label>
+            <div class="col-sm-8">
+                <input id="processSection"  name="processSection"  th:field="*{processSection}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">加工顺序：</label>
+            <div class="col-sm-8">
+                <input id="processOrder" th:field="*{processOrder}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">当前所在工序：</label>
+            <div class="col-sm-8">
+                <input id="processStage" name="processStage" th:field="*{processStage}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">下一工序：</label>
+            <div class="col-sm-8">
+                <input id="nextStage" name="nextStage" th:field="*{nextStage}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">派工工位：</label>
+            <div class="col-sm-8">
+                <!--用pipeNumber专递选择的工位id-->
+                <input id="processSectionId"  name="processSectionId" th:field="*{processSectionId}" hidden>
+                <input id="workPlaceId"  name="workPlaceId" th:field="*{workPlaceId}" hidden>
+                <input id="selectSection" th:field="*{processSection}" class="form-control" onclick="selectSectionTree()" type="text" readonly>
+            </div>
+        </div>
+    </form>
 </div>
 <div th:include="include::footer"></div>
 <script type="text/javascript">
-    var prefix = ctx +webPrefix+ "/process/unitArrange";
+    var prefix = ctx + webPrefix + "/process/unitArrange";
     $("#form-unit-edit").validate({
-        rules:{
-            xxxx:{
-                required:true,
+        rules: {
+            xxxx: {
+                required: true,
             },
         }
     });
@@ -130,6 +73,28 @@
     function submitHandler() {
         if ($.validate.form()) {
             $.operate.save(prefix + "/edit", $('#form-unit-edit').serialize());
+        }
+    }
+
+    /*选择加工工位*/
+    function selectSectionTree() {
+        var deptId = $("#processSectionId").val();
+        var url ="/admin/system/workplace/selectArrangeTree/" + deptId;
+        var options = {
+            title: '选择工位',
+            width: "380",
+            url: url,
+            callBack: doSubmit1
+        };
+        $.modal.openOptions(options);
+    }
+    function doSubmit1(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        if ($.tree.notAllowParents(tree)) {
+            var body = layer.getChildFrame('body', index);
+            $("#workPlaceId").val(body.find('#treeId').val());
+            $("#selectSection").val(body.find('#treeName').val());
+            layer.close(index);
         }
     }
 </script>

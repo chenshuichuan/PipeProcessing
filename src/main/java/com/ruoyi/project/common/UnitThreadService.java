@@ -7,16 +7,10 @@ import com.ruoyi.project.process.batchArrange.domain.ArrangeInfo;
 import com.ruoyi.project.process.order.domain.ProcessStage;
 
 /**
- * Created by tengj on 2017/4/7.
+ * 用于单元派工的异步线程
  */
-public interface ProjectThreadService {
-
-    void executeGenerateAward(String model, int year);
+public interface UnitThreadService {
 
 
-    void judgeBatchUnitByPlanName(String planName);
-
-
-    void cutArrange(ArrangeInfo arrangeInfo);
-    
+    void unitArrange(Unit unit, ArrangeTable arrangeTable, ProcessStage nextSatge);
 }

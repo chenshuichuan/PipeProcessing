@@ -55,6 +55,7 @@
         <div th:if="${batchArrange.onebigCutNumber > 0}"  class="form-group">
             <label class="col-sm-3 control-label">一部大管下料工段-派工：</label>
             <div class="col-sm-8">
+                <input th:value="${OnebigCut.deptId}" id="onebigCutRootId" type="hidden">
                 <input name="onebigCutId" th:value="${OnebigCut.deptId}" id="onebigCutId" type="hidden">
                 <input  class="form-control" th:value="${OnebigCut.workplaceName}" onclick="selectOnebigTree()" readonly id="onebigCut">
             </div>
@@ -63,6 +64,7 @@
         <div th:if="${batchArrange.oneTotalNumber > 0}" class="form-group">
             <label class="col-sm-3 control-label">一部下料工段-派工：</label>
             <div class="col-sm-8">
+                <input  th:value="${OneCut.deptId}" id="oneCutRootId" type="hidden">
                 <input name="oneCutId"  th:value="${OneCut.deptId}" id="oneCutId" type="hidden">
                 <input  class="form-control"  th:value="${OneCut.workplaceName}" onclick="selectOneTree()" readonly id="oneCut">
             </div>
@@ -71,6 +73,7 @@
         <div th:if="${batchArrange.twoTotalNumber > 0}" class="form-group">
             <label class="col-sm-3 control-label">二部下料工段-派工：</label>
             <div class="col-sm-8">
+                <input  th:value="${TwoCut.deptId}" id="twoCutRootId" type="hidden">
                 <input name="twoCutId" th:value="${TwoCut.deptId}" id="twoCutId" type="hidden">
                 <input  class="form-control" th:value="${TwoCut.workplaceName}" onclick="selectTwoTree()" readonly id="twoCut">
             </div>
@@ -92,12 +95,15 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/edit", $('#form-batchArrange-edit').serialize());
+            //再次确认
+            $.modal.confirm("确定要对该下料计划派工吗？", function () {
+                $.operate.save(prefix + "/edit", $('#form-batchArrange-edit').serialize());
+            });
         }
     }
     /*Onebig-选择部门树*/
     function selectOnebigTree() {
-        var deptId = $("#onebigCutId").val();
+        var deptId = $("#onebigCutRootId").val();
         var url = ctx + "system/workplace/selectArrangeTree/" + deptId;
         var options = {
             title: '选择工位',
@@ -118,7 +124,7 @@
     }
     /*oneCut-选择部门树*/
     function selectOneTree() {
-        var deptId = $("#oneCutId").val();
+        var deptId = $("#oneCutRootId").val();
         var url = ctx + "system/workplace/selectArrangeTree/" + deptId;
         var options = {
             title: '选择工位',
@@ -139,7 +145,7 @@
     }
     /*twoCut-选择部门树*/
     function selectTwoTree() {
-        var deptId = $("#twoCutId").val();
+        var deptId = $("#twoCutRootId").val();
         var url = ctx + "system/workplace/selectArrangeTree/" + deptId;
         var options = {
             title: '选择工位',
