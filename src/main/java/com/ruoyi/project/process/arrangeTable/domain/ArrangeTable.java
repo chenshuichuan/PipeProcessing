@@ -57,7 +57,7 @@ public class ArrangeTable extends BaseEntity {
     @Column(name = "arranger_id")
     private Integer arrangerId;
     /**
-     * 工位
+     * 工位 码
      */
     @Column(name = "workplace")
     private String workplace;

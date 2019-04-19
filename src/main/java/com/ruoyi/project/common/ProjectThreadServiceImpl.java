@@ -19,6 +19,7 @@ import com.ruoyi.project.pipe.unit.service.IUnitService;
 import com.ruoyi.project.pipe.unit.service.UnitRepository;
 import com.ruoyi.project.pipe.workPipe.service.WorkPipeRepository;
 import com.ruoyi.project.process.arrangeTable.domain.ArrangeTable;
+import com.ruoyi.project.process.arrangeTable.service.ArrangeTableRepository;
 import com.ruoyi.project.process.batchArrange.domain.ArrangeInfo;
 import com.ruoyi.project.process.batchArrange.service.IBatchArrangeService;
 import com.ruoyi.project.process.middleStatus.domain.MiddleStatus;
@@ -26,6 +27,8 @@ import com.ruoyi.project.process.middleStatus.service.MiddleStatusRepository;
 import com.ruoyi.project.process.order.domain.ProcessStage;
 import com.ruoyi.project.process.order.service.OrderRepository;
 import com.ruoyi.project.process.pipeProcessing.service.IPipeProcessingService;
+import com.ruoyi.project.system.workplace.domain.Workplace;
+import com.ruoyi.project.system.workplace.mapper.WorkplaceMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +69,10 @@ public class ProjectThreadServiceImpl implements ProjectThreadService {
     private ICutPlanService cutPlanService;
     @Autowired
     private PipeRepository pipeRepository;
-
+    @Autowired
+    private ArrangeTableRepository arrangeTableRepository;
+    @Autowired
+    private WorkplaceMapper workplaceMapper;
     @Autowired
     private IPipeProcessingService pipeProcessingService;
     /**
@@ -127,6 +133,35 @@ public class ProjectThreadServiceImpl implements ProjectThreadService {
         cutPlan.setIsArrange(1);
         cutPlanService.updateCutPlan(cutPlan);
 
+        //批次派工
         batchArrangeService.arrangeCutPlan(arrangeInfo,cutPlan);
+        //批次派工时生成套料管材表记录
+        //拿到派工单
+        if(arrangeInfo.getOnebigCutId()!=null&&arrangeInfo.getOnebigCutNumber()>0){
+            generateTaoliaoRecord(arrangeInfo, arrangeInfo.getOnebigCutId());
+        }
+        if(arrangeInfo.getOneCutId()!=null&&arrangeInfo.getOneTotalNumber()>0){
+            generateTaoliaoRecord(arrangeInfo, arrangeInfo.getOneCutId());
+        }
+        if(arrangeInfo.getTwoCutId()!=null&&arrangeInfo.getTwoTotalNumber()>0){
+            generateTaoliaoRecord(arrangeInfo, arrangeInfo.getTwoCutId());
+        }
+    }
+    private boolean generateTaoliaoRecord(ArrangeInfo arrangeInfo, Integer cutPlaceId){
+        //批次派工时生成套料管材表记录
+        //拿到派工单
+        Workplace workplace = workplaceMapper.selectWorkplaceById(cutPlaceId);
+        ArrangeTable arrangeTable = arrangeTableRepository.findByTypeAndPlanIdAndStageAndWorkplace(
+                1,arrangeInfo.getId(),"下料",workplace.getWorkplaceCode()
+        );
+        if(null ==  workplace||null == arrangeTable){
+            MiddleStatus middleStatus = new MiddleStatus("批次派工时生成套料管材表记录出现错误",
+                    "process_arrange_table",arrangeInfo.toString(),"生成套料管材表记录");
+            middleStatusRepository.save(middleStatus);
+        }
+        else{
+
+        }
+        return true;
     }
 }

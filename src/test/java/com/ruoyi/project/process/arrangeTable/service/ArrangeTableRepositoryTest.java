@@ -14,6 +14,8 @@ import com.ruoyi.project.process.taoliao.service.TaoliaoRepository;
 import com.ruoyi.project.process.unitProcessing.domain.UnitProcessing;
 import com.ruoyi.project.process.unitProcessing.service.UnitProcessingRepository;
 import com.ruoyi.project.system.files.domain.Files;
+import com.ruoyi.project.system.workplace.domain.Workplace;
+import com.ruoyi.project.system.workplace.mapper.WorkplaceMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +51,8 @@ public class ArrangeTableRepositoryTest {
     private TaoliaoRepository taoliaoRepository;
     @Autowired
     private UnitProcessingRepository unitProcessingRepository;
-
+    @Autowired
+    private WorkplaceMapper workplaceMapper;
     @Test
     public void arrangeTableRepository() {
         List<ArrangeTable> objects = arrangeTableRepository.findAll();
@@ -93,5 +96,19 @@ public class ArrangeTableRepositoryTest {
         System.out.println("find size = "+objects.size());
     }
 
+    @Test
+    public void findByTypeAndPlanIdAndStageAndWorkplace() {
+        Integer type = 1;
+        Integer planId = 773;
+        String  stage = "下料";
+        Integer workplaceId = 132;
+        Workplace workplace = workplaceMapper.selectWorkplaceById(workplaceId);
 
+        ArrangeTable objects = arrangeTableRepository.findByTypeAndPlanIdAndStageAndWorkplace(
+                type,planId,stage,workplace.getWorkplaceCode()
+        );
+        Assert.assertThat(objects,notNullValue());
+        Assert.assertThat(objects.getId(),greaterThan(26));
+        System.out.println("find id = "+objects.getId());
+    }
 }

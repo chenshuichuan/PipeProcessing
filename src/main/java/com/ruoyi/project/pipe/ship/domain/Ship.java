@@ -36,6 +36,20 @@ public class Ship extends BaseEntity {
     @Column(name = "ship_name")
     private String shipName;
     /**
+     * 船名前缀 如 G、XL、等
+     */
+    @Column(name = "ship_prefix")
+    private String shipPrefix;
+
+    public String getShipPrefix() {
+        return shipPrefix;
+    }
+
+    public void setShipPrefix(String shipPrefix) {
+        this.shipPrefix = shipPrefix;
+    }
+
+    /**
      * 型船id
      */
     @Column(name = "shape_ship_id")

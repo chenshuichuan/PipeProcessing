@@ -18,5 +18,5 @@ public interface ProjectThreadService {
 
 
     void cutArrange(ArrangeInfo arrangeInfo);
-    
+
 }

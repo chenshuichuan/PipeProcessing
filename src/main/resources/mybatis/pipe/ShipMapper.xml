@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="shipCode"    column="ship_code"    />
         <result property="shipName"    column="ship_name"    />
+        <result property="shipPrefix"    column="ship_prefix"    />
         <result property="shapeShipId"    column="shape_ship_id"    />
         <result property="batchNumber"    column="batch_number"    />
         <result property="unprocessNumber"    column="unprocess_number"    />
@@ -18,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 	<sql id="selectShipVo">
-        select id, ship_code, ship_name, shape_ship_id, batch_number, unprocess_number, processing_number, processed_number, update_time, is_finished from pipe_ship
+        select id, ship_code, ship_name, ship_prefix, shape_ship_id, batch_number, unprocess_number, processing_number, processed_number, update_time, is_finished from pipe_ship
     </sql>
 	
     <select id="selectShipList" parameterType="Ship" resultMap="ShipResult">
@@ -27,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null "> and id = #{id}</if>
              <if test="shipCode != null  and shipCode != '' "> and ship_code = #{shipCode}</if>
              <if test="shipName != null  and shipName != '' "> and ship_name = #{shipName}</if>
+             <if test="shipPrefix != null  and shipPrefix != '' "> and ship_prefix = #{shipPrefix}</if>
              <if test="shapeShipId != null  and shapeShipId != '' "> and shape_ship_id = #{shapeShipId}</if>
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
              <if test="isFinished != null "> and is_finished = #{isFinished}</if>
@@ -44,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="id != null  ">id,</if>
 			<if test="shipCode != null  and shipCode != ''  ">ship_code,</if>
 			<if test="shipName != null  and shipName != ''  ">ship_name,</if>
+            <if test="shipPrefix != null  and shipPrefix != ''  ">ship_prefix,</if>
 			<if test="shapeShipId != null  and shapeShipId != ''  ">shape_ship_id,</if>
 			<if test="batchNumber != null  ">batch_number,</if>
 			<if test="unprocessNumber != null  ">unprocess_number,</if>
@@ -56,6 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="id != null  ">#{id},</if>
 			<if test="shipCode != null  and shipCode != ''  ">#{shipCode},</if>
 			<if test="shipName != null  and shipName != ''  ">#{shipName},</if>
+            <if test="shipPrefix != null  and shipPrefix != ''  ">#{shipPrefix},</if>
 			<if test="shapeShipId != null  and shapeShipId != ''  ">#{shapeShipId},</if>
 			<if test="batchNumber != null  ">#{batchNumber},</if>
 			<if test="unprocessNumber != null  ">#{unprocessNumber},</if>
@@ -71,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="shipCode != null  and shipCode != ''  ">ship_code = #{shipCode},</if>
             <if test="shipName != null  and shipName != ''  ">ship_name = #{shipName},</if>
+            <if test="shipPrefix != null  and shipPrefix != ''  ">ship_prefix = #{shipPrefix},</if>
             <if test="shapeShipId != null  and shapeShipId != ''  ">shape_ship_id = #{shapeShipId},</if>
             <if test="batchNumber != null  ">batch_number = #{batchNumber},</if>
             <if test="unprocessNumber != null  ">unprocess_number = #{unprocessNumber},</if>

@@ -111,5 +111,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{oldId}
         </foreach>
     </delete>
-    
+
+    <select id="selectPipCuttingByIds" parameterType="java.util.List" resultMap="PipCuttingResult">
+        <include refid="selectPipCuttingVo"/>
+        where old_id in
+        <foreach item="oldId" collection="list" open="(" separator="," close=")">
+            #{oldId}
+        </foreach>
+    </select>
 </mapper>

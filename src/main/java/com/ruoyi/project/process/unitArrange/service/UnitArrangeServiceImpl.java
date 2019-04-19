@@ -83,6 +83,10 @@ public class UnitArrangeServiceImpl implements IUnitArrangeService
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 能进入这个函数的单元都是下一工序不是“完成”工序的单元，或是说非完成状态的单元，
+     * 单元在管件加工完成时计算单元的完成情况，完成的单元将不在派工处显示
+     * **/
     @Override
     public int arrangeByUniteArrangInfo(UnitArrangeInfo unitArrangeInfo) {
 
@@ -137,15 +141,6 @@ public class UnitArrangeServiceImpl implements IUnitArrangeService
         unitThreadService.unitArrange(unit,arrangeTable,nextSatge);
         return unitService.updateUnit(unit);
     }
-
-//    @Async
-//    @Override
-//    public void unitArrangeToPipe(Unit unit, ArrangeTable arrangeTable, ProcessStage nextSatge) {
-//        List<Pipe> pipeList = pipeRepository.findByBatchIdAndUnitId(unit.getBatchId(),unit.getId());
-//        for (Pipe pipe: pipeList){
-//            pipeProcessingService.arrangePipe(pipe,arrangeTable,unit,nextSatge);
-//        }
-//    }
 
     /**
      * 单元的下料工段只有一个，或是特殊管E开头的单元//特殊管直接扔去二部下料工段
@@ -216,29 +211,50 @@ public class UnitArrangeServiceImpl implements IUnitArrangeService
         Ship ship = shipRepository.findByShipCode(unit.getShipCode());
         List<Pipe> pipeList = pipeRepository.findByBatchIdAndUnitId(unit.getBatchId(),unit.getId());
 
-        for (Pipe pipe: pipeList){
-            //取得管的管子外径
-            WorkPipe workPipe = pipeService.getWorkPipeBy(pipe,ship);
-            //判断属于哪个派工单
-            if(workPipe == null){
-                MiddleStatus middleStatus = new MiddleStatus("管件未能找到对应的WorkPipe信息","pipe_work_pipe",pipe.toString(),"arrangeUnitCut");
-                middleStatusRepository.save(middleStatus);
-            }
-            //大岗下料
-            else if(workPipe.getPipeOutDiameter()>140){
-                //产生PipeProcessing记录
-                //更新Pipe当前状态
-                pipeProcessingService.arrangePipe(pipe,onebigSection,unit,nextSatge);
-                onebigCutnumber++;
-            }
-            else if(workPipe.getPipeOutDiameter()<114){
-                //产生PipeProcessing记录
-                //更新Pipe当前状态
-                pipeProcessingService.arrangePipe(pipe,oneSection,unit,nextSatge);
-                oneCutNumber++;
+        //特殊管单元
+        if(unit.getName().contains("E")){
+            for (Pipe pipe: pipeList) {
+                //取得管的管子外径
+                WorkPipe workPipe = pipeService.getWorkPipeBy(pipe, ship);
+                //判断属于哪个派工单
+                if (workPipe == null) {
+                    MiddleStatus middleStatus = new MiddleStatus("管件未能找到对应的WorkPipe信息", "pipe_work_pipe", pipe.toString(), "arrangeUnitCut");
+                    middleStatusRepository.save(middleStatus);
+                }
+                else{
+                    //产生PipeProcessing记录
+                    //更新Pipe当前状态
+                    pipeProcessingService.arrangePipe(pipe,twoSection,unit,nextSatge);
+                    twoCutNumber++;
+                }
             }
         }
-
+        //其他单元
+        else{
+            for (Pipe pipe: pipeList){
+                //取得管的管子外径
+                WorkPipe workPipe = pipeService.getWorkPipeBy(pipe,ship);
+                //判断属于哪个派工单
+                if(workPipe == null){
+                    MiddleStatus middleStatus = new MiddleStatus("管件未能找到对应的WorkPipe信息","pipe_work_pipe",pipe.toString(),"arrangeUnitCut");
+                    middleStatusRepository.save(middleStatus);
+                }
+                //大岗下料
+                else if(workPipe.getPipeOutDiameter()>=140){
+                    //产生PipeProcessing记录
+                    //更新Pipe当前状态
+                    pipeProcessingService.arrangePipe(pipe,onebigSection,unit,nextSatge);
+                    onebigCutnumber++;
+                }
+                //一部下料工段
+                else if(workPipe.getPipeOutDiameter()<=114 && workPipe.getPipeOutDiameter()>=22){
+                    //产生PipeProcessing记录
+                    //更新Pipe当前状态
+                    pipeProcessingService.arrangePipe(pipe,oneSection,unit,nextSatge);
+                    oneCutNumber++;
+                }
+            }
+        }
         //构造单元加工信息
         if(onebigSection!=null){
             UnitProcessing unitProcessing = new UnitProcessing(unit.getId(),unit.getBatchId(),
