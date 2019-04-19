@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-taoliaoResult-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">对应的process_taoliao的id：</label>
+				<div class="col-sm-8">
+					<input id="taoliaoId" name="taoliaoId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">管材：</label>
+				<div class="col-sm-8">
+					<input id="pipeId" name="pipeId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="batchId" name="batchId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">批次：</label>
+				<div class="col-sm-8">
+					<input id="batchName" name="batchName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">集配管号：</label>
+				<div class="col-sm-8">
+					<input id="collecteCode" name="collecteCode" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="surfaceTreat" name="surfaceTreat" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">管形态：</label>
+				<div class="col-sm-8">
+					<input id="pipeShape" name="pipeShape" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">不校装：</label>
+				<div class="col-sm-8">
+					<input id="noInstall" name="noInstall" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">下料长：</label>
+				<div class="col-sm-8">
+					<input id="cutLength" name="cutLength" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">管材：</label>
+				<div class="col-sm-8">
+					<input id="pipeMaterial" name="pipeMaterial" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">原材id：</label>
+				<div class="col-sm-8">
+					<input id="originId" name="originId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">原材料长度：</label>
+				<div class="col-sm-8">
+					<input id="originLength" name="originLength" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">原材料编号：</label>
+				<div class="col-sm-8">
+					<input id="originIndex" name="originIndex" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">套料算法：</label>
+				<div class="col-sm-8">
+					<input id="algorithm" name="algorithm" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+        ctx = ctx + webPrefix+"/";
+		var prefix = ctx + "process/taoliaoResult";
+		$("#form-taoliaoResult-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-taoliaoResult-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

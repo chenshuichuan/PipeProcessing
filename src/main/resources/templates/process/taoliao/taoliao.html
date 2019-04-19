@@ -26,15 +26,15 @@
                         </li>
 
                         <li>
+                            套料人id：<input type="text" name="cuterId"/>
+                        </li>
+
+                        <li>
+                            对应的派工单id：<input type="text" name="arrangeId"/>
+                        </li>
+
+                        <li>
                             管材：<input type="text" name="pipeMaterial"/>
-                        </li>
-
-                        <li>
-                            管总长度：<input type="text" name="totalLength"/>
-                        </li>
-
-                        <li>
-                            管数量：<input type="text" name="pipeNumber"/>
                         </li>
 
                         <li>
@@ -44,8 +44,8 @@
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                         th:value="${dict.dictValue}"></option>
                             </select>
-                            <!--<input type="text" name="isTaoliao"/>-->
                         </li>
+
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
@@ -106,11 +106,21 @@
                 {
                     field: 'planId',
                     title: '对应的计划id',
-                    sortable: true
+                    visible: false
                 },
                 {
                     field: 'batchId',
                     title: '批次id',
+                    visible: false
+                },
+                {
+                    field: 'cuterId',
+                    title: '套料人id',
+                    sortable: true
+                },
+                {
+                    field: 'arrangeId',
+                    title: '对应的派工单id',
                     sortable: true
                 },
                 {
@@ -130,13 +140,13 @@
                 },
                 {
                     field: 'isTaoliao',
-                    title: '是否已经套过料了',
+                    title: '是否已套料',
                     sortable: true
                 },
                 {
                     field: 'updateTime',
                     title: '更新时间',
-                    sortable: true
+                    visible: false
                 },
                 {
                     title: '操作',
@@ -191,6 +201,5 @@
         selector.append(str);
     }
 </script>
-
 </body>
 </html>

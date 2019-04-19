@@ -1,7 +1,5 @@
 package com.ruoyi.project.process.arrangeTable.service;
 
-import com.ruoyi.project.pipe.processPlan.service.ProcessPlanRepository;
-import com.ruoyi.project.pipe.unit.service.UnitRepository;
 import com.ruoyi.project.process.arrangeTable.domain.ArrangeTable;
 import com.ruoyi.project.process.batchProcessing.domain.BatchProcessing;
 import com.ruoyi.project.process.batchProcessing.service.BatchProcessingRepository;
@@ -11,9 +9,12 @@ import com.ruoyi.project.process.pipeProcessing.domain.PipeProcessing;
 import com.ruoyi.project.process.pipeProcessing.service.PipeProcessingRepository;
 import com.ruoyi.project.process.taoliao.domain.Taoliao;
 import com.ruoyi.project.process.taoliao.service.TaoliaoRepository;
+import com.ruoyi.project.process.taoliaoOrigin.domain.TaoliaoOrigin;
+import com.ruoyi.project.process.taoliaoOrigin.service.TaoliaoOriginRepository;
+import com.ruoyi.project.process.taoliaoResult.domain.TaoliaoResult;
+import com.ruoyi.project.process.taoliaoResult.service.TaoliaoResultRepository;
 import com.ruoyi.project.process.unitProcessing.domain.UnitProcessing;
 import com.ruoyi.project.process.unitProcessing.service.UnitProcessingRepository;
-import com.ruoyi.project.system.files.domain.Files;
 import com.ruoyi.project.system.workplace.domain.Workplace;
 import com.ruoyi.project.system.workplace.mapper.WorkplaceMapper;
 import org.junit.Assert;
@@ -27,7 +28,6 @@ import java.util.List;
 
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
-import static org.junit.Assert.*;
 
 /**
  * @author Ricardo
@@ -49,6 +49,10 @@ public class ArrangeTableRepositoryTest {
     private PipeProcessingRepository pipeProcessingRepository;
     @Autowired
     private TaoliaoRepository taoliaoRepository;
+    @Autowired
+    private TaoliaoOriginRepository taoliaoOriginRepository;
+    @Autowired
+    private TaoliaoResultRepository taoliaoResultRepository;
     @Autowired
     private UnitProcessingRepository unitProcessingRepository;
     @Autowired
@@ -84,6 +88,20 @@ public class ArrangeTableRepositoryTest {
     @Test
     public void taoliaoRepository() {
         List<Taoliao> objects = taoliaoRepository.findAll();
+        Assert.assertThat(objects,notNullValue());
+        Assert.assertThat(objects.size(),greaterThan(0));
+        System.out.println("find size = "+objects.size());
+    }
+    @Test
+    public void taoliaoOriginRepository() {
+        List<TaoliaoOrigin> objects = taoliaoOriginRepository.findAll();
+        Assert.assertThat(objects,notNullValue());
+        Assert.assertThat(objects.size(),greaterThan(0));
+        System.out.println("find size = "+objects.size());
+    }
+    @Test
+    public void taoliaoResultRepository() {
+        List<TaoliaoResult> objects = taoliaoResultRepository.findAll();
         Assert.assertThat(objects,notNullValue());
         Assert.assertThat(objects.size(),greaterThan(0));
         System.out.println("find size = "+objects.size());

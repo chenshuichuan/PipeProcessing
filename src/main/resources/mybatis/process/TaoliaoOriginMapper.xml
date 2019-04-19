@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.taoliaoOrigin.mapper.TaoliaoOriginMapper">
+    
+    <resultMap type="TaoliaoOrigin" id="TaoliaoOriginResult">
+        <result property="id"    column="id"    />
+        <result property="taoliaoId"    column="taoliao_id"    />
+        <result property="material"    column="material"    />
+        <result property="originLength"    column="origin_length"    />
+        <result property="originIndex"    column="origin_index"    />
+        <result property="algorithm"    column="algorithm"    />
+        <result property="remainLength"    column="remain_length"    />
+        <result property="pipeNumber"    column="pipe_number"    />
+    </resultMap>
+	
+	<sql id="selectTaoliaoOriginVo">
+        select id, taoliao_id, material, origin_length, origin_index, algorithm, remain_length, pipe_number from process_taoliao_origin
+    </sql>
+	
+    <select id="selectTaoliaoOriginList" parameterType="TaoliaoOrigin" resultMap="TaoliaoOriginResult">
+        <include refid="selectTaoliaoOriginVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="taoliaoId != null "> and taoliao_id = #{taoliaoId}</if>
+             <if test="material != null  and material != '' "> and material = #{material}</if>
+             <if test="algorithm != null  and algorithm != '' "> and algorithm = #{algorithm}</if>
+         </where>
+    </select>
+    
+    <select id="selectTaoliaoOriginById" parameterType="Integer" resultMap="TaoliaoOriginResult">
+        <include refid="selectTaoliaoOriginVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTaoliaoOrigin" parameterType="TaoliaoOrigin">
+        insert into process_taoliao_origin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="taoliaoId != null  ">taoliao_id,</if>
+			<if test="material != null  and material != ''  ">material,</if>
+			<if test="originLength != null  ">origin_length,</if>
+			<if test="originIndex != null  ">origin_index,</if>
+			<if test="algorithm != null  and algorithm != ''  ">algorithm,</if>
+			<if test="remainLength != null  ">remain_length,</if>
+			<if test="pipeNumber != null  ">pipe_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="taoliaoId != null  ">#{taoliaoId},</if>
+			<if test="material != null  and material != ''  ">#{material},</if>
+			<if test="originLength != null  ">#{originLength},</if>
+			<if test="originIndex != null  ">#{originIndex},</if>
+			<if test="algorithm != null  and algorithm != ''  ">#{algorithm},</if>
+			<if test="remainLength != null  ">#{remainLength},</if>
+			<if test="pipeNumber != null  ">#{pipeNumber},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTaoliaoOrigin" parameterType="TaoliaoOrigin">
+        update process_taoliao_origin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taoliaoId != null  ">taoliao_id = #{taoliaoId},</if>
+            <if test="material != null  and material != ''  ">material = #{material},</if>
+            <if test="originLength != null  ">origin_length = #{originLength},</if>
+            <if test="originIndex != null  ">origin_index = #{originIndex},</if>
+            <if test="algorithm != null  and algorithm != ''  ">algorithm = #{algorithm},</if>
+            <if test="remainLength != null  ">remain_length = #{remainLength},</if>
+            <if test="pipeNumber != null  ">pipe_number = #{pipeNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteTaoliaoOriginById" parameterType="Integer">
+        delete from process_taoliao_origin where id = #{id}
+    </delete>
+	
+    <delete id="deleteTaoliaoOriginByIds" parameterType="String">
+        delete from process_taoliao_origin where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

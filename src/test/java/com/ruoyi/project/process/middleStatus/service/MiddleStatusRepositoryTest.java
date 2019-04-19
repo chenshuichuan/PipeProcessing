@@ -1,10 +1,8 @@
 package com.ruoyi.project.process.middleStatus.service;
 
-import com.ruoyi.project.pipe.processPlan.service.ProcessPlanRepository;
 import com.ruoyi.project.process.arrangeTable.domain.ArrangeTable;
 import com.ruoyi.project.process.arrangeTable.mapper.ArrangeTableMapper;
 import com.ruoyi.project.process.arrangeTable.service.ArrangeTableRepository;
-import com.ruoyi.project.process.arrangeTable.service.IArrangeTableService;
 import com.ruoyi.project.process.batchProcessing.domain.BatchProcessing;
 import com.ruoyi.project.process.batchProcessing.mapper.BatchProcessingMapper;
 import com.ruoyi.project.process.batchProcessing.service.BatchProcessingRepository;
@@ -22,7 +20,6 @@ import com.ruoyi.project.process.taoliao.service.TaoliaoRepository;
 import com.ruoyi.project.process.unitProcessing.domain.UnitProcessing;
 import com.ruoyi.project.process.unitProcessing.mapper.UnitProcessingMapper;
 import com.ruoyi.project.process.unitProcessing.service.UnitProcessingRepository;
-import com.ruoyi.project.system.files.domain.Files;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,12 +29,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
-import static org.junit.Assert.*;
 
 /**
  * Created by:Ricardo

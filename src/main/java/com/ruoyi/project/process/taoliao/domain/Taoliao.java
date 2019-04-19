@@ -12,7 +12,7 @@ import java.util.Date;
  * 套料管材表 process_taoliao
  *
  * @author ricardo
- * @date 2019-03-08
+ * @date 2019-04-19
  */
 @Entity
 @Table(name = "process_taoliao")
@@ -34,6 +34,16 @@ public class Taoliao extends BaseEntity {
      */
     @Column(name = "batch_id")
     private Integer batchId;
+    /**
+     * 套料人id
+     */
+    @Column(name = "cuter_id")
+    private Integer cuterId;
+    /**
+     * 对应的派工单id
+     */
+    @Column(name = "arrange_id")
+    private Integer arrangeId;
     /**
      * 管材
      */
@@ -60,9 +70,22 @@ public class Taoliao extends BaseEntity {
     @Column(name = "update_time")
     private Date updateTime;
 
-    public Taoliao() {
+    public Taoliao(Integer planId, Integer batchId, Integer cuterId, Integer arrangeId,
+                   String pipeMaterial, Integer totalLength, Integer pipeNumber,
+                   Integer isTaoliao, Date updateTime) {
+        this.planId = planId;
+        this.batchId = batchId;
+        this.cuterId = cuterId;
+        this.arrangeId = arrangeId;
+        this.pipeMaterial = pipeMaterial;
+        this.totalLength = totalLength;
+        this.pipeNumber = pipeNumber;
+        this.isTaoliao = isTaoliao;
+        this.updateTime = updateTime;
     }
+    public Taoliao() {
 
+    }
     public void setId(Integer id) {
         this.id = id;
     }
@@ -85,6 +108,22 @@ public class Taoliao extends BaseEntity {
 
     public Integer getBatchId() {
         return batchId;
+    }
+
+    public void setCuterId(Integer cuterId) {
+        this.cuterId = cuterId;
+    }
+
+    public Integer getCuterId() {
+        return cuterId;
+    }
+
+    public void setArrangeId(Integer arrangeId) {
+        this.arrangeId = arrangeId;
+    }
+
+    public Integer getArrangeId() {
+        return arrangeId;
     }
 
     public void setPipeMaterial(String pipeMaterial) {
@@ -123,18 +162,18 @@ public class Taoliao extends BaseEntity {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
     @Override
     public Date getUpdateTime() {
         return updateTime;
     }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("id", getId())
                 .append("planId", getPlanId())
                 .append("batchId", getBatchId())
+                .append("cuterId", getCuterId())
+                .append("arrangeId", getArrangeId())
                 .append("pipeMaterial", getPipeMaterial())
                 .append("totalLength", getTotalLength())
                 .append("pipeNumber", getPipeNumber())
