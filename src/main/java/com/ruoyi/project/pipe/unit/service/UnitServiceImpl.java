@@ -139,7 +139,8 @@ public class UnitServiceImpl implements IUnitService {
         for(Pipe pipe: pipeList){
             //因为中间程序设定pipe_pipe的id和pipe_pip_cutting  的id一致的
             PipCutting pipCutting = pipCuttingService.selectPipCuttingById(pipe.getId());
-            List<WorkPipe> workPipeList = workPipeRepository.findByAssemblyPipeIdAndShapeShipId(pipe.getAssemblyPipeId(),Integer.parseInt(ship.getShapeShipId()));
+            List<WorkPipe> workPipeList = workPipeRepository.findByAssemblyPipeIdAndShapeShipIdAndCutLength(
+                    pipe.getAssemblyPipeId(),Integer.parseInt(ship.getShapeShipId()),pipCutting.getCutLength());
 
             //不确定查找出来的workPipe是否唯一
             //就是不唯一的。。。

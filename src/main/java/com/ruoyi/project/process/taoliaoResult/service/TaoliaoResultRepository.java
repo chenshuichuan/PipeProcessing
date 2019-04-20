@@ -4,6 +4,9 @@ package com.ruoyi.project.process.taoliaoResult.service;
 import com.ruoyi.project.process.taoliao.domain.Taoliao;
 import com.ruoyi.project.process.taoliaoResult.domain.TaoliaoResult;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author  ricardo
@@ -12,5 +15,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface TaoliaoResultRepository extends JpaRepository<TaoliaoResult,Integer> {
 
+    List<TaoliaoResult> findByTaoliaoId(Integer taoliaoId);
 
+    @Transactional
+    int deleteByTaoliaoId(Integer taoliaoId);
 }

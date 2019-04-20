@@ -35,6 +35,11 @@ public class Taoliao extends BaseEntity {
     @Column(name = "batch_id")
     private Integer batchId;
     /**
+     * 批次Name
+     */
+    @Column(name = "batch_name")
+    private String batchName;
+    /**
      * 套料人id
      */
     @Column(name = "cuter_id")
@@ -70,12 +75,38 @@ public class Taoliao extends BaseEntity {
     @Column(name = "update_time")
     private Date updateTime;
 
-    public Taoliao(Integer planId, Integer batchId, Integer cuterId, Integer arrangeId,
+    public Taoliao(Integer planId, Integer batchId,String batchName, Integer cuterId, Integer arrangeId,
                    String pipeMaterial, Integer totalLength, Integer pipeNumber,
                    Integer isTaoliao, Date updateTime) {
         this.planId = planId;
         this.batchId = batchId;
+        this.batchName = batchName;
         this.cuterId = cuterId;
+        this.arrangeId = arrangeId;
+        this.pipeMaterial = pipeMaterial;
+        this.totalLength = totalLength;
+        this.pipeNumber = pipeNumber;
+        this.isTaoliao = isTaoliao;
+        this.updateTime = updateTime;
+    }
+    public Taoliao(Integer planId, Integer batchId,String batchName, Integer arrangeId,
+                   String pipeMaterial, Integer totalLength, Integer pipeNumber,
+                   Integer isTaoliao, Date updateTime) {
+        this.planId = planId;
+        this.batchId = batchId;
+        this.batchName = batchName;
+        this.arrangeId = arrangeId;
+        this.pipeMaterial = pipeMaterial;
+        this.totalLength = totalLength;
+        this.pipeNumber = pipeNumber;
+        this.isTaoliao = isTaoliao;
+        this.updateTime = updateTime;
+    }
+    public Taoliao(Integer planId, Integer batchId,String batchName, Integer arrangeId,
+                   String pipeMaterial, Integer isTaoliao, Date updateTime) {
+        this.planId = planId;
+        this.batchId = batchId;
+        this.batchName = batchName;
         this.arrangeId = arrangeId;
         this.pipeMaterial = pipeMaterial;
         this.totalLength = totalLength;
@@ -86,6 +117,15 @@ public class Taoliao extends BaseEntity {
     public Taoliao() {
 
     }
+
+    public String getBatchName() {
+        return batchName;
+    }
+
+    public void setBatchName(String batchName) {
+        this.batchName = batchName;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -172,6 +212,7 @@ public class Taoliao extends BaseEntity {
                 .append("id", getId())
                 .append("planId", getPlanId())
                 .append("batchId", getBatchId())
+                .append("batchName", getBatchName())
                 .append("cuterId", getCuterId())
                 .append("arrangeId", getArrangeId())
                 .append("pipeMaterial", getPipeMaterial())

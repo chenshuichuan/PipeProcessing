@@ -91,5 +91,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-    
+    <select id="selectByArrangeId" parameterType="Integer" resultType="java.lang.Integer">
+        select pipe_id from process_pipe_processing
+        where arrange_id = #{arrangeId}
+    </select>
 </mapper>

@@ -67,8 +67,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('process:taoliaoResult:edit')}]];
         var removeFlag = [[${@permission.hasPermi('process:taoliaoResult:remove')}]];
-        ctx = ctx + webPrefix+"/";
-        var prefix = ctx + "process/taoliaoResult";
+        var prefix = ctx +webPrefix+ "/process/taoliaoResult";
 
         $(function() {
             var options = {

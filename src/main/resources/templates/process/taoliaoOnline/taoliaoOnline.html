@@ -11,17 +11,23 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								对应的taoliao的id：<input type="text" name="taoliaoId"/>
+								计划id：<input type="text" name="planId"/>
 							</li>
-
 							<li>
-								原材料：<input type="text" name="material"/>
+								批次id：<input type="text" name="batchId"/>
 							</li>
-
 							<li>
-								套料算法：<input type="text" name="algorithm"/>
+								套料人id：<input type="text" name="cuterId"/>
 							</li>
-
+							<li>
+								派工单id：<input type="text" name="arrangeId"/>
+							</li>
+							<li>
+								管材：<input type="text" name="pipeMaterial"/>
+							</li>
+							<li>
+								是否已套料：<input type="text" name="isTaoliao"/>
+							</li>
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -32,16 +38,16 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="process:taoliaoOrigin:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="process:taoliaoOnline:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="process:taoliaoOrigin:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="process:taoliaoOnline:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="process:taoliaoOrigin:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="process:taoliaoOnline:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="process:taoliaoOrigin:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="process:taoliaoOnline:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -52,9 +58,10 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('process:taoliaoOrigin:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('process:taoliaoOrigin:remove')}]];
-        var prefix = ctx +webPrefix+ "/process/taoliaoOrigin";
+        var editFlag = [[${@permission.hasPermi('process:taoliaoOnline:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('process:taoliaoOnline:remove')}]];
+
+        var prefix = ctx +webPrefix+ "/process/taoliaoOnline";
 
         $(function() {
             var options = {
@@ -63,7 +70,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "套料原材料",
+                modalName: "在线套料",
 				search: false,
 		        showExport: true,
                 columns: [{
@@ -71,42 +78,47 @@
 		        },
 				{
 					field : 'id', 
-					title : '',
+					title : 'id',
 					visible: false
 				},
 				{
-					field : 'taoliaoId', 
-					title : '对应的taoliao的id',
+					field : 'planId', 
+					title : '计划id',
+                    visible: false
+				},
+				{
+					field : 'batchId', 
+					title : '批次id',
+                    visible: false
+				},
+				{
+					field : 'cuterId', 
+					title : '套料人id',
+                    visible: false
+				},
+				{
+					field : 'arrangeId', 
+					title : '派工单id',
 					sortable: true
 				},
 				{
-					field : 'material', 
-					title : '原材料',
+					field : 'pipeMaterial', 
+					title : '管材',
 					sortable: true
 				},
 				{
-					field : 'originLength', 
-					title : '原材料长度',
-					sortable: true
-				},
-				{
-					field : 'originIndex', 
-					title : '原材料编号',
-					sortable: true
-				},
-				{
-					field : 'algorithm', 
-					title : '套料算法',
-					sortable: true
-				},
-				{
-					field : 'remainLength', 
-					title : '剩余长度',
+					field : 'totalLength', 
+					title : '所有管总长度',
 					sortable: true
 				},
 				{
 					field : 'pipeNumber', 
-					title : '包含管数',
+					title : '包含管数量',
+					sortable: true
+				},
+				{
+					field : 'isTaoliao', 
+					title : '是否已套料',
 					sortable: true
 				},
 		        {
