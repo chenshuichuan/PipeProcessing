@@ -109,7 +109,13 @@ public class TaoliaoResult extends BaseEntity {
         this.originIndex = originIndex;
         this.algorithm = algorithm;
     }
-    public TaoliaoResult() {
+    public void setTaoliaoOrigin(Integer originId, Integer originIndex, Integer originLength) {
+
+        this.originId = originId;
+        this.originLength = originLength;
+        this.originIndex = originIndex;
+    }
+    public  TaoliaoResult() {
 
     }
     public void setId(Integer id) {

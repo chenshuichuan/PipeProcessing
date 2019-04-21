@@ -27,6 +27,7 @@ import com.ruoyi.project.process.middleStatus.service.MiddleStatusRepository;
 import com.ruoyi.project.process.order.domain.ProcessStage;
 import com.ruoyi.project.process.order.service.OrderRepository;
 import com.ruoyi.project.process.pipeProcessing.service.IPipeProcessingService;
+import com.ruoyi.project.process.taoliaoOnline.service.ITaoliaoOnlineService;
 import com.ruoyi.project.system.workplace.domain.Workplace;
 import com.ruoyi.project.system.workplace.mapper.WorkplaceMapper;
 import org.slf4j.Logger;
@@ -75,6 +76,9 @@ public class ProjectThreadServiceImpl implements ProjectThreadService {
     private WorkplaceMapper workplaceMapper;
     @Autowired
     private IPipeProcessingService pipeProcessingService;
+
+    @Autowired
+    private ITaoliaoOnlineService taoliaoOnlineService;
     /**
      * 异常调用返回Future
      *
@@ -160,7 +164,7 @@ public class ProjectThreadServiceImpl implements ProjectThreadService {
             middleStatusRepository.save(middleStatus);
         }
         else{
-
+            taoliaoOnlineService.generateTaoliao(arrangeTable);
         }
         return true;
     }
