@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "process_taoliao")
-public class Taoliao extends BaseEntity {
+public class Taoliao  {
     private static final long serialVersionUID = 1L;
 
     /**  */
@@ -198,11 +198,11 @@ public class Taoliao extends BaseEntity {
         return isTaoliao;
     }
 
-    @Override
+
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-    @Override
+
     public Date getUpdateTime() {
         return updateTime;
     }

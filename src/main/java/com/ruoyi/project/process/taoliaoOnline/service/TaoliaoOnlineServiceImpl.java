@@ -240,7 +240,7 @@ public class TaoliaoOnlineServiceImpl implements ITaoliaoOnlineService {
             logger.info("results size = "+taoliaoResultList.size());
             dp.init(origin,taoliaoResultList);
             //origin = dp.getTaoliaoOrigin();
-            //List<TaoliaoResult> resultList = dp.getTaoliaoResultList();
+            //List<TaoliaoResult> resultList = dp.getTaoliaoGaList();
             taoliaoOriginMapper.updateTaoliaoOrigin(origin);
             logger.info(origin.toString());
             List<TaoliaoResult> resultList =taoliaoResultList;

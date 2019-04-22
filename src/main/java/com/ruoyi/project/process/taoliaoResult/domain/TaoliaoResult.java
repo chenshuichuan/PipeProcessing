@@ -15,7 +15,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "process_taoliao_result")
-public class TaoliaoResult extends BaseEntity {
+public class TaoliaoResult {
     private static final long serialVersionUID = 1L;
 
     /**  */
