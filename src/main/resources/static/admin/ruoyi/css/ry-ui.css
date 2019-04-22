@@ -310,7 +310,15 @@ label {
 .container-div .row {
 	height: 100%;
 }
-
+.myselect-table {
+	width: 100%;
+	background: #fff;
+	border-radius: 6px;
+	margin-top: 10px;
+	padding-top: 5px;
+	padding-bottom: 13px;
+	box-shadow: 1px 1px 3px rgba(0,0,0,.2);
+}
 .search-collapse,.select-table {
 	width: 100%;
 	background: #fff;

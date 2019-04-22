@@ -7,6 +7,7 @@ package com.ruoyi.project.process.taoliaoOnline.domain;
  *@Date: 2019/4/21 12:54
  **/
 public class OriginInfo {
+    private  int id;//前端使用
     private int originLength;
     private int originNumber;
 
@@ -18,6 +19,15 @@ public class OriginInfo {
         this.originLength = 0;
         this.originNumber = 0;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getOriginLength() {
         return originLength;
     }
@@ -32,5 +42,14 @@ public class OriginInfo {
 
     public void setOriginNumber(int originNumber) {
         this.originNumber = originNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "OriginInfo{" +
+                "id=" + id +
+                ", originLength=" + originLength +
+                ", originNumber=" + originNumber +
+                '}';
     }
 }

@@ -31,7 +31,7 @@
                     pagination: $.common.visible(options.pagination),   // 是否显示分页（*）
                     pageNumber: 1,                                      // 初始化加载第一页，默认第一页
                     pageSize: 10,                                       // 每页的记录行数（*） 
-                    pageList: [10, 25, 50],                             // 可供选择的每页的行数（*）
+                    pageList: [10, 25, 50, 100],                             // 可供选择的每页的行数（*）
                     escape: _escape,                                    // 转义HTML字符串
                     iconSize: 'outline',                                // 图标大小：undefined默认的按钮尺寸 xs超小按钮sm小按钮lg大按钮
                     toolbar: '#toolbar',                                // 指定工作栏
@@ -266,6 +266,139 @@
             // 隐藏表格指定列
             hideColumn: function(column) {
                 $($.table2._tableId).bootstrapTable('hideColumn', column);
+            }
+        },
+
+        // 自定义的表格封装处理
+        table3: {
+            _tableId: "",
+            _option: {},
+            _params: {},
+            // 初始化表格参数
+            init: function(options,tableId) {
+                $.table3._tableId = tableId;
+                $.table3._option = options;
+                $.table3._params = $.common.isEmpty(options.queryParams) ? $.table3.queryParams : options.queryParams;
+                _sortOrder = $.common.isEmpty(options.sortOrder) ? "asc" : options.sortOrder;
+                _sortName = $.common.isEmpty(options.sortName) ? "" : options.sortName;
+                _striped = $.common.isEmpty(options.striped) ? false : options.striped;
+                _escape = $.common.isEmpty(options.escape) ? false : options.escape;
+                $(tableId).bootstrapTable({
+                    url: options.url,                                   // 请求后台的URL（*）
+                    contentType: "application/x-www-form-urlencoded",   // 编码类型
+                    method: 'post',                                     // 请求方式（*）
+                    cache: false,                                       // 是否使用缓存
+                    striped: _striped,                                  // 是否显示行间隔色
+                    sortable: true,                                     // 是否启用排序
+                    sortStable: true,                                   // 设置为 true 将获得稳定的排序
+                    sortName: _sortName,                                // 排序列名称
+                    sortOrder: _sortOrder,                              // 排序方式  asc 或者 desc
+                    pagination: $.common.visible(options.pagination),   // 是否显示分页（*）
+                    pageNumber: 1,                                      // 初始化加载第一页，默认第一页
+                    pageSize: 15,                                       // 每页的记录行数（*）
+                    pageList: [10, 25, 50,100],                             // 可供选择的每页的行数（*）
+                    escape: _escape,                                    // 转义HTML字符串
+                    iconSize: 'outline',                                // 图标大小：undefined默认的按钮尺寸 xs超小按钮sm小按钮lg大按钮
+                    // toolbar: '#toolbar',                                // 指定工作栏
+                    sidePagination: "server",                           // 启用服务端分页
+                    search: $.common.visible(options.search),           // 是否显示搜索框功能
+                    showSearch: $.common.visible(options.showSearch),   // 是否显示检索信息
+                    showRefresh: $.common.visible(options.showRefresh), // 是否显示刷新按钮
+                    showColumns: $.common.visible(options.showColumns), // 是否显示隐藏某列下拉框
+                    showToggle: $.common.visible(options.showToggle),   // 是否显示详细视图和列表视图的切换按钮
+                    showExport: $.common.visible(options.showExport),   // 是否支持导出文件
+                    queryParams: $.table3._params,                       // 传递参数（*）
+                    columns: options.columns,                           // 显示列信息（*）
+                    responseHandler: $.table3.responseHandler            // 回调函数
+                });
+            },
+            // 查询条件
+            queryParams: function(params) {
+                return {
+                    // 传递参数查询参数
+                    pageSize:       params.limit,
+                    pageNum:        params.offset / params.limit + 1,
+                    searchValue:    params.search,
+                    orderByColumn:  params.sort,
+                    isAsc:          params.order
+                };
+            },
+            // 请求获取数据后处理回调函数
+            responseHandler: function(res) {
+                if (res.code == 0) {
+                    return { rows: res.rows, total: res.total };
+                } else {
+                    $.modal.alertWarning(res.msg);
+                    return { rows: [], total: 0 };
+                }
+            },
+            // 搜索-默认第一个form
+            search: function(formId) {
+                var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+                var params = $($.table3._tableId).bootstrapTable('getOptions');
+                params.queryParams = function(params) {
+                    var search = {};
+                    $.each($("#" + currentId).serializeArray(), function(i, field) {
+                        search[field.name] = field.value;
+                    });
+                    search.pageSize = params.limit;
+                    search.pageNum = params.offset / params.limit + 1;
+                    search.searchValue = params.search;
+                    search.orderByColumn = params.sort;
+                    search.isAsc = params.order;
+                    return search;
+                }
+                $($.table3._tableId).bootstrapTable('refresh', params);
+            },
+            // 下载-默认第一个form
+            exportExcel: function(formId) {
+                var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+                $.modal.loading("正在导出数据，请稍后...");
+                $.post($.table3._option.exportUrl, $("#" + currentId).serializeArray(), function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        window.location.href = ctx + "common/download?fileName=" + result.msg + "&delete=" + true;
+                    } else {
+                        $.modal.alertError(result.msg);
+                    }
+                    $.modal.closeLoading();
+                });
+            },
+            // 刷新表格
+            refresh: function() {
+                $($.table3._tableId).bootstrapTable('refresh', {
+                    silent: true
+                });
+            },
+            // 查询表格指定列值
+            selectColumns: function(column) {
+                return $.map($($.table3._tableId).bootstrapTable('getSelections'), function (row) {
+                    return row[column];
+                });
+            },
+            // 查询表格首列值
+            selectFirstColumns: function() {
+                return $.map($($.table3._tableId).bootstrapTable('getSelections'), function (row) {
+                    return row[$.table3._option.columns[1].field];
+                });
+            },
+            // 回显数据字典
+            selectDictLabel: function(datas, value) {
+                var actions = [];
+                $.each(datas, function(index, dict) {
+                    if (dict.dictValue == value) {
+                        actions.push("<span class='badge badge-" + dict.listClass + "'>" + dict.dictLabel + "</span>");
+                        return false;
+                    }
+                });
+                return actions.join('');
+            },
+            // 显示表格指定列
+            showColumn: function(column) {
+                $($.table3._tableId).bootstrapTable('showColumn', column);
+            },
+            // 隐藏表格指定列
+            hideColumn: function(column) {
+                $($.table3._tableId).bootstrapTable('hideColumn', column);
             }
         },
         // 表格树封装处理
@@ -704,6 +837,7 @@
             // 成功回调执行事件（父窗体静默更新）
             successCallback: function (result) {
                 if (result.code == web_status.SUCCESS) {
+                    //这个bug和表格id有关，需要修复！
                     if (window.parent.$("#bootstrap-table").length > 0) {
                         $.modal.close();
                         window.parent.$.modal.msgSuccess(result.msg);
@@ -721,6 +855,318 @@
                 $.modal.closeLoading();
             }
         },
+
+        // 操作封装处理
+        operate2: {
+            // 提交数据
+            submit: function (url, type, dataType, data) {
+                $.modal.loading("正在处理中，请稍后...");
+                var config = {
+                    url: url,
+                    type: type,
+                    dataType: dataType,
+                    data: data,
+                    success: function (result) {
+                        $.operate.ajaxSuccess(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            // post请求传输
+            post: function (url, data) {
+                $.operate2.submit(url, "post", "json", data);
+            },
+            // 删除信息
+            remove: function (id) {
+                $.modal.confirm("确定删除该条" + $.table2._option.modalName + "信息吗？", function () {
+                    var url = $.common.isEmpty(id) ? $.table2._option.removeUrl : $.table2._option.removeUrl.replace("{id}", id);
+                    var data = {"ids": id};
+                    $.operate2.submit(url, "post", "json", data);
+                });
+            },
+            // 批量删除信息
+            removeAll: function () {
+                var rows = $.common.isEmpty($.table2._option.uniqueId) ? $.table2.selectFirstColumns() : $.table2.selectColumns($.table2._option.uniqueId);
+                if (rows.length == 0) {
+                    $.modal.alertWarning("请至少选择一条记录");
+                    return;
+                }
+                $.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function () {
+                    var url = $.table2._option.removeUrl;
+                    var data = {"ids": rows.join()};
+                    $.operate2.submit(url, "post", "json", data);
+                });
+            },
+            // 清空信息
+            clean: function () {
+                $.modal.confirm("确定清空所有" + $.table2._option.modalName + "吗？", function () {
+                    var url = $.table2._option.cleanUrl;
+                    $.operate2.submit(url, "post", "json", "");
+                });
+            },
+            // 添加信息
+            add: function (id) {
+                var url = $.common.isEmpty(id) ? $.table2._option.createUrl : $.table2._option.createUrl.replace("{id}", id);
+                $.modal.open("添加" + $.table2._option.modalName, url);
+            },
+            // 修改信息
+            edit: function (id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = $.table2._option.updateUrl.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty($.table2._option.uniqueId) ? $.table2.selectFirstColumns() : $.table2.selectColumns($.table2._option.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    url = $.table2._option.updateUrl.replace("{id}", id);
+                }
+                $.modal.open("修改" + $.table2._option.modalName, url);
+            },
+            // 工具栏表格树修改
+            editTree: function () {
+                var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
+                if ($.common.isEmpty(row)) {
+                    $.modal.alertWarning("请至少选择一条记录");
+                    return;
+                }
+                var url = $.table2._option.updateUrl.replace("{id}", row[$.table2._option.uniqueId]);
+                $.modal.open("修改" + $.table2._option.modalName, url);
+            },
+            // 添加信息 全屏
+            addFull: function (id) {
+                var url = $.common.isEmpty(id) ? $.table2._option.createUrl : $.table2._option.createUrl.replace("{id}", id);
+                $.modal.openFull("添加" + $.table2._option.modalName, url);
+            },
+            // 修改信息 全屏
+            editFull: function (id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = $.table2._option.updateUrl.replace("{id}", id);
+                } else {
+                    var row = $.common.isEmpty($.table._option.uniqueId) ? $.table2.selectFirstColumns() : $.table2.selectColumns($.table2._option.uniqueId);
+                    url = $.table2._option.updateUrl.replace("{id}", row);
+                }
+                $.modal.openFull("修改" + $.table2._option.modalName, url);
+            },
+            // 保存信息
+            save: function (url, data) {
+                $.modal.loading("正在处理中，请稍后...");
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (result) {
+                        $.operate2.successCallback(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            // 保存信息
+            saveJson: function (url, data) {
+                $.modal.loading("正在处理中，请稍后...");
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    contentType: "application/json;charset-UTF-8",
+                    success: function (result) {
+                        $.operate2.successCallback(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            // 保存结果弹出msg刷新table表格
+            ajaxSuccess: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.msgSuccess(result.msg);
+                    $.table2.refresh();
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            },
+            // 成功结果提示msg（父窗体全局更新）
+            saveSuccess: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            },
+            // 成功回调执行事件（父窗体静默更新）
+            successCallback: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    if (window.parent.$($.table2._tableId).length > 0) {
+                        $.modal.close();
+                        window.parent.$.modal.msgSuccess(result.msg);
+                        window.parent.$.table2.refresh();
+                    } else if (window.parent.$("#bootstrap-tree-table").length > 0) {
+                        $.modal.close();
+                        window.parent.$.modal.msgSuccess(result.msg);
+                        window.parent.$.treeTable.refresh();
+                    } else {
+                        $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                    }
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        },
+
+        // 操作封装处理
+        operate3: {
+            // 提交数据
+            submit: function (url, type, dataType, data) {
+                $.modal.loading("正在处理中，请稍后...");
+                var config = {
+                    url: url,
+                    type: type,
+                    dataType: dataType,
+                    data: data,
+                    success: function (result) {
+                        $.operate3.ajaxSuccess(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            // post请求传输
+            post: function (url, data) {
+                $.operate3.submit(url, "post", "json", data);
+            },
+            // 删除信息
+            remove: function (id) {
+                $.modal.confirm("确定删除该条" + $.table3._option.modalName + "信息吗？", function () {
+                    var url = $.common.isEmpty(id) ? $.table3._option.removeUrl : $.table3._option.removeUrl.replace("{id}", id);
+                    var data = {"ids": id};
+                    $.operate3.submit(url, "post", "json", data);
+                });
+            },
+            // 批量删除信息
+            removeAll: function () {
+                var rows = $.common.isEmpty($.table3._option.uniqueId) ? $.table3.selectFirstColumns() : $.table3.selectColumns($.table3._option.uniqueId);
+                if (rows.length == 0) {
+                    $.modal.alertWarning("请至少选择一条记录");
+                    return;
+                }
+                $.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function () {
+                    var url = $.table3._option.removeUrl;
+                    var data = {"ids": rows.join()};
+                    $.operate3.submit(url, "post", "json", data);
+                });
+            },
+            // 清空信息
+            clean: function () {
+                $.modal.confirm("确定清空所有" + $.table3._option.modalName + "吗？", function () {
+                    var url = $.table3._option.cleanUrl;
+                    $.operate3.submit(url, "post", "json", "");
+                });
+            },
+            // 添加信息
+            add: function (id) {
+                var url = $.common.isEmpty(id) ? $.table3._option.createUrl : $.table3._option.createUrl.replace("{id}", id);
+                $.modal.open("添加" + $.table3._option.modalName, url);
+            },
+            // 修改信息
+            edit: function (id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = $.table3._option.updateUrl.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty($.table3._option.uniqueId) ? $.table3.selectFirstColumns() : $.table3.selectColumns($.table3._option.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    url = $.table3._option.updateUrl.replace("{id}", id);
+                }
+                $.modal.open("修改" + $.table3._option.modalName, url);
+            },
+            // 工具栏表格树修改
+            editTree: function () {
+                var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
+                if ($.common.isEmpty(row)) {
+                    $.modal.alertWarning("请至少选择一条记录");
+                    return;
+                }
+                var url = $.table3._option.updateUrl.replace("{id}", row[$.table3._option.uniqueId]);
+                $.modal.open("修改" + $.table3._option.modalName, url);
+            },
+            // 添加信息 全屏
+            addFull: function (id) {
+                var url = $.common.isEmpty(id) ? $.table3._option.createUrl : $.table3._option.createUrl.replace("{id}", id);
+                $.modal.openFull("添加" + $.table3._option.modalName, url);
+            },
+            // 修改信息 全屏
+            editFull: function (id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = $.table3._option.updateUrl.replace("{id}", id);
+                } else {
+                    var row = $.common.isEmpty($.table._option.uniqueId) ? $.table3.selectFirstColumns() : $.table3.selectColumns($.table3._option.uniqueId);
+                    url = $.table3._option.updateUrl.replace("{id}", row);
+                }
+                $.modal.openFull("修改" + $.table3._option.modalName, url);
+            },
+            // 保存信息
+            save: function (url, data) {
+                $.modal.loading("正在处理中，请稍后...");
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (result) {
+                        $.operate3.successCallback(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            // 保存结果弹出msg刷新table表格
+            ajaxSuccess: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.msgSuccess(result.msg);
+                    $.table3.refresh();
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            },
+            // 成功结果提示msg（父窗体全局更新）
+            saveSuccess: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            },
+            // 成功回调执行事件（父窗体静默更新）
+            successCallback: function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    if (window.parent.$($.table3._tableId).length > 0) {
+                        $.modal.close();
+                        window.parent.$.modal.msgSuccess(result.msg);
+                        window.parent.$.table3.refresh();
+                    } else if (window.parent.$("#bootstrap-tree-table").length > 0) {
+                        $.modal.close();
+                        window.parent.$.modal.msgSuccess(result.msg);
+                        window.parent.$.treeTable.refresh();
+                    } else {
+                        $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                    }
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        },
+
         // 校验封装处理
         validate: {
             // 判断返回标识是否唯一 false 不存在 true 存在
