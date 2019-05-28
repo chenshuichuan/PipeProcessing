@@ -39,6 +39,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="noInstall != null  and noInstall != '' "> and no_install = #{noInstall}</if>
              <if test="pipeMaterial != null  and pipeMaterial != '' "> and pipe_material = #{pipeMaterial}</if>
              <if test="algorithm != null  and algorithm != '' "> and algorithm = #{algorithm}</if>
+             <if test="originId != null "> and origin_id = #{originId}</if>
+             <if test="originIndex != null "> and origin_index = #{originIndex}</if>
          </where>
     </select>
     

@@ -2,11 +2,13 @@ package com.ruoyi.project.process.taoliaoOnline.controller;
 
 import java.util.List;
 
+import com.ruoyi.project.algorithm.AlgorithmConstants;
 import com.ruoyi.project.process.taoliao.domain.Taoliao;
 import com.ruoyi.project.process.taoliao.service.ITaoliaoService;
 import com.ruoyi.project.process.taoliaoOnline.domain.InputOriginId;
 import com.ruoyi.project.process.taoliaoOnline.domain.InputOriginInfo;
 import com.ruoyi.project.process.taoliaoOnline.domain.OriginInfo;
+import com.ruoyi.project.process.taoliaoOrigin.service.ITaoliaoOriginService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,10 @@ public class TaoliaoOnlineController extends BaseController {
 
     @Autowired
     private ITaoliaoService taoliaoService;
+    @Autowired
+    private ITaoliaoOnlineService taoliaoOnlineService;
+    @Autowired
+    private ITaoliaoOriginService taoliaoOriginService;
 
     @RequiresPermissions("process:taoliaoOnline:view")
     @GetMapping()
@@ -106,6 +112,13 @@ public class TaoliaoOnlineController extends BaseController {
         System.out.println(inputOriginId.getOriginInfoList().toString());
         System.out.println(inputOriginId.getId());
         //Taoliao taoliaoOnline = inputOriginInfo.getTaoliao();
+        Taoliao taoliao = taoliaoService.selectTaoliaoById(inputOriginId.getId());
+        List<OriginInfo> originInfoList = inputOriginId.getOriginInfoList();
+
+        taoliaoOnlineService.inputOrigin(taoliao,originInfoList,AlgorithmConstants.DynamicProgrammingName);
+        taoliaoOnlineService.inputOrigin(taoliao,originInfoList,AlgorithmConstants.GeneticAlgorithmName);
+
+        taoliaoOnlineService.dynamicProgramming(taoliao);
         return toAjax(1);
     }
 

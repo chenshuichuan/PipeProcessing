@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="row">
+        <div class="col-md-2 ">
+            管材:<span th:text="${pipeMaterial}">0</span>
+        </div>
+        <div class="col-md-2 ">
+            数量:<span th:text="${resultSize}">0</span>
+        </div>
+        <div class="col-md-4 ">
+            <button type="button" id="test_button_print" class="btn btn-danger">批量打印</button>
+        </div>
+        <div class="col-md-2 ">
+            点击“批量打印”按钮将标记该批量管件完成下料
+        </div>
+    </div>
+</div>
+<div id="printDiv">
+    <!--<div>-->
+        <!--<table>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td style="padding-left: 10px;">(1)</td>-->
+                <!--<td>-</td>-->
+                <!--<td>20#无缝钢管</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<div>-->
+            <!--<img id="barcode"/>-->
+        <!--</div>-->
+        <!--<table>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td>20#无缝钢管</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<table>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td style="padding-left: 10px;">L:</td>-->
+                <!--<td >583</td>-->
+                <!--<td>-</td>-->
+                <!--<td>G01</td>-->
+                <!--<td>-</td>-->
+                <!--<td>BB</td>-->
+                <!--<td>-</td>-->
+                <!--<td>直</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+</div>
+<div th:include="include::footer"></div>
+<!-- JsBarcode生成条码 -->
+<script src="../../../static/admin/js/plugins/JsBarcode.all.min.js"
+        th:src="@{/admin/js/plugins/JsBarcode.all.min.js}"></script>
+<script src="../../../static/admin/js/plugins/jquery-migrate-1.2.1.min.js"
+        th:src="@{/admin/js/plugins/jquery-migrate-1.2.1.min.js}"></script>
+<script src="../../../static/admin/js/plugins/jquery.jqprint-0.3.js"
+        th:src="@{/admin/js/plugins/jquery.jqprint-0.3.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var taoliaoResults = /*[[${taoliaoResultList}]]*/ null;
+    /*]]>*/
+</script>
+<script type="text/javascript">
+    //var prefix = ctx + webPrefix + "/process/taoliaoResult";
+    $(document).ready(function () {
+
+        if (taoliaoResults === null) {
+            $.modal.msgError("加载管件信息错误！");
+            //记录错误信息到系统 $('#textarea_test1').val()
+        }
+        else {
+            for(var i=0;i<taoliaoResults.length; i++){
+                var html="<div style='margin-left: 20px;'>\n" +
+                    "        <table>\n" +
+                    "            <tbody>\n" +
+                    "            <tr>\n" +
+                    "                <td style=\"padding-left: 13px; font-size: 6px;\">("+taoliaoResults[i].originIndex+")</td>\n" +
+                    "                <td>-</td>\n" +
+                    "                <td style=\"font-size: 6px;\">"+taoliaoResults[i].pipeMaterial+"</td>\n" +
+                    "            </tr>\n" +
+                    "            </tbody>\n" +
+                    "        </table>\n" +
+                    "        <div style='width: 200px;text-align: center;'>\n" +
+                    "            <img id=\"barcode"+i+"\"/>\n" +
+                    "        </div>\n" +
+                    "        <table>\n" +
+                    "            <tbody>\n" +
+                    "            <tr  style=\"font-size: 6px;\">\n" +
+                    "                <td style=\"padding-left: 13px;\">L:</td>\n" +
+                    "                <td>"+taoliaoResults[i].cutLength+"</td>\n" +
+                    "                <td>-</td>\n" +
+                    "                <td>"+taoliaoResults[i].batchName+"</td>\n" +
+                    "                <td>-</td>\n" +
+                    "                <td>"+taoliaoResults[i].surfaceTreat+"</td>\n" +
+                    "                <td>-</td>\n" +
+                    "                <td>"+taoliaoResults[i].pipeShape+"</td>\n" +
+                    "                <td>-</td>\n" +
+                    "                <td>"+taoliaoResults[i].noInstall+"</td>\n" +
+                    "                <td>-</td>\n" +
+                    "                <td>"+taoliaoResults[i].collecteCode+"</td>\n" +
+                    "            </tr>\n" +
+                    "            </tbody>\n" +
+                    "        </table>\n" +
+                    "    </div>";
+                $("#printDiv").append(html);
+                JsBarcode("#barcode"+i, taoliaoResults[i].batchId+"-"+taoliaoResults[i].pipeId, {
+                    format: "CODE128",
+                    lineColor: "#000000",
+                    width:2,
+                    height:80,
+                    displayValue:false
+                });
+            }
+        }
+
+        $('#test_button_print').click(function () {
+            $("#printDiv").jqprint({
+                debug: false, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+                importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+                printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+                operaSupport: false//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
+            });
+        });
+    });
+
+    function submitHandler() {
+//        if ($.validate.form()) {
+//            $.operate.save(prefix + "/edit", $('#form-taoliaoResult-edit').serialize());
+//        }
+    }
+</script>
+</body>
+</html>

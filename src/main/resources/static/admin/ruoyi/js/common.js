@@ -193,8 +193,6 @@ $.ajaxSetup({
         }
     }
 });
-
-
 function ajaxGet(url, data, requestType) {
     var resultData = null;
     $.ajax({

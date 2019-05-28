@@ -85,7 +85,7 @@
             </div>
         </div>
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.removeAll()"
+            <a class="btn btn-success" onclick="printAll()"
                shiro:hasPermission="process:taoliaoResult:remove">
                 <i class="fa fa-print"></i> 批量打印
             </a>
@@ -182,7 +182,7 @@
                 },
                 {
                     field : 'surfaceTreat',
-                    title : '',
+                    title : '表处',
                     sortable: true
                 },
                 {
@@ -240,6 +240,13 @@
         };
         $.table.init(options);
     });
+    function printAll() {
+
+        var resultTaoliaoId = $("#resultTaoliaoId").val();
+        var resultAlgorithm = $("#resultAlgorithm").val();
+        var printURL = "/admin/process/taoliaoResult/print?resultTaoliaoId="+resultTaoliaoId+"&resultAlgorithm="+resultAlgorithm;
+        $.modal.open("批量打印条码", printURL);
+    }
 </script>
 
 <!--套料原料表taoliaoOrigin-->
@@ -334,6 +341,7 @@
 </script>
 
 
+
 <!--套料管材表taoliao-->
 <script th:inline="javascript">
     var editFlag = [[${@permission.hasPermi('process:taoliaoOnline:edit')}]];
@@ -419,8 +427,8 @@
             var taoliao = t;
             var algorithm = $("#cut-algorithm").val();
             //origin的表单
-            $("#resultTaoliaoId").val(taoliao.id);
-            $("#resultPipeMaterial").val(taoliao.pipeMaterial);
+            $("#originTaoliaoId").val(taoliao.id);
+            $("#originMaterial").val(taoliao.pipeMaterial);
             $("#originAlgorithm").val(algorithm);
 
             //result的表单
