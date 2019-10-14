@@ -87,7 +87,11 @@
         <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
             <a class="btn btn-success" onclick="printAll()"
                shiro:hasPermission="process:taoliaoResult:remove">
-                <i class="fa fa-print"></i> 批量打印
+                <i class="fa fa-print"></i> 打印(40规格)
+            </a>
+            <a class="btn btn-success" onclick="print25()"
+               shiro:hasPermission="process:taoliaoResult:remove">
+                <i class="fa fa-print"></i> 打印(25规格)
             </a>
             <!--<a class="btn btn-warning" onclick="$.table.exportExcel('formResult')" shiro:hasPermission="process:taoliaoResult:export">-->
                 <!--<i class="fa fa-download"></i> 导出-->
@@ -113,6 +117,9 @@
                                 </li>
                                 <li hidden>
                                     套料算法：<input id="resultAlgorithm" type="text" name="algorithm"/>
+                                </li>
+                                <li hidden>
+                                    集配管号：<input id="resultCollecteCode" type="text" name="collecteCode"/>
                                 </li>
                             </ul>
                         </div>
@@ -245,7 +252,14 @@
         var resultTaoliaoId = $("#resultTaoliaoId").val();
         var resultAlgorithm = $("#resultAlgorithm").val();
         var printURL = "/admin/process/taoliaoResult/print?resultTaoliaoId="+resultTaoliaoId+"&resultAlgorithm="+resultAlgorithm;
-        $.modal.open("批量打印条码", printURL);
+        $.modal.open("打印条码(40规格)", printURL);
+    }
+    function print25() {
+
+        var resultTaoliaoId = $("#resultTaoliaoId").val();
+        var resultAlgorithm = $("#resultAlgorithm").val();
+        var printURL = "/admin/process/taoliaoResult/print25?resultTaoliaoId="+resultTaoliaoId+"&resultAlgorithm="+resultAlgorithm;
+        $.modal.open("打印条码(25规格)", printURL);
     }
 </script>
 

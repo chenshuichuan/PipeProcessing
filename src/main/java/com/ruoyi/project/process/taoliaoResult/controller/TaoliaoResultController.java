@@ -149,4 +149,25 @@ public class TaoliaoResultController extends BaseController {
 
     return toAjax(1);
   }
+  /**
+   * 修改管材套料结果
+   */
+  @GetMapping("/print25")
+  public String print25(@RequestParam("resultTaoliaoId") Integer resultTaoliaoId,
+                         @RequestParam("resultAlgorithm") String resultAlgorithm, ModelMap mmap) {
+    Taoliao taoliao = taoliaoService.selectTaoliaoById(resultTaoliaoId);
+
+    TaoliaoResult taoliaoResult = new TaoliaoResult();
+    taoliaoResult.setTaoliaoId(resultTaoliaoId);
+    taoliaoResult.setAlgorithm(resultAlgorithm);
+    List<TaoliaoResult> list = taoliaoResultService.selectTaoliaoResultList(taoliaoResult);
+    mmap.put("taoliaoResultList", list);
+    mmap.put("resultSize", list.size());
+    if(taoliao!=null) {
+      mmap.put("pipeMaterial", taoliao.getPipeMaterial());
+    }else{
+      mmap.put("pipeMaterial", "查找错误！");
+    }
+    return prefix + "/print25";
+  }
 }

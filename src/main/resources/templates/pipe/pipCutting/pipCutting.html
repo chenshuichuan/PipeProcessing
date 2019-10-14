@@ -7,6 +7,24 @@
 <div class="container-div">
     <div class="row">
         <div class="col-sm-12 search-collapse">
+            <form id="genPlan">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            下料表：<select id="selectPlan">
+                            <option th:each="file,iterStat : ${planFiles}" th:text="${file.fileName}"
+                                    th:value="${file.id}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="readXlsFile()"><i
+                                    class="fa fa-file-excel-o"></i>&nbsp;导入下料表</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-12 search-collapse">
             <form id="formId">
                 <div class="select-list">
                     <ul>

@@ -11,6 +11,8 @@ spring:
                 password: 969396
 #                username: root
 #                password: llcweb123
+#                username: root
+#                password: chy123456.
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭

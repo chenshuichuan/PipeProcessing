@@ -13,10 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="unitHasF"    column="unit_has_f"    />
         <result property="pipeShapeHasBend"    column="pipe_shape_has_bend"    />
         <result property="hasSurfaceTreat"    column="has_surface_treat"    />
+        <result property="hasNoInstall"    column="has_no_install"    />
     </resultMap>
 	
 	<sql id="selectOrderVo">
-        select id, name, order_list,order_list_name, update_time, unit_has_f, pipe_shape_has_bend, has_surface_treat from process_order
+        select id, name, order_list,order_list_name, update_time, unit_has_f, pipe_shape_has_bend, has_surface_treat,has_no_install from process_order
     </sql>
 	
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
@@ -30,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="unitHasF != null "> and unit_has_f = #{unitHasF}</if>
              <if test="pipeShapeHasBend != null "> and pipe_shape_has_bend = #{pipeShapeHasBend}</if>
              <if test="hasSurfaceTreat != null "> and has_surface_treat = #{hasSurfaceTreat}</if>
+            <if test="hasNoInstall != null "> and has_no_install = #{hasNoInstall}</if>
          </where>
     </select>
     
@@ -49,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="unitHasF != null  ">unit_has_f,</if>
 			<if test="pipeShapeHasBend != null  ">pipe_shape_has_bend,</if>
 			<if test="hasSurfaceTreat != null  ">has_surface_treat,</if>
+            <if test="hasNoInstall != null  ">has_no_install,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">#{id},</if>
@@ -59,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="unitHasF != null  ">#{unitHasF},</if>
 			<if test="pipeShapeHasBend != null  ">#{pipeShapeHasBend},</if>
 			<if test="hasSurfaceTreat != null  ">#{hasSurfaceTreat},</if>
+            <if test="hasNoInstall != null  ">#{hasNoInstall},</if>
          </trim>
     </insert>
 	 
@@ -72,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="unitHasF != null  ">unit_has_f = #{unitHasF},</if>
             <if test="pipeShapeHasBend != null  ">pipe_shape_has_bend = #{pipeShapeHasBend},</if>
             <if test="hasSurfaceTreat != null  ">has_surface_treat = #{hasSurfaceTreat},</if>
+            <if test="hasNoInstall != null  ">has_no_install = #{hasNoInstall},</if>
         </trim>
         where id = #{id}
     </update>

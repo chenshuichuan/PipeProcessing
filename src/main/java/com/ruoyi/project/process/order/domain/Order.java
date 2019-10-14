@@ -18,132 +18,145 @@ import java.util.Date;
 @Entity
 @Table(name = "process_order")
 public class Order extends BaseEntity {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * 加工顺序id
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-    /**
-     * 加工顺序名称
-     */
-    @Column(name = "name")
-    private String name;
-    /**
-     * 顺序列表，以逗号隔开
-     */
-    @Column(name = "order_list")
-    private String orderList;
-    /**
-     * 顺序列表名称，以逗号隔开
-     */
-    @Column(name = "order_list_name")
-    private String orderListName;
+  /**
+   * 加工顺序id
+   */
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  private Integer id;
+  /**
+   * 加工顺序名称
+   */
+  @Column(name = "name")
+  private String name;
+  /**
+   * 顺序列表，以逗号隔开
+   */
+  @Column(name = "order_list")
+  private String orderList;
+  /**
+   * 顺序列表名称，以逗号隔开
+   */
+  @Column(name = "order_list_name")
+  private String orderListName;
 
-    /**
-     * 规则更新时间
-     */
-    @Column(name = "update_time")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date updateTime;
-    /**
-     * 单元名称包含F
-     */
-    @Column(name = "unit_has_f")
-    private Integer unitHasF;
-    /**
-     * 管形态包含‘弯字’
-     */
-    @Column(name = "pipe_shape_has_bend")
-    private Integer pipeShapeHasBend;
-    /**
-     * 需要进行表面处理
-     */
-    @Column(name = "has_surface_treat")
-    private Integer hasSurfaceTreat;
+  /**
+   * 规则更新时间
+   */
+  @Column(name = "update_time")
+  @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+  private Date updateTime;
+  /**
+   * 单元名称包含F
+   */
+  @Column(name = "unit_has_f")
+  private Integer unitHasF;
+  /**
+   * 管形态包含‘弯字’
+   */
+  @Column(name = "pipe_shape_has_bend")
+  private Integer pipeShapeHasBend;
+  /**
+   * 需要进行表面处理
+   */
+  @Column(name = "has_surface_treat")
+  private Integer hasSurfaceTreat;
+  /**
+   * 需要进行表面处理
+   */
+  @Column(name = "has_no_install")
+  private Integer hasNoInstall;
 
-    public Order() {
-    }
+  public Order() {
+  }
 
-    public String getOrderListName() {
-        return orderListName;
-    }
+  public Integer getHasNoInstall() {
+    return hasNoInstall;
+  }
 
-    public void setOrderListName(String orderListName) {
-        this.orderListName = orderListName;
-    }
+  public void setHasNoInstall(Integer hasNoInstall) {
+    this.hasNoInstall = hasNoInstall;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public String getOrderListName() {
+    return orderListName;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setOrderListName(String orderListName) {
+    this.orderListName = orderListName;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setOrderList(String orderList) {
-        this.orderList = orderList;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getOrderList() {
-        return orderList;
-    }
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+  public void setOrderList(String orderList) {
+    this.orderList = orderList;
+  }
 
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+  public String getOrderList() {
+    return orderList;
+  }
 
-    public void setUnitHasF(Integer unitHasF) {
-        this.unitHasF = unitHasF;
-    }
+  @Override
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
 
-    public Integer getUnitHasF() {
-        return unitHasF;
-    }
+  @Override
+  public Date getUpdateTime() {
+    return updateTime;
+  }
 
-    public void setPipeShapeHasBend(Integer pipeShapeHasBend) {
-        this.pipeShapeHasBend = pipeShapeHasBend;
-    }
+  public void setUnitHasF(Integer unitHasF) {
+    this.unitHasF = unitHasF;
+  }
 
-    public Integer getPipeShapeHasBend() {
-        return pipeShapeHasBend;
-    }
+  public Integer getUnitHasF() {
+    return unitHasF;
+  }
 
-    public void setHasSurfaceTreat(Integer hasSurfaceTreat) {
-        this.hasSurfaceTreat = hasSurfaceTreat;
-    }
+  public void setPipeShapeHasBend(Integer pipeShapeHasBend) {
+    this.pipeShapeHasBend = pipeShapeHasBend;
+  }
 
-    public Integer getHasSurfaceTreat() {
-        return hasSurfaceTreat;
-    }
+  public Integer getPipeShapeHasBend() {
+    return pipeShapeHasBend;
+  }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("id", getId())
-                .append("name", getName())
-                .append("orderList", getOrderList())
-                .append("updateTime", getUpdateTime())
-                .append("unitHasF", getUnitHasF())
-                .append("pipeShapeHasBend", getPipeShapeHasBend())
-                .append("hasSurfaceTreat", getHasSurfaceTreat())
-                .toString();
-    }
+  public void setHasSurfaceTreat(Integer hasSurfaceTreat) {
+    this.hasSurfaceTreat = hasSurfaceTreat;
+  }
+
+  public Integer getHasSurfaceTreat() {
+    return hasSurfaceTreat;
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("name", getName())
+            .append("orderList", getOrderList())
+            .append("updateTime", getUpdateTime())
+            .append("unitHasF", getUnitHasF())
+            .append("pipeShapeHasBend", getPipeShapeHasBend())
+            .append("hasSurfaceTreat", getHasSurfaceTreat())
+            .toString();
+  }
 }
