@@ -254,6 +254,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/admin/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/admin/prepage/*", "anon,captchaValidate");
         filterChainDefinitionMap.put("/admin/prepage/scan", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/admin/process/scanCode/scan", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/admin/process/scanCode/list", "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.process.scanCode.mapper.ScanCodeMapper">
+    
+    <resultMap type="ScanCode" id="ScanCodeResult">
+        <result property="id"    column="id"    />
+        <result property="content"    column="content"    />
+        <result property="workerId"    column="worker_id"    />
+        <result property="pipeId"    column="pipe_id"    />
+        <result property="state"    column="state"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectScanCodeVo">
+        select id, content, worker_id, pipe_id, state, update_time from process_scan_code
+    </sql>
+	
+    <select id="selectScanCodeList" parameterType="ScanCode" resultMap="ScanCodeResult">
+        <include refid="selectScanCodeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="workerId != null "> and worker_id = #{workerId}</if>
+             <if test="pipeId != null "> and pipe_id = #{pipeId}</if>
+             <if test="state != null "> and state = #{state}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectScanCodeById" parameterType="Integer" resultMap="ScanCodeResult">
+        <include refid="selectScanCodeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertScanCode" parameterType="ScanCode">
+        insert into process_scan_code
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="workerId != null  ">worker_id,</if>
+			<if test="pipeId != null  ">pipe_id,</if>
+			<if test="state != null  ">state,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="workerId != null  ">#{workerId},</if>
+			<if test="pipeId != null  ">#{pipeId},</if>
+			<if test="state != null  ">#{state},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateScanCode" parameterType="ScanCode">
+        update process_scan_code
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="workerId != null  ">worker_id = #{workerId},</if>
+            <if test="pipeId != null  ">pipe_id = #{pipeId},</if>
+            <if test="state != null  ">state = #{state},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteScanCodeById" parameterType="Integer">
+        delete from process_scan_code where id = #{id}
+    </delete>
+	
+    <delete id="deleteScanCodeByIds" parameterType="String">
+        delete from process_scan_code where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
